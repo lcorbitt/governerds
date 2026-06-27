@@ -41,6 +41,12 @@ export function AppShell({
                 </Link>
               ) : null}
               <Link
+                href="/communities"
+                className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
+              >
+                Communities
+              </Link>
+              <Link
                 href="/profile"
                 className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
               >

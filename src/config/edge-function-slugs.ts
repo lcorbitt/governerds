@@ -15,6 +15,8 @@ export const EDGE_FUNCTION_SLUGS = {
   getPermissions: "get-permissions",
   getFeatureFlag: "get-feature-flag",
   getAdminOverview: "get-admin-overview",
+  listCommunities: "list-communities",
+  getCommunity: "get-community",
 } as const;
 
 export type EdgeFunctionSlug =

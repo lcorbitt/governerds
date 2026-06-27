@@ -49,3 +49,6 @@ supabase/.temp
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# stakeholder docs (maintained locally, not in repo)
+/docs/STAKEHOLDER-BRIEF.md

@@ -339,7 +339,7 @@ The migration comment states the intent:
 -- Communities (stub for future multi-tenant features).
 ```
 
-[ARCHITECTURE.md §16](ARCHITECTURE.md#16-what-is-not-built-yet) lists **"Communities UI (DB stubs exist)"** under intentionally deferred work. The schema is ready; the product UI is not.
+[ARCHITECTURE.md §16](ARCHITECTURE.md#16-what-is-not-built-yet) lists forums, moderation, and payments under intentionally deferred work. **Communities read UI** (list + home placeholder, nav link, `list-communities` / `get-community`) is in early delivery; community CRUD, join/leave, forums, and switcher are not.
 
 ### What exists in the database today
 
@@ -397,18 +397,22 @@ None of these features are built yet. The table ensures we do not need a painful
 
 ```mermaid
 flowchart LR
-    subgraph now [Built now — schema only]
+    subgraph now [Built now]
         T[communities table]
         M[community_members table]
         R[community-scoped user_roles FK]
         RS[role_scope enum]
         S[Seed community: GoverNerds HQ]
         RLS[RLS policies]
+        UI[List and home UI]
+        NAV[Communities nav in AppShell]
+        EF[list-communities and get-community]
     end
 
     subgraph later [Not built yet — product]
-        UI[Communities UI]
-        NAV[Community switcher in AppShell]
+        SW[Community switcher / active context]
+        CRUD[Community create and admin UI]
+        JOIN[Join and leave flows]
         FORUM[Community-scoped forums]
         GATE[Gated content per community]
         MOD[Community-level moderation tools]
@@ -441,13 +445,13 @@ Multi-space tenancy is a reasonable default assumption. The stub tables cost alm
 
 ### What you will NOT find yet
 
-- No communities page or admin UI
-- No community switcher in `AppShell`
-- No SSR loader for community context (`getCommunityContext()` does not exist)
-- No Edge Functions for community CRUD
-- Seed data creates one sample community but does not assign test users to it
+- No community create/admin UI or join/leave flows
+- No community switcher or active-community context in layouts
+- No community-scoped forums, gated content, or moderation tools
+- No Edge Functions for community CRUD mutations (read path only: `list-communities`, `get-community`)
+- No cookie- or session-backed community context loader (`getCommunityContext()` is still future work); read prefetch via `prefetchCommunitiesQuery` / `prefetchCommunityQuery` is in place
 
-When community features ship, expect the [new feature checklist](ARCHITECTURE.md#17-new-feature-checklist) pattern: migration (if needed) → model → DTO → service → Edge Function slug → frontend service → hooks → UI.
+When the next community features ship, expect the [new feature checklist](ARCHITECTURE.md#17-new-feature-checklist) pattern: migration (if needed) → model → DTO → service → Edge Function slug → frontend service → hooks → UI.
 
 ---
 
@@ -457,4 +461,4 @@ When community features ship, expect the [new feature checklist](ARCHITECTURE.md
 - [ARCHITECTURE.md §4 — Hard architectural rules](ARCHITECTURE.md#4-hard-architectural-rules) — slug registry rule
 - [ARCHITECTURE.md §8 — Authentication & authorization](ARCHITECTURE.md#8-authentication--authorization) — auth flow sequence diagram
 - [ARCHITECTURE.md §11 — Route groups & gating](ARCHITECTURE.md#11-route-groups--gating) — layout responsibilities
-- [ARCHITECTURE.md §16 — What is NOT built yet](ARCHITECTURE.md#16-what-is-not-built-yet) — deferred features including communities UI
+- [ARCHITECTURE.md §16 — What is NOT built yet](ARCHITECTURE.md#16-what-is-not-built-yet) — deferred features including forums and moderation

@@ -215,3 +215,18 @@ begin
     on conflict do nothing;
   end if;
 end $$;
+
+-- Assign all local test users to the sample community (after auth.users exist).
+insert into public.community_members (community_id, user_id, role_id)
+select c.id, u.user_id, r.id
+from public.communities c
+cross join (
+  values
+    ('11111111-1111-1111-1111-111111111111'::uuid),
+    ('22222222-2222-2222-2222-222222222222'::uuid),
+    ('33333333-3333-3333-3333-333333333333'::uuid),
+    ('44444444-4444-4444-4444-444444444444'::uuid)
+) as u(user_id)
+join public.roles r on r.slug = 'member'
+where c.slug = 'governerds-hq'
+on conflict (community_id, user_id) do nothing;

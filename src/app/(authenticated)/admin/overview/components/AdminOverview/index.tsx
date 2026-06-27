@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ErrorState } from "@/components/shared/error-state";
+import { Reveal } from "@/components/shared/reveal";
 import { useAdminOverviewQuery } from "@/hooks/queries/useAdminOverview";
 
 function formatWhen(iso: string): string {
@@ -47,7 +48,7 @@ export function AdminOverview() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <Reveal className="grid gap-4 sm:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>Profiles</CardTitle>
@@ -75,9 +76,9 @@ export function AdminOverview() {
             <p className="text-3xl font-bold">{data.analyticsEventCount24h}</p>
           </CardContent>
         </Card>
-      </div>
+      </Reveal>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <Reveal className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Recent audit log</CardTitle>
@@ -137,7 +138,7 @@ export function AdminOverview() {
             )}
           </CardContent>
         </Card>
-      </div>
+      </Reveal>
     </div>
   );
 }
