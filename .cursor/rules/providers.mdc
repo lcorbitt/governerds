@@ -1,0 +1,25 @@
+---
+description: Swappable provider interfaces and job handler boundaries
+globs: src/lib/providers/**/*.ts,src/lib/jobs/**/*.ts
+alwaysApply: false
+---
+
+# Swappable providers
+
+All third-party and infrastructure adapters live under
+`src/lib/providers/<name>/`. Each exposes an interface + `get<Name>Provider()`
+factory (or equivalent facade). Free tier by default; swap = new implementation
++ one factory branch. Job *handlers* (`src/lib/jobs/functions/`) are not
+providers — they orchestrate work using provider clients.
+
+| Provider  | Location                              | Default            | Fallback (no API key) |
+|-----------|---------------------------------------|--------------------|------------------------|
+| Email     | `src/lib/providers/email.ts`          | Resend             | Console logger         |
+| SMS       | `src/lib/providers/sms.ts`            | —                  | Console logger         |
+| Storage   | `src/lib/providers/storage.ts`        | Supabase Storage   | —                      |
+| Search    | `src/lib/providers/search.ts`         | Postgres full-text | —                      |
+| Analytics | `src/lib/providers/analytics/`        | PostHog            | No-op                  |
+| Jobs      | `src/lib/providers/jobs/`             | Inngest            | Console logger         |
+| Redis     | `src/lib/providers/redis/`            | Upstash            | Graceful disable       |
+
+Domain event names live in `src/lib/jobs/catalog.ts` (not a provider).

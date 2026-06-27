@@ -1,0 +1,49 @@
+"use client";
+
+import { useState } from "react";
+import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
+import { signInWithOAuth, type OAuthProvider } from "@/lib/auth/client";
+
+/**
+ * Continue-with-Google / Continue-with-Microsoft buttons. Shared across login
+ * and signup. Labels are explicit and recognizable for our audience.
+ */
+export function OAuthButtons() {
+  const [pending, setPending] = useState<OAuthProvider | null>(null);
+
+  async function handleClick(provider: OAuthProvider) {
+    setPending(provider);
+    try {
+      await signInWithOAuth(provider);
+      // On success the browser is redirected, so no further UI is needed.
+    } catch {
+      toast.error("We could not start sign-in. Please try again.");
+      setPending(null);
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <Button
+        type="button"
+        variant="outline"
+        size="lg"
+        onClick={() => handleClick("google")}
+        disabled={pending !== null}
+      >
+        {pending === "google" ? "Connecting…" : "Continue with Google"}
+      </Button>
+      <Button
+        type="button"
+        variant="outline"
+        size="lg"
+        onClick={() => handleClick("azure")}
+        disabled={pending !== null}
+      >
+        {pending === "azure" ? "Connecting…" : "Continue with Microsoft"}
+      </Button>
+    </div>
+  );
+}

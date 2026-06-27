@@ -1,0 +1,52 @@
+---
+description: Frontend layer placement, naming, and route gating
+globs: src/app/**/*.{ts,tsx},src/hooks/**/*.ts,src/frontend/**/*.ts,src/components/**/*.{ts,tsx},src/server/prefetch/**/*.ts,src/server/loaders/**/*.ts
+alwaysApply: false
+---
+
+# Frontend layers (src/)
+
+- `app/(group)/<route>/page.tsx` — async Server Component. Prefetches this
+  route's TanStack queries via `server/prefetch/*` + `PrefetchBoundary`. No
+  business logic, no fat JSX — delegates to colocated feature component.
+  Exception: pages with no initial domain data (static stubs, auth forms,
+  marketing).
+- `app/(group)/<route>/components/<Name>/` — route-scoped UI:
+  `index.tsx` (JSX), `use<Name>.ts` (orchestration: form, toasts, routing),
+  `utils.ts`, `constants.ts`, `types.ts`.
+- `app/(group)/components/` — shell for that group only.
+- `components/` — shared across routes. `components/ui/` — shadcn primitives.
+- `components/shared/` — AppModal, ErrorState, field helpers.
+- `hosts/` — global modals/toasts/portals mounted once from the root.
+- `hooks/queries/<domain>.keys.ts` — query keys only (server-safe imports).
+- `hooks/queries/use<Domain>.ts` — reads + invalidation helpers; imports keys
+  from the `.keys.ts` file.
+- `hooks/mutations/use<Domain>.ts` — writes + cache updates. Imports keys from
+  the query file; never defines keys.
+- `frontend/services/<domain>.service.ts` — `edgeFunctionFetch` + slug only. No
+  React, no TanStack.
+- `server/loaders/*` — SSR session/role bootstrap (auth exception).
+- `server/prefetch/*` — SSR TanStack prefetch helpers per domain (server-only).
+- `lib/query/prefetch-boundary.tsx` — `PrefetchBoundary` wrapper for pages.
+- `lib/toast/*` — user-facing toast helpers; use from colocated hooks only.
+- `lib/modal/open-modal.ts` — imperative modal API; use from colocated hooks.
+
+## Naming (1:1 across layers)
+
+`create-shipment` (slug) → `createShipment()` (service) →
+`useCreateShipmentMutation()`. Query keys: `["domain-thing"]`, stable param
+order. Slugs live in `src/config/edge-function-slugs.ts` — no magic URLs.
+
+Do not use possessive scope in slugs or symbols (`get-my-profile`,
+`getMyProfile`). The authenticated caller is implied by JWT/session. Use neutral
+names: `get-profile`, `getProfile`, `update-profile`, `get-permissions`.
+
+## Route groups & gating
+
+- Groups: `(public)`, `(authenticated)`, `(member)`, `(shared)`. Names organize
+  layouts; they are not URL segments. Use literal, honest names.
+- `middleware.ts` — session/cookie refresh ONLY.
+- Group `layout.tsx` — auth gate + role redirect + shell. Auth checks live here,
+  never on every page.
+- Nested `layout.tsx` (e.g. `admin/`) — subtree role gate only.
+- Super admins use `requireSuperAdmin()` for analytics-focused admin routes.

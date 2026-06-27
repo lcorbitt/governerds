@@ -1,0 +1,82 @@
+# GoverNerds local Supabase configuration.
+# Docs: https://supabase.com/docs/guides/cli/config
+project_id = "governerds"
+
+# Ports use a dedicated 545xx range so this project can run alongside other
+# local Supabase projects. Adjust if they conflict on your machine.
+[api]
+enabled = true
+port = 54521
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54522
+shadow_port = 54520
+major_version = 15
+
+[db.pooler]
+enabled = false
+
+[realtime]
+enabled = true
+
+[studio]
+enabled = true
+port = 54523
+
+[inbucket]
+enabled = true
+port = 54524
+
+# Disabled locally to avoid port contention with other Supabase projects.
+[analytics]
+enabled = false
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000/auth/callback"]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+
+# OAuth providers. Fill secrets via environment variables; never commit them.
+[auth.external.google]
+enabled = false
+client_id = "env(SUPABASE_AUTH_GOOGLE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_GOOGLE_SECRET)"
+
+[auth.external.azure]
+enabled = false
+client_id = "env(SUPABASE_AUTH_AZURE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_AZURE_SECRET)"
+url = "https://login.microsoftonline.com/common/v2.0"
+
+# Edge Functions. We perform auth in-code via the withAuth middleware so we can
+# return standardized error shapes and support optional-auth endpoints; hence
+# verify_jwt is disabled at the gateway for all functions.
+[functions.get-health]
+verify_jwt = false
+
+[functions.get-profile]
+verify_jwt = false
+
+[functions.update-profile]
+verify_jwt = false
+
+[functions.get-permissions]
+verify_jwt = false
+
+[functions.get-feature-flag]
+verify_jwt = false
+
+[functions.get-admin-overview]
+verify_jwt = false

@@ -1,0 +1,1 @@
+export { captureServerEvent } from "./posthog";

@@ -1,0 +1,13 @@
+---
+description: Migration naming, rollback pairing, and RPC signature changes
+globs: supabase/migrations/**/*.sql,supabase/rollback/**/*.sql
+alwaysApply: false
+---
+
+# Migrations
+
+`YYYYMMDDHHMMSS_snake_case.sql`, strictly increasing. Every up migration in
+`supabase/migrations/` must have a paired rollback in `supabase/rollback/` with
+the same timestamp prefix. Apply rollbacks locally via `npm run db:rollback`.
+Production rollbacks are a deliberate ops action. Changing an RPC signature:
+drop (exact old sig) → create → re-grant.

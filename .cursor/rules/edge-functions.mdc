@@ -1,0 +1,27 @@
+---
+description: Edge Function handler/service/model layers and middleware presets
+globs: supabase/functions/**/*.ts
+alwaysApply: false
+---
+
+# Backend layers (supabase/functions/)
+
+- `<slug>/index.ts` — `Deno.serve` via middleware presets only (2 lines).
+- `<slug>/handler.ts` — HTTP adapter: method check, parse/validate body, auth
+  gate via ctx, return JSON. No `.from()`, no business rules.
+- `_services/<domain>/<domain>.service.ts` — validation, authorization,
+  multi-step workflows, side effects. May serve multiple slugs.
+- `_models/<table>.ts` — ALL `.from("<table>")` for that table. No cross-table
+  orchestration.
+- `_wire/dto/*.dto.ts` — pure wire types, shared with the frontend via
+  `@shared/dto/*`. Never duplicate wire types in frontend-only files.
+- `_wire/middleware/*` — the internal pipeline (auth, rate limit, access
+  control, ownership, CORS, security headers, logging, error boundary).
+- `_wire/middleware/presets.ts` — `servePublic`, `serveAuthenticated`,
+  `serveWithAccessContext`, `serveWithPermission` — use these in `index.ts`.
+
+## DB clients
+
+- User client (anon key + caller JWT) → RLS applies. Default for user data.
+- Service client (service role) → bypasses RLS. ONLY after an explicit
+  authorization check in code.
