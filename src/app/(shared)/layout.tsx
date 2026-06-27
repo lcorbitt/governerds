@@ -10,7 +10,7 @@ export default function SharedLayout({ children }: { children: ReactNode }) {
     <div className="flex min-h-dvh flex-col">
       <header className="border-b">
         <div className="mx-auto flex h-16 w-full max-w-5xl items-center px-4">
-          <Link href="/" className="text-primary text-xl font-bold">
+          <Link href="/" className="text-primary font-serif text-xl font-bold">
             GoverNerds
           </Link>
         </div>

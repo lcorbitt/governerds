@@ -27,7 +27,7 @@ export function AppShell({
           <div className="flex items-center gap-6">
             <Link
               href={isSuperAdmin ? "/admin/overview" : "/dashboard"}
-              className="text-primary text-xl font-bold"
+              className="text-primary font-serif text-xl font-bold"
             >
               GoverNerds
             </Link>

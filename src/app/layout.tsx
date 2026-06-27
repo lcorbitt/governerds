@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Libre_Caslon_Text } from "next/font/google";
 
 import { Providers } from "@/components/providers";
 import { Hosts } from "@/hosts";
 import "./globals.css";
 
-const inter = Inter({
+const dmSans = DM_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
+});
+
+const libreCaslon = Libre_Caslon_Text({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -22,7 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} min-h-dvh font-sans antialiased`}>
+      <body
+        className={`${dmSans.variable} ${libreCaslon.variable} min-h-dvh font-sans antialiased`}
+      >
         {/* Skip link for keyboard and screen-reader users. */}
         <a
           href="#main-content"
