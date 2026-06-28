@@ -1,0 +1,56 @@
+---
+description: UI copy conventions — Title Case, punctuation, and constants placement
+globs: src/**/*.{tsx,ts},emails/**/*.tsx
+alwaysApply: false
+---
+
+# UI copy — humanized Title Case
+
+User-facing **buttons**, **links**, **`<h1>`**, and **`<h2>`** (and matching
+`CardTitle` / dialog titles at the same semantic level) use **Title Case**:
+capitalize major words; keep articles/prepositions/conjunctions lowercase unless
+first or last word (`Sign Up`, `Log In`, `Forgot Password?`, `Back to Dashboard`).
+
+## Rules
+
+- Prefer **Title Case** over sentence case for interactive and primary headings.
+- Store copy in the feature's **`constants.ts`** (see `component-colocation.mdc`).
+- Apply consistently: JSX text, `Button` children, `Link` children, toast
+  messages triggered from that feature, and form submit labels.
+- **Do not Title Case** body paragraphs, `CardDescription`, helper text, or
+  long explanatory sentences — those stay sentence case.
+- **No em dashes (`—`)** anywhere in user-facing copy (UI, toasts, emails,
+  error messages). Use a comma, period, colon, or rephrase instead. Hyphens
+  (`-`) are fine for compound words and kebab-case slugs shown as labels.
+- Acronyms stay as-is (`OAuth`, `API`). Product name: `GoverNerds`.
+
+## Examples
+
+| ❌ Avoid | ✅ Use |
+|----------|--------|
+| Sign up | Sign Up |
+| Log in | Log In |
+| Create account | Create Account |
+| Back to dashboard | Back to Dashboard |
+| Send invite | Send Invite |
+| No communities yet | No Communities Yet |
+| Manage communities | Manage Communities |
+| Continue with google | Continue with Google |
+| Forums, discussions — member content | Forums and member content arrive later. |
+
+```tsx
+// constants.ts
+export const LOGIN_COPY = {
+  title: "Log In",
+  submit: "Log In",
+  signupLink: "Sign Up",
+  magicLink: "Email Me a Sign-In Link",
+} as const;
+
+// index.tsx
+<CardTitle>{LOGIN_COPY.title}</CardTitle>
+<Button type="submit">{LOGIN_COPY.submit}</Button>
+```
+
+When adding or editing UI copy, fix nearby violations in the same file or
+feature folder when reasonable.

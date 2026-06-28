@@ -1,9 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,46 +13,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FieldError } from "@/components/shared/field-error";
-import {
-  forgotPasswordSchema,
-  type ForgotPasswordInput,
-} from "@/lib/auth/schemas";
-import { sendPasswordReset } from "@/lib/auth/client";
+
+import { FORGOT_PASSWORD_FORM_COPY } from "./constants";
+import { useForgotPasswordForm } from "./useForgotPasswordForm";
 
 export function ForgotPasswordForm() {
-  const [sent, setSent] = useState(false);
+  const { form, sent, onSubmit } = useForgotPasswordForm();
   const {
     register,
-    handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ForgotPasswordInput>({
-    resolver: zodResolver(forgotPasswordSchema),
-    defaultValues: { email: "" },
-  });
-
-  async function onSubmit(values: ForgotPasswordInput) {
-    try {
-      await sendPasswordReset(values.email);
-      setSent(true);
-    } catch {
-      // Do not reveal whether an email exists (avoids account enumeration).
-      setSent(true);
-    }
-  }
+  } = form;
 
   if (sent) {
     return (
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Check your email</CardTitle>
+          <CardTitle>{FORGOT_PASSWORD_FORM_COPY.successTitle}</CardTitle>
           <CardDescription>
-            If an account exists for that email, we have sent a link to reset
-            your password.
+            {FORGOT_PASSWORD_FORM_COPY.successDescription}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Button asChild variant="outline" size="lg" className="w-full">
-            <Link href="/login">Back to log in</Link>
+            <Link href="/login">{FORGOT_PASSWORD_FORM_COPY.backToLogin}</Link>
           </Button>
         </CardContent>
       </Card>
@@ -65,19 +45,17 @@ export function ForgotPasswordForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Reset your password</CardTitle>
+        <CardTitle>{FORGOT_PASSWORD_FORM_COPY.title}</CardTitle>
         <CardDescription>
-          Enter your email and we will send you a link to choose a new password.
+          {FORGOT_PASSWORD_FORM_COPY.description}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
-          noValidate
-        >
+        <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Email address</Label>
+            <Label htmlFor="email">
+              {FORGOT_PASSWORD_FORM_COPY.emailLabel}
+            </Label>
             <Input
               id="email"
               type="email"
@@ -88,7 +66,9 @@ export function ForgotPasswordForm() {
             <FieldError message={errors.email?.message} />
           </div>
           <Button type="submit" size="lg" disabled={isSubmitting}>
-            {isSubmitting ? "Sending…" : "Send reset link"}
+            {isSubmitting
+              ? FORGOT_PASSWORD_FORM_COPY.submitting
+              : FORGOT_PASSWORD_FORM_COPY.submit}
           </Button>
         </form>
       </CardContent>

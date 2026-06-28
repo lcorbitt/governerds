@@ -25,3 +25,21 @@ export async function hasCommunityMembership(
   if (error) throw new Error(error.message);
   return data !== null;
 }
+
+export async function insertCommunityMember(
+  client: SupabaseClient,
+  input: { communityId: string; userId: string; roleId: string },
+): Promise<CommunityMemberRow> {
+  const { data, error } = await client
+    .from("community_members")
+    .insert({
+      community_id: input.communityId,
+      user_id: input.userId,
+      role_id: input.roleId,
+    })
+    .select("id, community_id, user_id, role_id")
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data as CommunityMemberRow;
+}

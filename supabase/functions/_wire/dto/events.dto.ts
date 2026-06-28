@@ -12,3 +12,28 @@ export interface ProfileUpdatedEventData {
   /** camelCase field names that changed, e.g. ["displayName", "bio"] */
   changedFields: string[];
 }
+
+/** Emitted after a community is created. */
+export interface CommunityCreatedEventData {
+  communityId: string;
+  name: string;
+  slug: string;
+  createdBy: string;
+}
+
+/** Emitted after a user joins a community. */
+export interface CommunityMemberJoinedEventData {
+  communityId: string;
+  communitySlug: string;
+  userId: string;
+  inviteId?: string;
+}
+
+/** Emitted after a community invite is created and should be emailed. */
+export interface CommunityInviteSentEventData {
+  inviteId: string;
+  email: string;
+  inviterName: string;
+  communityName: string;
+  acceptUrl: string;
+}

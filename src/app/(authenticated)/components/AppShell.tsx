@@ -60,13 +60,21 @@ export function AppShell({
                   Overview
                 </Link>
               ) : null}
-              {isAdmin ? (
-                <Link
-                  href="/admin/flags"
-                  className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
-                >
-                  Admin
-                </Link>
+              {isAdmin || isSuperAdmin ? (
+                <>
+                  <Link
+                    href="/admin/communities"
+                    className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
+                  >
+                    Manage communities
+                  </Link>
+                  <Link
+                    href="/admin/flags"
+                    className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
+                  >
+                    Flags
+                  </Link>
+                </>
               ) : null}
             </div>
           </div>

@@ -8,36 +8,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ErrorState } from "@/components/shared/error-state";
-import { EdgeFunctionError } from "@/lib/edge-function-fetch";
 
+import { COMMUNITY_HOME_COPY } from "./constants";
 import { useCommunityHome } from "./useCommunityHome";
 
 export function CommunityHome() {
-  const { communityQuery, slug } = useCommunityHome();
-
-  const isNotFound =
-    communityQuery.error instanceof EdgeFunctionError &&
-    communityQuery.error.status === 404;
+  const { communityQuery, slug, isNotFound } = useCommunityHome();
 
   return (
     <div className="flex flex-col gap-6">
       {communityQuery.isPending ? (
-        <p className="text-muted-foreground">Loading community…</p>
+        <p className="text-muted-foreground">{COMMUNITY_HOME_COPY.loading}</p>
       ) : communityQuery.isError ? (
         <ErrorState
           title={
             isNotFound
-              ? "Community not available"
-              : "We could not load this community"
+              ? COMMUNITY_HOME_COPY.notFoundTitle
+              : COMMUNITY_HOME_COPY.errorTitle
           }
           description={
             isNotFound
-              ? "You may not have access to this community, or it may not exist."
-              : "Please check that your local stack is running, then try again."
+              ? COMMUNITY_HOME_COPY.notFoundDescription
+              : COMMUNITY_HOME_COPY.errorDescription
           }
           onRetry={() => communityQuery.refetch()}
           homeHref="/communities"
-          homeLabel="Back to communities"
+          homeLabel={COMMUNITY_HOME_COPY.backToCommunities}
         />
       ) : (
         <>
@@ -50,17 +46,16 @@ export function CommunityHome() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Community home</CardTitle>
+              <CardTitle>{COMMUNITY_HOME_COPY.cardTitle}</CardTitle>
               <CardDescription>
-                Forums, discussions, and member content will appear here in a
-                later release.
+                {COMMUNITY_HOME_COPY.cardDescription}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground text-base">
-                You are viewing the home for{" "}
-                <strong>{communityQuery.data?.name}</strong>. This is the
-                starting point for community-scoped features.
+                {COMMUNITY_HOME_COPY.bodyPrefix}{" "}
+                <strong>{communityQuery.data?.name}</strong>.{" "}
+                {COMMUNITY_HOME_COPY.bodySuffix}
               </p>
             </CardContent>
           </Card>

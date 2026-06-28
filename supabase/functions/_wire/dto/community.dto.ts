@@ -14,3 +14,29 @@ export interface CommunityDetail extends CommunitySummary {
 export interface ListCommunitiesResponse {
   communities: CommunitySummary[];
 }
+
+export interface AdminCommunitiesResponse {
+  communities: CommunitySummary[];
+}
+
+export interface CreateCommunityBody {
+  name: string;
+  slug: string;
+}
+
+export interface SendCommunityInviteBody {
+  communityId: string;
+  email: string;
+}
+
+export interface AcceptInviteBody {
+  token: string;
+}
+
+export interface AcceptInviteResponse {
+  communitySlug: string;
+}
+
+export interface SendCommunityInviteResponse {
+  message: string;
+}

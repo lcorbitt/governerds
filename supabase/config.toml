@@ -86,3 +86,15 @@ verify_jwt = false
 
 [functions.get-community]
 verify_jwt = false
+
+[functions.create-community]
+verify_jwt = false
+
+[functions.list-admin-communities]
+verify_jwt = false
+
+[functions.send-community-invite]
+verify_jwt = false
+
+[functions.accept-invite]
+verify_jwt = false

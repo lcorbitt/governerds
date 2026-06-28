@@ -7,15 +7,20 @@ import { toast } from "sonner";
 
 import { useAppRouter } from "@/hooks/use-app-router";
 import { loginSchema, type LoginInput } from "@/lib/auth/schemas";
+import { buildAuthHref } from "@/lib/auth/next-path";
 import { sendMagicLink, signInWithPassword } from "@/lib/auth/client";
+
+import { LOGIN_FORM_COPY } from "./constants";
+import type { UseLoginFormOptions } from "./types";
 
 /**
  * Colocated UI orchestration for the login form: form state, submission,
  * toasts, and navigation. Auth itself runs through the centralized auth client.
  */
-export function useLoginForm() {
+export function useLoginForm({ nextPath = null }: UseLoginFormOptions = {}) {
   const router = useAppRouter();
   const [magicLinkSent, setMagicLinkSent] = useState(false);
+  const destination = nextPath ?? "/dashboard";
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -25,11 +30,11 @@ export function useLoginForm() {
   async function onSubmit(values: LoginInput) {
     try {
       await signInWithPassword(values.email, values.password);
-      toast.success("Welcome back!");
-      router.push("/dashboard");
+      toast.success(LOGIN_FORM_COPY.toastWelcome);
+      router.push(destination);
       router.refresh();
     } catch {
-      toast.error("That email or password did not match. Please try again.");
+      toast.error(LOGIN_FORM_COPY.toastError);
     }
   }
 
@@ -39,11 +44,11 @@ export function useLoginForm() {
     if (!result) return;
 
     try {
-      await sendMagicLink(email);
+      await sendMagicLink(email, destination);
       setMagicLinkSent(true);
-      toast.success("Check your email for a sign-in link.");
+      toast.success(LOGIN_FORM_COPY.toastMagicSent);
     } catch {
-      toast.error("We could not send the link. Please try again.");
+      toast.error(LOGIN_FORM_COPY.toastMagicError);
     }
   }
 
@@ -52,5 +57,6 @@ export function useLoginForm() {
     onSubmit: form.handleSubmit(onSubmit),
     onMagicLink,
     magicLinkSent,
+    signupHref: buildAuthHref("/signup", nextPath),
   };
 }

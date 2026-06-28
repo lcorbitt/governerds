@@ -69,7 +69,7 @@ create policy "communities_select_member"
     exists (
       select 1
       from public.community_members m
-      where m.community_id = id
+      where m.community_id = communities.id
         and m.user_id = (select auth.uid())
     )
   );

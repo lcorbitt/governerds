@@ -19,21 +19,29 @@ export async function signInWithPassword(email: string, password: string) {
   if (error) throw error;
 }
 
-export async function signUpWithPassword(email: string, password: string) {
+function authCallbackUrl(nextPath = "/dashboard"): string {
+  return siteUrl(`/auth/callback?next=${encodeURIComponent(nextPath)}`);
+}
+
+export async function signUpWithPassword(
+  email: string,
+  password: string,
+  nextPath = "/dashboard",
+) {
   const supabase = createClient();
   const { error } = await supabase.auth.signUp({
     email,
     password,
-    options: { emailRedirectTo: siteUrl("/auth/callback?next=/dashboard") },
+    options: { emailRedirectTo: authCallbackUrl(nextPath) },
   });
   if (error) throw error;
 }
 
-export async function sendMagicLink(email: string) {
+export async function sendMagicLink(email: string, nextPath = "/dashboard") {
   const supabase = createClient();
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: siteUrl("/auth/callback?next=/dashboard") },
+    options: { emailRedirectTo: authCallbackUrl(nextPath) },
   });
   if (error) throw error;
 }

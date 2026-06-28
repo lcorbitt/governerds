@@ -1,0 +1,12 @@
+import { serveWithPermission } from "@shared/middleware/index.ts";
+import { handle } from "./handler.ts";
+
+serveWithPermission(
+  handle,
+  {
+    name: "list-admin-communities",
+    limit: 60,
+    windowSeconds: 60,
+  },
+  "communities:read",
+);

@@ -1,0 +1,77 @@
+---
+description: Colocated feature component folder structure, separation of UI vs logic, and copy placement
+globs: src/app/**/components/**/*.{ts,tsx},src/components/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Colocated component structure
+
+Every feature UI lives in a **TitleCase** folder. Match the folder name to the
+component (`LoginForm/`, `AdminCommunities/`, `CommunityHome/`).
+
+## Required layout
+
+```
+<Name>/
+  index.tsx       # UI only — JSX, layout, wiring to the hook
+  use<Name>.ts    # Orchestration — forms, toasts, routing, hook composition
+  constants.ts    # All user-facing copy (labels, headings, descriptions, CTAs)
+  utils.ts        # Pure helpers scoped to this feature (optional)
+  types.ts        # Feature-local types (optional)
+```
+
+Examples: `LoginForm/useLoginForm.ts`, `Profile/useProfile.ts`,
+`AdminCommunities/useAdminCommunities.ts`.
+
+## Hard rules
+
+- **TitleCase folder names only** — never `login-form/`, `admin-communities/`.
+- **No kebab-case or snake_case files** inside the folder — use `constants.ts`,
+  `utils.ts`, `types.ts`, `use<Name>.ts`, `index.tsx` only.
+- **No nested `hooks/`** (or `lib/`, `helpers/`) inside a component folder.
+  Domain hooks live in `src/hooks/queries/` and `src/hooks/mutations/`; feature
+  orchestration lives in `use<Name>.ts` beside `index.tsx`.
+- **`index.tsx` is UI only** — no `fetch`, no Supabase client, no
+  `edgeFunctionFetch`, no TanStack `useMutation`/`useQuery` setup, no Zod
+  schemas, no toast/modal side effects. Import a colocated `use<Name>` hook and
+  render.
+- **All user-facing strings in `constants.ts`** — headings, button labels, link
+  text, empty states, error titles/descriptions used by this feature. Import
+  constants in both `index.tsx` and `use<Name>.ts`. Exception: shared copy used
+  across routes belongs in `components/shared/` with its own constants if needed.
+
+## `page.tsx` vs component folder
+
+- `page.tsx` — thin Server Component: prefetch + `<Feature />`. No fat JSX.
+- Fat JSX and client logic belong in `components/<Name>/`, not on the page.
+
+## Shared components (`src/components/`)
+
+Same split when a shared component has non-trivial logic:
+
+- `components/shared/<Name>/index.tsx` + `use<Name>.ts` + `constants.ts` as needed.
+- `components/ui/` — shadcn primitives; do not add business hooks there.
+
+## Anti-patterns
+
+```tsx
+// ❌ BAD — logic + copy inline in index.tsx
+export function AdminCommunities() {
+  const form = useForm(...);
+  async function onSubmit() { await createCommunity(...); }
+  return <h1>Communities</h1>;
+}
+
+// ✅ GOOD
+// constants.ts
+export const ADMIN_COMMUNITIES_COPY = {
+  title: "Communities",
+  createButton: "Create Community",
+} as const;
+
+// useAdminCommunities.ts — form, mutations, toasts, navigation
+// index.tsx — imports copy + hook; JSX only
+```
+
+When editing an existing component that violates this layout, refactor toward
+the target structure in the same change when touching that feature.

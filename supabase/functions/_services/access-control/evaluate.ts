@@ -31,3 +31,7 @@ export function hasPermission(
 ): boolean {
   return effectivePermissions.includes(required);
 }
+
+export function isSuperAdminRole(roleSlugs: string[]): boolean {
+  return roleSlugs.includes("super_admin");
+}

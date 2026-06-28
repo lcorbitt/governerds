@@ -1,6 +1,9 @@
 import { sendEmail } from "./send-email";
 import { onUserCreated } from "./on-user-created";
 import { onProfileUpdated } from "./on-profile-updated";
+import { onCommunityCreated } from "./on-community-created";
+import { onCommunityMemberJoined } from "./on-community-member-joined";
+import { onCommunityInviteSent } from "./on-community-invite-sent";
 import { writeAuditLog } from "./write-audit-log";
 import { indexSearchDocument } from "./index-search-document";
 import { invalidateCache } from "./invalidate-cache";
@@ -14,6 +17,9 @@ export const functions = [
   sendEmail,
   onUserCreated,
   onProfileUpdated,
+  onCommunityCreated,
+  onCommunityMemberJoined,
+  onCommunityInviteSent,
   writeAuditLog,
   indexSearchDocument,
   invalidateCache,

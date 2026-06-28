@@ -1,0 +1,42 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import { useAppRouter } from "@/hooks/use-app-router";
+import {
+  resetPasswordSchema,
+  type ResetPasswordInput,
+} from "@/lib/auth/schemas";
+import { updatePassword } from "@/lib/auth/client";
+
+import { RESET_PASSWORD_FORM_COPY } from "./constants";
+
+/**
+ * Colocated orchestration for the reset-password form.
+ */
+export function useResetPasswordForm() {
+  const router = useAppRouter();
+
+  const form = useForm<ResetPasswordInput>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: { password: "" },
+  });
+
+  async function onSubmit(values: ResetPasswordInput) {
+    try {
+      await updatePassword(values.password);
+      toast.success(RESET_PASSWORD_FORM_COPY.toastSuccess);
+      router.push("/dashboard");
+      router.refresh();
+    } catch {
+      toast.error(RESET_PASSWORD_FORM_COPY.toastError);
+    }
+  }
+
+  return {
+    form,
+    onSubmit: form.handleSubmit(onSubmit),
+  };
+}

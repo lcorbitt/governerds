@@ -12,6 +12,7 @@ import {
 import { ErrorState } from "@/components/shared/error-state";
 import { Reveal } from "@/components/shared/reveal";
 
+import { COMMUNITIES_COPY } from "./constants";
 import { useCommunities } from "./useCommunities";
 
 export function Communities() {
@@ -20,28 +21,30 @@ export function Communities() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Communities</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {COMMUNITIES_COPY.title}
+        </h1>
         <p className="text-muted-foreground text-lg">
-          Spaces you belong to across GoverNerds.
+          {COMMUNITIES_COPY.subtitle}
         </p>
       </div>
 
       {communitiesQuery.isPending ? (
-        <p className="text-muted-foreground">Loading your communities…</p>
+        <p className="text-muted-foreground">{COMMUNITIES_COPY.loading}</p>
       ) : communitiesQuery.isError ? (
         <ErrorState
-          title="We could not load your communities"
-          description="Please check that your local stack is running, then try again."
+          title={COMMUNITIES_COPY.errorTitle}
+          description={COMMUNITIES_COPY.errorDescription}
           onRetry={() => communitiesQuery.refetch()}
           homeHref="/dashboard"
-          homeLabel="Back to dashboard"
+          homeLabel={COMMUNITIES_COPY.backToDashboard}
         />
       ) : communitiesQuery.data?.communities.length === 0 ? (
         <Card>
           <CardHeader>
-            <CardTitle>No communities yet</CardTitle>
+            <CardTitle>{COMMUNITIES_COPY.emptyTitle}</CardTitle>
             <CardDescription>
-              When you join a community, it will show up here.
+              {COMMUNITIES_COPY.emptyDescription}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -58,7 +61,7 @@ export function Communities() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground text-sm">
-                        Open community home
+                        {COMMUNITIES_COPY.openHome}
                       </p>
                     </CardContent>
                   </Card>

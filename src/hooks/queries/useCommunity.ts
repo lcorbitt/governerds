@@ -2,6 +2,7 @@ import { useQuery, type QueryClient } from "@tanstack/react-query";
 
 import {
   getCommunity,
+  listAdminCommunities,
   listCommunities,
 } from "@/frontend/services/community.service";
 import {
@@ -26,6 +27,13 @@ export function useCommunityQuery(slug: string) {
     queryKey: communityQueryKeys.detail(slug),
     queryFn: () => getCommunity(slug),
     enabled: slug.length > 0,
+  });
+}
+
+export function useAdminCommunitiesQuery() {
+  return useQuery({
+    queryKey: communityQueryKeys.adminList(),
+    queryFn: listAdminCommunities,
   });
 }
 

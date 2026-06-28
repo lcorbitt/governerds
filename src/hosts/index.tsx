@@ -10,7 +10,7 @@ export function Hosts() {
   return (
     <>
       <Toaster
-        position="top-center"
+        position="top-right"
         richColors
         closeButton
         expand

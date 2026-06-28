@@ -23,7 +23,9 @@ insert into public.permissions (resource, action, description) values
   ('flags', 'read', 'View feature flags'),
   ('flags', 'manage', 'Create and update feature flags'),
   ('audit', 'read', 'Read audit logs'),
-  ('admin', 'access', 'Access the admin area')
+  ('admin', 'access', 'Access the admin area'),
+  ('communities', 'read', 'View all communities in admin'),
+  ('communities', 'manage', 'Create communities and send invites')
 on conflict (resource, action) do nothing;
 
 -- ---------------------------------------------------------------------------
@@ -48,7 +50,9 @@ join public.permissions p
     ('flags', 'read'),
     ('flags', 'manage'),
     ('audit', 'read'),
-    ('admin', 'access')
+    ('admin', 'access'),
+    ('communities', 'read'),
+    ('communities', 'manage')
   )
 where r.slug = 'admin'
 on conflict do nothing;

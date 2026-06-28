@@ -1,13 +1,19 @@
 import type { ProfileUpdatedEventData } from "@shared/dto/events.dto.ts";
+import type {
+  CommunityCreatedEventData,
+  CommunityInviteSentEventData,
+  CommunityMemberJoinedEventData,
+} from "@shared/dto/events.dto.ts";
 
 /**
  * Typed event catalog for Edge Function publishers. Domain events are emitted
  * after successful writes; integration commands are emitted by orchestrators.
  */
-export type EdgeDomainEvent = {
-  name: "profile/updated";
-  data: ProfileUpdatedEventData;
-};
+export type EdgeDomainEvent =
+  | { name: "profile/updated"; data: ProfileUpdatedEventData }
+  | { name: "community/created"; data: CommunityCreatedEventData }
+  | { name: "community/member-joined"; data: CommunityMemberJoinedEventData }
+  | { name: "community/invite-sent"; data: CommunityInviteSentEventData };
 
 export type EdgeEvent = EdgeDomainEvent;
 

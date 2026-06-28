@@ -1,4 +1,9 @@
 import type { ProfileUpdatedEventData } from "@shared/dto/events.dto";
+import type {
+  CommunityCreatedEventData,
+  CommunityInviteSentEventData,
+  CommunityMemberJoinedEventData,
+} from "@shared/dto/events.dto";
 
 /**
  * Unified typed event catalog.
@@ -7,10 +12,11 @@ import type { ProfileUpdatedEventData } from "@shared/dto/events.dto";
  * Integration commands — emitted by orchestrators or providers; consumed by
  * single-purpose workers.
  */
-export type DomainEvent = {
-  name: "profile/updated";
-  data: ProfileUpdatedEventData;
-};
+export type DomainEvent =
+  | { name: "profile/updated"; data: ProfileUpdatedEventData }
+  | { name: "community/created"; data: CommunityCreatedEventData }
+  | { name: "community/member-joined"; data: CommunityMemberJoinedEventData }
+  | { name: "community/invite-sent"; data: CommunityInviteSentEventData };
 
 export type IntegrationEvent =
   | { name: "email/send"; data: EmailSendData }
@@ -65,3 +71,8 @@ export interface AnalyticsTrackData {
 }
 
 export type { ProfileUpdatedEventData };
+export type {
+  CommunityCreatedEventData,
+  CommunityInviteSentEventData,
+  CommunityMemberJoinedEventData,
+} from "@shared/dto/events.dto";

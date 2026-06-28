@@ -1,7 +1,11 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { getRolesWithPermissionsForUser } from "@models/user_roles.ts";
-import { collectPermissions, hasPermission } from "./evaluate.ts";
+import {
+  collectPermissions,
+  hasPermission,
+  isSuperAdminRole,
+} from "./evaluate.ts";
 
 /**
  * Authorization use cases. This is the single gate for permission checks in the
@@ -28,5 +32,6 @@ export function checkPermission(
   access: EffectiveAccess,
   required: string,
 ): boolean {
+  if (isSuperAdminRole(access.roleSlugs)) return true;
   return hasPermission(access.permissions, required);
 }

@@ -11,9 +11,10 @@ alwaysApply: false
   business logic, no fat JSX — delegates to colocated feature component.
   Exception: pages with no initial domain data (static stubs, auth forms,
   marketing).
-- `app/(group)/<route>/components/<Name>/` — route-scoped UI:
-  `index.tsx` (JSX), `use<Name>.ts` (orchestration: form, toasts, routing),
-  `utils.ts`, `constants.ts`, `types.ts`.
+- `app/(group)/<route>/components/<Name>/` — route-scoped feature UI. **See
+  `component-colocation.mdc`** for the required folder layout (`index.tsx`,
+  `use<Name>.ts`, `constants.ts`, …), UI-only `index.tsx`, and copy placement.
+  **See `ui-copy-title-case.mdc`** for Title Case on buttons, links, and h1/h2.
 - `app/(group)/components/` — shell for that group only.
 - `components/` — shared across routes. `components/ui/` — shadcn primitives.
 - `components/shared/` — AppModal, ErrorState, field helpers.

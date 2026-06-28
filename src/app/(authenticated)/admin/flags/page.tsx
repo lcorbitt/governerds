@@ -15,7 +15,7 @@ export default function AdminFlagsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Feature flags</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Feature Flags</h1>
         <p className="text-muted-foreground text-lg">
           Admin-only area. You can see this because you hold an admin role.
         </p>

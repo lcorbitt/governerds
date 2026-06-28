@@ -26,6 +26,19 @@ export async function listCommunities(
   return (data ?? []) as Pick<CommunityRow, "id" | "name" | "slug">[];
 }
 
+export async function listAllCommunities(
+  client: SupabaseClient,
+): Promise<Pick<CommunityRow, "id" | "name" | "slug">[]> {
+  const { data, error } = await client
+    .from("communities")
+    .select(SUMMARY_COLUMNS)
+    .is("deleted_at", null)
+    .order("name", { ascending: true });
+
+  if (error) throw new Error(error.message);
+  return (data ?? []) as Pick<CommunityRow, "id" | "name" | "slug">[];
+}
+
 export async function getCommunityBySlug(
   client: SupabaseClient,
   slug: string,
@@ -39,4 +52,48 @@ export async function getCommunityBySlug(
 
   if (error) throw new Error(error.message);
   return data as CommunityRow | null;
+}
+
+export async function getCommunityById(
+  client: SupabaseClient,
+  id: string,
+): Promise<CommunityRow | null> {
+  const { data, error } = await client
+    .from("communities")
+    .select(DETAIL_COLUMNS)
+    .eq("id", id)
+    .is("deleted_at", null)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  return data as CommunityRow | null;
+}
+
+export async function slugExists(
+  client: SupabaseClient,
+  slug: string,
+): Promise<boolean> {
+  const { data, error } = await client
+    .from("communities")
+    .select("id")
+    .eq("slug", slug)
+    .is("deleted_at", null)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  return data !== null;
+}
+
+export async function insertCommunity(
+  client: SupabaseClient,
+  input: { name: string; slug: string },
+): Promise<CommunityRow> {
+  const { data, error } = await client
+    .from("communities")
+    .insert({ name: input.name, slug: input.slug })
+    .select(DETAIL_COLUMNS)
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data as CommunityRow;
 }

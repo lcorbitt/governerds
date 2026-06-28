@@ -16,10 +16,14 @@ import { FieldError } from "@/components/shared/field-error";
 import { OAuthButtons } from "@/components/shared/oauth-buttons";
 import { PasswordInput } from "@/components/shared/password-input";
 
+import { SIGNUP_FORM_COPY } from "./constants";
+import type { SignupFormProps } from "./types";
 import { useSignupForm } from "./useSignupForm";
 
-export function SignupForm() {
-  const { form, onSubmit, submittedEmail } = useSignupForm();
+export function SignupForm({ nextPath = null }: SignupFormProps) {
+  const { form, onSubmit, submittedEmail, loginHref } = useSignupForm({
+    nextPath,
+  });
   const {
     register,
     formState: { errors, isSubmitting },
@@ -29,15 +33,17 @@ export function SignupForm() {
     return (
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Check your email</CardTitle>
+          <CardTitle>{SIGNUP_FORM_COPY.successTitle}</CardTitle>
           <CardDescription>
-            We sent a confirmation link to {submittedEmail}. Click it to finish
-            setting up your account.
+            {SIGNUP_FORM_COPY.successDescription.replace(
+              "{email}",
+              submittedEmail,
+            )}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Button asChild variant="outline" size="lg" className="w-full">
-            <Link href="/login">Back to log in</Link>
+            <Link href={loginHref}>{SIGNUP_FORM_COPY.backToLogin}</Link>
           </Button>
         </CardContent>
       </Card>
@@ -47,13 +53,13 @@ export function SignupForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Create your account</CardTitle>
-        <CardDescription>It only takes a minute.</CardDescription>
+        <CardTitle>{SIGNUP_FORM_COPY.title}</CardTitle>
+        <CardDescription>{SIGNUP_FORM_COPY.description}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Email address</Label>
+            <Label htmlFor="email">{SIGNUP_FORM_COPY.emailLabel}</Label>
             <Input
               id="email"
               type="email"
@@ -65,7 +71,7 @@ export function SignupForm() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="password">Choose a password</Label>
+            <Label htmlFor="password">{SIGNUP_FORM_COPY.passwordLabel}</Label>
             <PasswordInput
               id="password"
               autoComplete="new-password"
@@ -74,30 +80,32 @@ export function SignupForm() {
             />
             <FieldError message={errors.password?.message} />
             <p className="text-muted-foreground text-sm">
-              Use at least 8 characters.
+              {SIGNUP_FORM_COPY.passwordHint}
             </p>
           </div>
 
           <Button type="submit" size="lg" disabled={isSubmitting}>
-            {isSubmitting ? "Creating your account…" : "Create account"}
+            {isSubmitting
+              ? SIGNUP_FORM_COPY.submitting
+              : SIGNUP_FORM_COPY.submit}
           </Button>
         </form>
 
         <div className="text-muted-foreground flex items-center gap-3 text-sm">
           <span className="bg-border h-px flex-1" />
-          or
+          {SIGNUP_FORM_COPY.divider}
           <span className="bg-border h-px flex-1" />
         </div>
 
         <OAuthButtons />
 
         <p className="text-center text-base">
-          Already have an account?{" "}
+          {SIGNUP_FORM_COPY.hasAccount}{" "}
           <Link
-            href="/login"
+            href={loginHref}
             className="text-primary font-medium hover:underline"
           >
-            Log in
+            {SIGNUP_FORM_COPY.loginLink}
           </Link>
         </p>
       </CardContent>

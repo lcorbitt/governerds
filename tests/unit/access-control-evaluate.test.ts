@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   collectPermissions,
   hasPermission,
+  isSuperAdminRole,
   permissionKey,
 } from "../../supabase/functions/_services/access-control/evaluate";
 
@@ -23,5 +24,10 @@ describe("access control", () => {
     const permissions = ["users:read", "admin:access"];
     expect(hasPermission(permissions, "admin:access")).toBe(true);
     expect(hasPermission(permissions, "users:manage")).toBe(false);
+  });
+
+  it("detects the super_admin role slug", () => {
+    expect(isSuperAdminRole(["member", "super_admin"])).toBe(true);
+    expect(isSuperAdminRole(["admin"])).toBe(false);
   });
 });

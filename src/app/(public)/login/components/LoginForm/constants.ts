@@ -1,0 +1,17 @@
+export const LOGIN_FORM_COPY = {
+  title: "Log In",
+  description: "Welcome back. Sign in to continue.",
+  emailLabel: "Email address",
+  passwordLabel: "Password",
+  forgotPasswordLink: "Forgot Password?",
+  submit: "Log In",
+  submitting: "Signing In…",
+  magicLink: "Email Me a Sign-In Link",
+  divider: "or",
+  newHere: "New here?",
+  signupLink: "Create Account",
+  toastWelcome: "Welcome back!",
+  toastError: "That email or password did not match. Please try again.",
+  toastMagicSent: "Check your email for a sign-in link.",
+  toastMagicError: "We could not send the link. Please try again.",
+} as const;
