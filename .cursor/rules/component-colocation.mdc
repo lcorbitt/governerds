@@ -15,7 +15,7 @@ component (`LoginForm/`, `AdminCommunities/`, `CommunityHome/`).
 <Name>/
   index.tsx       # UI only — JSX, layout, wiring to the hook
   use<Name>.ts    # Orchestration — forms, toasts, routing, hook composition
-  constants.ts    # All user-facing copy (labels, headings, descriptions, CTAs)
+  constants.ts    # All user-facing copy and Tailwind classNames (see ui-classnames.mdc)
   utils.ts        # Pure helpers scoped to this feature (optional)
   types.ts        # Feature-local types (optional)
 ```
@@ -35,10 +35,13 @@ Examples: `LoginForm/useLoginForm.ts`, `Profile/useProfile.ts`,
   `edgeFunctionFetch`, no TanStack `useMutation`/`useQuery` setup, no Zod
   schemas, no toast/modal side effects. Import a colocated `use<Name>` hook and
   render.
-- **All user-facing strings in `constants.ts`** — headings, button labels, link
-  text, empty states, error titles/descriptions used by this feature. Import
-  constants in both `index.tsx` and `use<Name>.ts`. Exception: shared copy used
-  across routes belongs in `components/shared/` with its own constants if needed.
+- **All user-facing strings in `constants.ts`** — flat exports with semantic suffixes
+  (`_LABEL`, `_TITLE`, `_BODY`, `_TOAST_*`). Import in both `index.tsx` and
+  `use<Name>.ts`. Exception: shared copy used across routes belongs in
+  `components/shared/` with its own constants if needed.
+- **All Tailwind class strings in `constants.ts`** — flat exports ending in `_CLASS`.
+  **See `ui-classnames.mdc`**. No nested `FEATURE_COPY` or `FEATURE_CLASSNAMES`
+  objects. No inline layout or styling literals in view files.
 
 ## `page.tsx` vs component folder
 
@@ -64,10 +67,9 @@ export function AdminCommunities() {
 
 // ✅ GOOD
 // constants.ts
-export const ADMIN_COMMUNITIES_COPY = {
-  title: "Communities",
-  createButton: "Create Community",
-} as const;
+export const ADMIN_COMMUNITIES_TITLE = "Communities";
+export const ADMIN_COMMUNITIES_CREATE_SUBMIT_LABEL = "Create Community";
+export const ADMIN_COMMUNITIES_PAGE_CLASS = "flex flex-col gap-6";
 
 // useAdminCommunities.ts — form, mutations, toasts, navigation
 // index.tsx — imports copy + hook; JSX only

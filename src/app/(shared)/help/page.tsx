@@ -1,4 +1,10 @@
-import { HELP_PAGE_COPY } from "@/app/(public)/constants";
+import {
+  HELP_PAGE_CLASS,
+  HELP_PAGE_DESCRIPTION,
+  HELP_PAGE_DESCRIPTION_CLASS,
+  HELP_PAGE_TITLE,
+  HELP_PAGE_TITLE_CLASS,
+} from "@/app/(public)/constants";
 
 /**
  * Help page in the shared group (guest + signed-in, minimal chrome). Phase 1
@@ -6,13 +12,9 @@ import { HELP_PAGE_COPY } from "@/app/(public)/constants";
  */
 export default function HelpPage() {
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-16">
-      <h1 className="text-3xl font-bold tracking-tight">
-        {HELP_PAGE_COPY.title}
-      </h1>
-      <p className="text-muted-foreground mt-4 text-lg">
-        {HELP_PAGE_COPY.description}
-      </p>
+    <div className={HELP_PAGE_CLASS}>
+      <h1 className={HELP_PAGE_TITLE_CLASS}>{HELP_PAGE_TITLE}</h1>
+      <p className={HELP_PAGE_DESCRIPTION_CLASS}>{HELP_PAGE_DESCRIPTION}</p>
     </div>
   );
 }

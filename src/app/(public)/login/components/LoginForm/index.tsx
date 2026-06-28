@@ -16,7 +16,29 @@ import { FieldError } from "@/components/shared/field-error";
 import { OAuthButtons } from "@/components/shared/oauth-buttons";
 import { PasswordInput } from "@/components/shared/password-input";
 
-import { LOGIN_FORM_COPY } from "./constants";
+import {
+  LOGIN_FORM_CARD_CLASS,
+  LOGIN_FORM_CONTENT_CLASS,
+  LOGIN_FORM_DESCRIPTION,
+  LOGIN_FORM_DIVIDER,
+  LOGIN_FORM_DIVIDER_CLASS,
+  LOGIN_FORM_DIVIDER_LINE_CLASS,
+  LOGIN_FORM_EMAIL_LABEL,
+  LOGIN_FORM_FIELD_CLASS,
+  LOGIN_FORM_FOOTER_CLASS,
+  LOGIN_FORM_FORGOT_PASSWORD_LINK_CLASS,
+  LOGIN_FORM_FORGOT_PASSWORD_LINK_LABEL,
+  LOGIN_FORM_FORM_CLASS,
+  LOGIN_FORM_LINK_CLASS,
+  LOGIN_FORM_MAGIC_LINK_LABEL,
+  LOGIN_FORM_NEW_HERE_BODY,
+  LOGIN_FORM_PASSWORD_LABEL,
+  LOGIN_FORM_PASSWORD_LABEL_ROW_CLASS,
+  LOGIN_FORM_SIGNUP_LINK_LABEL,
+  LOGIN_FORM_SUBMIT_LABEL,
+  LOGIN_FORM_SUBMITTING_LABEL,
+  LOGIN_FORM_TITLE,
+} from "./constants";
 import type { LoginFormProps } from "./types";
 import { useLoginForm } from "./useLoginForm";
 
@@ -30,15 +52,15 @@ export function LoginForm({ nextPath = null }: LoginFormProps) {
   } = form;
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className={LOGIN_FORM_CARD_CLASS}>
       <CardHeader>
-        <CardTitle>{LOGIN_FORM_COPY.title}</CardTitle>
-        <CardDescription>{LOGIN_FORM_COPY.description}</CardDescription>
+        <CardTitle>{LOGIN_FORM_TITLE}</CardTitle>
+        <CardDescription>{LOGIN_FORM_DESCRIPTION}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-6">
-        <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="email">{LOGIN_FORM_COPY.emailLabel}</Label>
+      <CardContent className={LOGIN_FORM_CONTENT_CLASS}>
+        <form onSubmit={onSubmit} className={LOGIN_FORM_FORM_CLASS} noValidate>
+          <div className={LOGIN_FORM_FIELD_CLASS}>
+            <Label htmlFor="email">{LOGIN_FORM_EMAIL_LABEL}</Label>
             <Input
               id="email"
               type="email"
@@ -49,14 +71,14 @@ export function LoginForm({ nextPath = null }: LoginFormProps) {
             <FieldError message={errors.email?.message} />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">{LOGIN_FORM_COPY.passwordLabel}</Label>
+          <div className={LOGIN_FORM_FIELD_CLASS}>
+            <div className={LOGIN_FORM_PASSWORD_LABEL_ROW_CLASS}>
+              <Label htmlFor="password">{LOGIN_FORM_PASSWORD_LABEL}</Label>
               <Link
                 href="/forgot-password"
-                className="text-primary text-sm font-medium hover:underline"
+                className={LOGIN_FORM_FORGOT_PASSWORD_LINK_CLASS}
               >
-                {LOGIN_FORM_COPY.forgotPasswordLink}
+                {LOGIN_FORM_FORGOT_PASSWORD_LINK_LABEL}
               </Link>
             </div>
             <PasswordInput
@@ -69,29 +91,28 @@ export function LoginForm({ nextPath = null }: LoginFormProps) {
           </div>
 
           <Button type="submit" size="lg" disabled={isSubmitting}>
-            {isSubmitting ? LOGIN_FORM_COPY.submitting : LOGIN_FORM_COPY.submit}
+            {isSubmitting
+              ? LOGIN_FORM_SUBMITTING_LABEL
+              : LOGIN_FORM_SUBMIT_LABEL}
           </Button>
         </form>
 
         <Button type="button" variant="ghost" onClick={onMagicLink}>
-          {LOGIN_FORM_COPY.magicLink}
+          {LOGIN_FORM_MAGIC_LINK_LABEL}
         </Button>
 
-        <div className="text-muted-foreground flex items-center gap-4 text-sm">
-          <span className="bg-border h-px flex-1" />
-          {LOGIN_FORM_COPY.divider}
-          <span className="bg-border h-px flex-1" />
+        <div className={LOGIN_FORM_DIVIDER_CLASS}>
+          <span className={LOGIN_FORM_DIVIDER_LINE_CLASS} />
+          {LOGIN_FORM_DIVIDER}
+          <span className={LOGIN_FORM_DIVIDER_LINE_CLASS} />
         </div>
 
         <OAuthButtons />
 
-        <p className="text-center text-base">
-          {LOGIN_FORM_COPY.newHere}{" "}
-          <Link
-            href={signupHref}
-            className="text-primary font-medium hover:underline"
-          >
-            {LOGIN_FORM_COPY.signupLink}
+        <p className={LOGIN_FORM_FOOTER_CLASS}>
+          {LOGIN_FORM_NEW_HERE_BODY}{" "}
+          <Link href={signupHref} className={LOGIN_FORM_LINK_CLASS}>
+            {LOGIN_FORM_SIGNUP_LINK_LABEL}
           </Link>
         </p>
       </CardContent>

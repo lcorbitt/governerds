@@ -3,8 +3,12 @@
 import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 
+import {
+  GLOBAL_ERROR_BODY_CLASS,
+  GLOBAL_ERROR_DESCRIPTION,
+  GLOBAL_ERROR_TITLE,
+} from "@/app/constants";
 import { ErrorState } from "@/components/shared/error-state";
-import { GLOBAL_ERROR_COPY } from "@/app/constants";
 
 /**
  * Top-level error boundary. Reports to Sentry and shows a calm, plain-language
@@ -23,10 +27,10 @@ export default function GlobalError({
 
   return (
     <html lang="en">
-      <body className="bg-background text-foreground antialiased">
+      <body className={GLOBAL_ERROR_BODY_CLASS}>
         <ErrorState
-          title={GLOBAL_ERROR_COPY.title}
-          description={GLOBAL_ERROR_COPY.description}
+          title={GLOBAL_ERROR_TITLE}
+          description={GLOBAL_ERROR_DESCRIPTION}
           onRetry={reset}
         />
       </body>

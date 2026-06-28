@@ -14,7 +14,20 @@ import {
 } from "@/components/ui/card";
 import { FieldError } from "@/components/shared/field-error";
 
-import { FORGOT_PASSWORD_FORM_COPY } from "./constants";
+import {
+  FORGOT_PASSWORD_FORM_BACK_TO_LOGIN_LABEL,
+  FORGOT_PASSWORD_FORM_CARD_CLASS,
+  FORGOT_PASSWORD_FORM_DESCRIPTION,
+  FORGOT_PASSWORD_FORM_EMAIL_LABEL,
+  FORGOT_PASSWORD_FORM_FIELD_CLASS,
+  FORGOT_PASSWORD_FORM_FORM_CLASS,
+  FORGOT_PASSWORD_FORM_SUBMIT_LABEL,
+  FORGOT_PASSWORD_FORM_SUBMITTING_LABEL,
+  FORGOT_PASSWORD_FORM_SUCCESS_BUTTON_CLASS,
+  FORGOT_PASSWORD_FORM_SUCCESS_DESCRIPTION,
+  FORGOT_PASSWORD_FORM_SUCCESS_TITLE,
+  FORGOT_PASSWORD_FORM_TITLE,
+} from "./constants";
 import { useForgotPasswordForm } from "./useForgotPasswordForm";
 
 export function ForgotPasswordForm() {
@@ -26,16 +39,23 @@ export function ForgotPasswordForm() {
 
   if (sent) {
     return (
-      <Card className="w-full max-w-md">
+      <Card className={FORGOT_PASSWORD_FORM_CARD_CLASS}>
         <CardHeader>
-          <CardTitle>{FORGOT_PASSWORD_FORM_COPY.successTitle}</CardTitle>
+          <CardTitle>{FORGOT_PASSWORD_FORM_SUCCESS_TITLE}</CardTitle>
           <CardDescription>
-            {FORGOT_PASSWORD_FORM_COPY.successDescription}
+            {FORGOT_PASSWORD_FORM_SUCCESS_DESCRIPTION}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button asChild variant="outline" size="lg" className="w-full">
-            <Link href="/login">{FORGOT_PASSWORD_FORM_COPY.backToLogin}</Link>
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className={FORGOT_PASSWORD_FORM_SUCCESS_BUTTON_CLASS}
+          >
+            <Link href="/login">
+              {FORGOT_PASSWORD_FORM_BACK_TO_LOGIN_LABEL}
+            </Link>
           </Button>
         </CardContent>
       </Card>
@@ -43,19 +63,19 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className={FORGOT_PASSWORD_FORM_CARD_CLASS}>
       <CardHeader>
-        <CardTitle>{FORGOT_PASSWORD_FORM_COPY.title}</CardTitle>
-        <CardDescription>
-          {FORGOT_PASSWORD_FORM_COPY.description}
-        </CardDescription>
+        <CardTitle>{FORGOT_PASSWORD_FORM_TITLE}</CardTitle>
+        <CardDescription>{FORGOT_PASSWORD_FORM_DESCRIPTION}</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="email">
-              {FORGOT_PASSWORD_FORM_COPY.emailLabel}
-            </Label>
+        <form
+          onSubmit={onSubmit}
+          className={FORGOT_PASSWORD_FORM_FORM_CLASS}
+          noValidate
+        >
+          <div className={FORGOT_PASSWORD_FORM_FIELD_CLASS}>
+            <Label htmlFor="email">{FORGOT_PASSWORD_FORM_EMAIL_LABEL}</Label>
             <Input
               id="email"
               type="email"
@@ -67,8 +87,8 @@ export function ForgotPasswordForm() {
           </div>
           <Button type="submit" size="lg" disabled={isSubmitting}>
             {isSubmitting
-              ? FORGOT_PASSWORD_FORM_COPY.submitting
-              : FORGOT_PASSWORD_FORM_COPY.submit}
+              ? FORGOT_PASSWORD_FORM_SUBMITTING_LABEL
+              : FORGOT_PASSWORD_FORM_SUBMIT_LABEL}
           </Button>
         </form>
       </CardContent>

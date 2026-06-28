@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
 
-import { AuthenticatedLoadingShell } from "./AuthenticatedLoadingShell";
-import { AuthenticatedShellBody } from "./AuthenticatedShellBody";
-import { MemberTopNav } from "./MemberTopNav";
-import { ProfileRealtimeSync } from "./ProfileRealtimeSync";
+import { AuthenticatedLoadingShell } from "../AuthenticatedLoadingShell";
+import { AuthenticatedShellBody } from "../AuthenticatedShellBody";
+import { MemberTopNav } from "../MemberTopNav";
+import { ProfileRealtimeSync } from "../ProfileRealtimeSync";
+
+import { APP_SHELL_ROOT_CLASS } from "./constants";
 
 interface AppShellProps {
   userId: string;
@@ -23,7 +25,7 @@ export function AppShell({
   children,
 }: AppShellProps) {
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className={APP_SHELL_ROOT_CLASS}>
       <ProfileRealtimeSync userId={userId} />
       <MemberTopNav
         userId={userId}

@@ -11,7 +11,12 @@ import { buildAuthHref } from "@/lib/auth/next-path";
 import { sendMagicLink, signInWithPassword } from "@/lib/auth/client";
 import { showUserError } from "@/lib/toast/user-message";
 
-import { LOGIN_FORM_COPY } from "./constants";
+import {
+  LOGIN_FORM_TOAST_ERROR,
+  LOGIN_FORM_TOAST_MAGIC_ERROR,
+  LOGIN_FORM_TOAST_MAGIC_SENT,
+  LOGIN_FORM_TOAST_WELCOME,
+} from "./constants";
 import type { UseLoginFormOptions } from "./types";
 
 /**
@@ -31,11 +36,11 @@ export function useLoginForm({ nextPath = null }: UseLoginFormOptions = {}) {
   async function onSubmit(values: LoginInput) {
     try {
       await signInWithPassword(values.email, values.password);
-      toast.success(LOGIN_FORM_COPY.toastWelcome);
+      toast.success(LOGIN_FORM_TOAST_WELCOME);
       router.push(destination);
       router.refresh();
     } catch (error) {
-      showUserError(error, LOGIN_FORM_COPY.toastError);
+      showUserError(error, LOGIN_FORM_TOAST_ERROR);
     }
   }
 
@@ -47,9 +52,9 @@ export function useLoginForm({ nextPath = null }: UseLoginFormOptions = {}) {
     try {
       await sendMagicLink(email, destination);
       setMagicLinkSent(true);
-      toast.success(LOGIN_FORM_COPY.toastMagicSent);
+      toast.success(LOGIN_FORM_TOAST_MAGIC_SENT);
     } catch (error) {
-      showUserError(error, LOGIN_FORM_COPY.toastMagicError);
+      showUserError(error, LOGIN_FORM_TOAST_MAGIC_ERROR);
     }
   }
 

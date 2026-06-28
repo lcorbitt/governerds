@@ -13,13 +13,14 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
-const sizeClasses = {
-  sm: "max-w-sm",
-  md: "max-w-lg",
-  lg: "max-w-2xl",
-} as const;
+import {
+  APP_MODAL_LG_CLASS,
+  APP_MODAL_MD_CLASS,
+  APP_MODAL_SM_CLASS,
+  type AppModalSize,
+} from "./app-modal/constants";
 
-export type AppModalSize = keyof typeof sizeClasses;
+export type { AppModalSize };
 
 export interface AppModalProps {
   open: boolean;
@@ -34,6 +35,18 @@ export interface AppModalProps {
   variant?: "default" | "destructive";
   size?: AppModalSize;
   hideFooter?: boolean;
+}
+
+function getAppModalSizeClass(size: AppModalSize): string {
+  switch (size) {
+    case "sm":
+      return APP_MODAL_SM_CLASS;
+    case "lg":
+      return APP_MODAL_LG_CLASS;
+    case "md":
+    default:
+      return APP_MODAL_MD_CLASS;
+  }
 }
 
 /**
@@ -66,7 +79,7 @@ export function AppModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={cn(sizeClasses[size])}>
+      <DialogContent className={cn(getAppModalSizeClass(size))}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description ? (

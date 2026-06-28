@@ -11,7 +11,18 @@ import { openModal } from "@/lib/modal/open-modal";
 import { runMutationWithToast } from "@/lib/toast/mutation-toast";
 import { DISPLAY_NAME_MAX_LENGTH } from "@shared/profile/validation";
 
-import { PROFILE_COPY } from "./constants";
+import {
+  PROFILE_AVATAR_UPLOADING_LABEL,
+  PROFILE_DISCARD_CANCEL_LABEL,
+  PROFILE_DISCARD_CONFIRM_LABEL,
+  PROFILE_DISCARD_DESCRIPTION,
+  PROFILE_DISCARD_TITLE,
+  PROFILE_TOAST_AVATAR_ERROR,
+  PROFILE_TOAST_AVATAR_SAVED,
+  PROFILE_TOAST_ERROR,
+  PROFILE_TOAST_SAVED,
+  PROFILE_TOAST_SAVING,
+} from "./constants";
 import {
   resolveProfileFieldError,
   resolveProfileSaveErrorMessage,
@@ -60,9 +71,9 @@ export function useProfile() {
           bio: values.bio,
         }),
         {
-          loading: PROFILE_COPY.toastSaving,
-          success: PROFILE_COPY.toastSaved,
-          errorFallback: PROFILE_COPY.toastError,
+          loading: PROFILE_TOAST_SAVING,
+          success: PROFILE_TOAST_SAVED,
+          errorFallback: PROFILE_TOAST_ERROR,
           resolveErrorMessage: resolveProfileSaveErrorMessage,
         },
       );
@@ -86,10 +97,10 @@ export function useProfile() {
     }
 
     openModal({
-      title: PROFILE_COPY.discardTitle,
-      description: PROFILE_COPY.discardDescription,
-      confirmLabel: PROFILE_COPY.discardConfirm,
-      cancelLabel: PROFILE_COPY.discardCancel,
+      title: PROFILE_DISCARD_TITLE,
+      description: PROFILE_DISCARD_DESCRIPTION,
+      confirmLabel: PROFILE_DISCARD_CONFIRM_LABEL,
+      cancelLabel: PROFILE_DISCARD_CANCEL_LABEL,
       variant: "destructive",
       onConfirm: () => {
         form.reset({
@@ -104,9 +115,9 @@ export function useProfile() {
     if (!file) return;
 
     await runMutationWithToast(avatarUploadMutation.mutateAsync(file), {
-      loading: PROFILE_COPY.avatarUploading,
-      success: PROFILE_COPY.toastAvatarSaved,
-      errorFallback: PROFILE_COPY.toastAvatarError,
+      loading: PROFILE_AVATAR_UPLOADING_LABEL,
+      success: PROFILE_TOAST_AVATAR_SAVED,
+      errorFallback: PROFILE_TOAST_AVATAR_ERROR,
     });
   }
 

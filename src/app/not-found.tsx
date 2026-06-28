@@ -1,20 +1,26 @@
 import Link from "next/link";
 
-import { NOT_FOUND_COPY } from "@/app/constants";
+import {
+  NOT_FOUND_DESCRIPTION,
+  NOT_FOUND_GO_TO_DASHBOARD_LABEL,
+  NOT_FOUND_GO_TO_HOME_LABEL,
+  NOT_FOUND_PAGE_CLASS,
+  NOT_FOUND_TITLE,
+} from "@/app/constants";
 import { ErrorState } from "@/components/shared/error-state";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <div className="bg-background flex min-h-dvh flex-col items-center justify-center px-4">
+    <div className={NOT_FOUND_PAGE_CLASS}>
       <ErrorState
-        title={NOT_FOUND_COPY.title}
-        description={NOT_FOUND_COPY.description}
+        title={NOT_FOUND_TITLE}
+        description={NOT_FOUND_DESCRIPTION}
         homeHref="/"
-        homeLabel={NOT_FOUND_COPY.goToHome}
+        homeLabel={NOT_FOUND_GO_TO_HOME_LABEL}
       >
         <Button asChild variant="secondary">
-          <Link href="/dashboard">{NOT_FOUND_COPY.goToDashboard}</Link>
+          <Link href="/dashboard">{NOT_FOUND_GO_TO_DASHBOARD_LABEL}</Link>
         </Button>
       </ErrorState>
     </div>

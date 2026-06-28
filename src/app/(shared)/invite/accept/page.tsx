@@ -1,5 +1,10 @@
 import { Suspense } from "react";
 
+import {
+  ACCEPT_INVITE_PAGE_CHECKING_FALLBACK,
+  ACCEPT_INVITE_PAGE_FALLBACK_MESSAGE_CLASS,
+  ACCEPT_INVITE_PAGE_FALLBACK_WRAPPER_CLASS,
+} from "./constants";
 import { AcceptInvite } from "./components/AcceptInvite";
 
 /**
@@ -9,9 +14,9 @@ export default function AcceptInvitePage() {
   return (
     <Suspense
       fallback={
-        <div className="mx-auto flex w-full max-w-md flex-col gap-4 px-4 py-12">
-          <p className="text-muted-foreground text-center text-lg">
-            Checking your invitation…
+        <div className={ACCEPT_INVITE_PAGE_FALLBACK_WRAPPER_CLASS}>
+          <p className={ACCEPT_INVITE_PAGE_FALLBACK_MESSAGE_CLASS}>
+            {ACCEPT_INVITE_PAGE_CHECKING_FALLBACK}
           </p>
         </div>
       }

@@ -5,6 +5,12 @@ import type { ReactNode } from "react";
 
 import { AdminSidebar, AdminSidebarMobile } from "../AdminSidebar";
 
+import {
+  AUTHENTICATED_SHELL_BODY_ADMIN_LAYOUT_CLASS,
+  AUTHENTICATED_SHELL_BODY_ADMIN_MAIN_CLASS,
+  AUTHENTICATED_SHELL_BODY_DEFAULT_MAIN_CLASS,
+} from "./constants";
+
 interface AuthenticatedShellBodyProps {
   isAdmin: boolean;
   isSuperAdmin: boolean;
@@ -22,10 +28,13 @@ export function AuthenticatedShellBody({
 
   if (showAdminSidebar) {
     return (
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col md:flex-row">
+      <div className={AUTHENTICATED_SHELL_BODY_ADMIN_LAYOUT_CLASS}>
         <AdminSidebarMobile isSuperAdmin={isSuperAdmin} />
         <AdminSidebar isSuperAdmin={isSuperAdmin} />
-        <main id="main-content" className="min-w-0 flex-1 px-4 py-8">
+        <main
+          id="main-content"
+          className={AUTHENTICATED_SHELL_BODY_ADMIN_MAIN_CLASS}
+        >
           {children}
         </main>
       </div>
@@ -35,7 +44,7 @@ export function AuthenticatedShellBody({
   return (
     <main
       id="main-content"
-      className="mx-auto w-full max-w-5xl flex-1 px-4 py-8"
+      className={AUTHENTICATED_SHELL_BODY_DEFAULT_MAIN_CLASS}
     >
       {children}
     </main>

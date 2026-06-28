@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { DM_Sans, Libre_Caslon_Text } from "next/font/google";
 
+import {
+  ROOT_LAYOUT_BODY_CLASS,
+  ROOT_LAYOUT_SKIP_LINK_CLASS,
+} from "@/app/constants";
 import { Providers } from "@/components/providers";
 import { Hosts } from "@/hosts";
 import "./globals.css";
@@ -29,13 +33,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${dmSans.variable} ${libreCaslon.variable} min-h-dvh font-sans antialiased`}
+        className={`${dmSans.variable} ${libreCaslon.variable} ${ROOT_LAYOUT_BODY_CLASS}`}
       >
-        {/* Skip link for keyboard and screen-reader users. */}
-        <a
-          href="#main-content"
-          className="focus:bg-primary focus:text-primary-foreground sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:px-4 focus:py-2"
-        >
+        <a href="#main-content" className={ROOT_LAYOUT_SKIP_LINK_CLASS}>
           Skip to main content
         </a>
         <Providers>

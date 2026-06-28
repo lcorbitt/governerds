@@ -6,7 +6,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { ADMIN_FLAGS_COPY } from "./constants";
+import {
+  ADMIN_FLAGS_BODY,
+  ADMIN_FLAGS_BODY_CLASS,
+  ADMIN_FLAGS_CARD_DESCRIPTION,
+  ADMIN_FLAGS_CARD_TITLE,
+  ADMIN_FLAGS_PAGE_CLASS,
+  ADMIN_FLAGS_SUBTITLE,
+  ADMIN_FLAGS_SUBTITLE_CLASS,
+  ADMIN_FLAGS_TITLE,
+  ADMIN_FLAGS_TITLE_CLASS,
+} from "./constants";
 
 /**
  * Feature flag admin stub. Proves the admin route gate works. A full management
@@ -15,25 +25,19 @@ import { ADMIN_FLAGS_COPY } from "./constants";
  */
 export default function AdminFlagsPage() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className={ADMIN_FLAGS_PAGE_CLASS}>
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          {ADMIN_FLAGS_COPY.title}
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          {ADMIN_FLAGS_COPY.subtitle}
-        </p>
+        <h1 className={ADMIN_FLAGS_TITLE_CLASS}>{ADMIN_FLAGS_TITLE}</h1>
+        <p className={ADMIN_FLAGS_SUBTITLE_CLASS}>{ADMIN_FLAGS_SUBTITLE}</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>{ADMIN_FLAGS_COPY.cardTitle}</CardTitle>
-          <CardDescription>{ADMIN_FLAGS_COPY.cardDescription}</CardDescription>
+          <CardTitle>{ADMIN_FLAGS_CARD_TITLE}</CardTitle>
+          <CardDescription>{ADMIN_FLAGS_CARD_DESCRIPTION}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-base">
-            {ADMIN_FLAGS_COPY.body}
-          </p>
+          <p className={ADMIN_FLAGS_BODY_CLASS}>{ADMIN_FLAGS_BODY}</p>
         </CardContent>
       </Card>
     </div>

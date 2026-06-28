@@ -17,7 +17,14 @@ import {
 import { suggestSlugFromName } from "@/lib/community/slug";
 import { runMutationWithToast } from "@/lib/toast/mutation-toast";
 
-import { ADMIN_COMMUNITIES_COPY } from "./constants";
+import {
+  ADMIN_COMMUNITIES_TOAST_CREATE_ERROR,
+  ADMIN_COMMUNITIES_TOAST_CREATE_LOADING,
+  ADMIN_COMMUNITIES_TOAST_CREATE_SUCCESS,
+  ADMIN_COMMUNITIES_TOAST_INVITE_ERROR,
+  ADMIN_COMMUNITIES_TOAST_INVITE_LOADING,
+  ADMIN_COMMUNITIES_TOAST_INVITE_SUCCESS,
+} from "./constants";
 import { createCommunitySchema, type CreateCommunityInput } from "./types";
 
 /**
@@ -50,9 +57,9 @@ export function useAdminCommunities() {
     const community = await runMutationWithToast(
       createMutation.mutateAsync(values),
       {
-        loading: ADMIN_COMMUNITIES_COPY.toastCreateLoading,
-        success: ADMIN_COMMUNITIES_COPY.toastCreateSuccess,
-        errorFallback: ADMIN_COMMUNITIES_COPY.toastCreateError,
+        loading: ADMIN_COMMUNITIES_TOAST_CREATE_LOADING,
+        success: ADMIN_COMMUNITIES_TOAST_CREATE_SUCCESS,
+        errorFallback: ADMIN_COMMUNITIES_TOAST_CREATE_ERROR,
       },
     );
     form.reset();
@@ -71,12 +78,12 @@ export function useAdminCommunities() {
       await runMutationWithToast(
         sendInviteMutation.mutateAsync({ communityId, email }),
         {
-          loading: ADMIN_COMMUNITIES_COPY.toastInviteLoading,
-          success: ADMIN_COMMUNITIES_COPY.toastInviteSuccess.replace(
+          loading: ADMIN_COMMUNITIES_TOAST_INVITE_LOADING,
+          success: ADMIN_COMMUNITIES_TOAST_INVITE_SUCCESS.replace(
             "{name}",
             communityName,
           ),
-          errorFallback: ADMIN_COMMUNITIES_COPY.toastInviteError,
+          errorFallback: ADMIN_COMMUNITIES_TOAST_INVITE_ERROR,
         },
       );
       setInviteEmails((current) => ({ ...current, [communityId]: "" }));

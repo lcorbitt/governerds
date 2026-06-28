@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { signInWithOAuth, type OAuthProvider } from "@/lib/auth/client";
 import { showUserError } from "@/lib/toast/user-message";
 
+import { OAUTH_BUTTONS_ROOT_CLASS } from "./oauth-buttons/constants";
+
 const OAUTH_ERROR_FALLBACK = "We could not start sign-in. Please try again.";
 
 /**
@@ -27,7 +29,7 @@ export function OAuthButtons() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className={OAUTH_BUTTONS_ROOT_CLASS}>
       <Button
         type="button"
         variant="outline"

@@ -14,7 +14,36 @@ import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { ADMIN_SIDEBAR_COPY } from "./constants";
+import {
+  ADMIN_SIDEBAR_ASIDE_CLASS,
+  ADMIN_SIDEBAR_BACK_LINK_CLASS,
+  ADMIN_SIDEBAR_BACK_TO_COMMUNITIES_LABEL,
+  ADMIN_SIDEBAR_BACK_TO_DASHBOARD_LABEL,
+  ADMIN_SIDEBAR_COMING_SOON_BADGE_CLASS,
+  ADMIN_SIDEBAR_COMING_SOON_LABEL,
+  ADMIN_SIDEBAR_FEATURE_FLAGS_LABEL,
+  ADMIN_SIDEBAR_FOOTER_CLASS,
+  ADMIN_SIDEBAR_HEADER_CLASS,
+  ADMIN_SIDEBAR_MANAGE_COMMUNITIES_LABEL,
+  ADMIN_SIDEBAR_MOBILE_NAV_CLASS,
+  ADMIN_SIDEBAR_MOBILE_TAB_ACTIVE_CLASS,
+  ADMIN_SIDEBAR_MOBILE_TAB_CLASS,
+  ADMIN_SIDEBAR_MOBILE_TAB_INACTIVE_CLASS,
+  ADMIN_SIDEBAR_MODERATION_LABEL,
+  ADMIN_SIDEBAR_NAV_CLASS,
+  ADMIN_SIDEBAR_NAV_ICON_CLASS,
+  ADMIN_SIDEBAR_NAV_LABEL_CLASS,
+  ADMIN_SIDEBAR_NAV_LINK_ACTIVE_CLASS,
+  ADMIN_SIDEBAR_NAV_LINK_CLASS,
+  ADMIN_SIDEBAR_NAV_LINK_INACTIVE_CLASS,
+  ADMIN_SIDEBAR_OVERVIEW_LABEL,
+  ADMIN_SIDEBAR_PLATFORM_SETTINGS_LABEL,
+  ADMIN_SIDEBAR_SUBTITLE,
+  ADMIN_SIDEBAR_SUBTITLE_CLASS,
+  ADMIN_SIDEBAR_TITLE,
+  ADMIN_SIDEBAR_TITLE_CLASS,
+  ADMIN_SIDEBAR_USERS_LABEL,
+} from "./constants";
 
 interface AdminSidebarProps {
   isSuperAdmin: boolean;
@@ -31,36 +60,36 @@ interface AdminNavItem {
 const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   {
     href: "/admin/overview",
-    label: ADMIN_SIDEBAR_COPY.overview,
+    label: ADMIN_SIDEBAR_OVERVIEW_LABEL,
     icon: LayoutDashboard,
     superAdminOnly: true,
   },
   {
     href: "/admin/communities",
-    label: ADMIN_SIDEBAR_COPY.manageCommunities,
+    label: ADMIN_SIDEBAR_MANAGE_COMMUNITIES_LABEL,
     icon: UsersRound,
   },
   {
     href: "/admin/flags",
-    label: ADMIN_SIDEBAR_COPY.featureFlags,
+    label: ADMIN_SIDEBAR_FEATURE_FLAGS_LABEL,
     icon: Flag,
     comingSoon: true,
   },
   {
     href: "/admin/users",
-    label: ADMIN_SIDEBAR_COPY.users,
+    label: ADMIN_SIDEBAR_USERS_LABEL,
     icon: Users,
     comingSoon: true,
   },
   {
     href: "/admin/moderation",
-    label: ADMIN_SIDEBAR_COPY.moderation,
+    label: ADMIN_SIDEBAR_MODERATION_LABEL,
     icon: Shield,
     comingSoon: true,
   },
   {
     href: "/admin/settings",
-    label: ADMIN_SIDEBAR_COPY.platformSettings,
+    label: ADMIN_SIDEBAR_PLATFORM_SETTINGS_LABEL,
     icon: Settings,
     superAdminOnly: true,
     comingSoon: true,
@@ -81,19 +110,17 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
   );
   const backHref = isSuperAdmin ? "/communities" : "/dashboard";
   const backLabel = isSuperAdmin
-    ? ADMIN_SIDEBAR_COPY.backToCommunities
-    : ADMIN_SIDEBAR_COPY.backToDashboard;
+    ? ADMIN_SIDEBAR_BACK_TO_COMMUNITIES_LABEL
+    : ADMIN_SIDEBAR_BACK_TO_DASHBOARD_LABEL;
 
   return (
-    <aside className="border-border bg-background sticky top-14 hidden w-56 shrink-0 flex-col border-r md:flex md:min-h-[calc(100dvh-3.5rem)]">
-      <div className="border-border border-b px-4 py-4">
-        <p className="text-sm font-semibold">{ADMIN_SIDEBAR_COPY.title}</p>
-        <p className="text-muted-foreground text-xs">
-          {ADMIN_SIDEBAR_COPY.subtitle}
-        </p>
+    <aside className={ADMIN_SIDEBAR_ASIDE_CLASS}>
+      <div className={ADMIN_SIDEBAR_HEADER_CLASS}>
+        <p className={ADMIN_SIDEBAR_TITLE_CLASS}>{ADMIN_SIDEBAR_TITLE}</p>
+        <p className={ADMIN_SIDEBAR_SUBTITLE_CLASS}>{ADMIN_SIDEBAR_SUBTITLE}</p>
       </div>
 
-      <nav className="flex flex-1 flex-col gap-2 p-4">
+      <nav className={ADMIN_SIDEBAR_NAV_CLASS}>
         {visibleItems.map((item) => {
           const Icon = item.icon;
           const isActive = isActivePath(pathname, item.href);
@@ -104,17 +131,19 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
               href={item.href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors",
+                ADMIN_SIDEBAR_NAV_LINK_CLASS,
                 isActive
-                  ? "bg-muted text-foreground font-semibold"
-                  : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                  ? ADMIN_SIDEBAR_NAV_LINK_ACTIVE_CLASS
+                  : ADMIN_SIDEBAR_NAV_LINK_INACTIVE_CLASS,
               )}
             >
-              <Icon className="h-4 w-4 shrink-0" aria-hidden />
-              <span className="min-w-0 flex-1 truncate">{item.label}</span>
+              <Icon className={ADMIN_SIDEBAR_NAV_ICON_CLASS} aria-hidden />
+              <span className={ADMIN_SIDEBAR_NAV_LABEL_CLASS}>
+                {item.label}
+              </span>
               {item.comingSoon ? (
-                <span className="text-muted-foreground shrink-0 text-[10px] font-normal tracking-wide uppercase">
-                  {ADMIN_SIDEBAR_COPY.comingSoon}
+                <span className={ADMIN_SIDEBAR_COMING_SOON_BADGE_CLASS}>
+                  {ADMIN_SIDEBAR_COMING_SOON_LABEL}
                 </span>
               ) : null}
             </Link>
@@ -122,11 +151,8 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
         })}
       </nav>
 
-      <div className="border-border border-t p-4">
-        <Link
-          href={backHref}
-          className="text-muted-foreground hover:text-foreground hover:bg-accent block rounded-md px-4 py-2 text-sm font-medium transition-colors"
-        >
+      <div className={ADMIN_SIDEBAR_FOOTER_CLASS}>
+        <Link href={backHref} className={ADMIN_SIDEBAR_BACK_LINK_CLASS}>
           {backLabel}
         </Link>
       </div>
@@ -142,8 +168,8 @@ export function AdminSidebarMobile({ isSuperAdmin }: AdminSidebarProps) {
 
   return (
     <nav
-      aria-label={ADMIN_SIDEBAR_COPY.title}
-      className="border-border flex gap-2 overflow-x-auto border-b px-4 py-2 md:hidden"
+      aria-label={ADMIN_SIDEBAR_TITLE}
+      className={ADMIN_SIDEBAR_MOBILE_NAV_CLASS}
     >
       {visibleItems.map((item) => {
         const isActive = isActivePath(pathname, item.href);
@@ -154,10 +180,10 @@ export function AdminSidebarMobile({ isSuperAdmin }: AdminSidebarProps) {
             href={item.href}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "shrink-0 rounded-md px-4 py-1.5 text-xs font-medium transition-colors",
+              ADMIN_SIDEBAR_MOBILE_TAB_CLASS,
               isActive
-                ? "bg-muted text-foreground font-semibold"
-                : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                ? ADMIN_SIDEBAR_MOBILE_TAB_ACTIVE_CLASS
+                : ADMIN_SIDEBAR_MOBILE_TAB_INACTIVE_CLASS,
             )}
           >
             {item.label}

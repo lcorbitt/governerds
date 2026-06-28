@@ -12,7 +12,10 @@ import {
 import { updatePassword } from "@/lib/auth/client";
 import { showUserError } from "@/lib/toast/user-message";
 
-import { RESET_PASSWORD_FORM_COPY } from "./constants";
+import {
+  RESET_PASSWORD_FORM_TOAST_ERROR,
+  RESET_PASSWORD_FORM_TOAST_SUCCESS,
+} from "./constants";
 
 /**
  * Colocated orchestration for the reset-password form.
@@ -28,11 +31,11 @@ export function useResetPasswordForm() {
   async function onSubmit(values: ResetPasswordInput) {
     try {
       await updatePassword(values.password);
-      toast.success(RESET_PASSWORD_FORM_COPY.toastSuccess);
+      toast.success(RESET_PASSWORD_FORM_TOAST_SUCCESS);
       router.push("/dashboard");
       router.refresh();
     } catch (error) {
-      showUserError(error, RESET_PASSWORD_FORM_COPY.toastError);
+      showUserError(error, RESET_PASSWORD_FORM_TOAST_ERROR);
     }
   }
 

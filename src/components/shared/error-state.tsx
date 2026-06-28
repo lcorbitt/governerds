@@ -10,7 +10,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { ERROR_STATE_COPY } from "./error-state/constants";
+import {
+  ERROR_STATE_ACTIONS_CLASS,
+  ERROR_STATE_CARD_CLASS,
+  ERROR_STATE_CONTENT_CLASS,
+  ERROR_STATE_DESCRIPTION_CLASS,
+  ERROR_STATE_GO_HOME,
+  ERROR_STATE_ROOT_CLASS,
+  ERROR_STATE_TITLE_CLASS,
+  ERROR_STATE_TRY_AGAIN,
+} from "./error-state/constants";
 
 interface ErrorStateProps {
   title: string;
@@ -30,22 +39,24 @@ export function ErrorState({
   description,
   onRetry,
   homeHref = "/",
-  homeLabel = ERROR_STATE_COPY.goHome,
+  homeLabel = ERROR_STATE_GO_HOME,
   children,
 }: ErrorStateProps) {
   return (
-    <div className="flex min-h-[50vh] items-center justify-center py-12">
-      <Card className="w-full max-w-md text-center">
+    <div className={ERROR_STATE_ROOT_CLASS}>
+      <Card className={ERROR_STATE_CARD_CLASS}>
         <CardHeader>
-          <CardTitle className="text-2xl">{title}</CardTitle>
-          <CardDescription className="text-base">{description}</CardDescription>
+          <CardTitle className={ERROR_STATE_TITLE_CLASS}>{title}</CardTitle>
+          <CardDescription className={ERROR_STATE_DESCRIPTION_CLASS}>
+            {description}
+          </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col items-center gap-4">
+        <CardContent className={ERROR_STATE_CONTENT_CLASS}>
           {children}
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className={ERROR_STATE_ACTIONS_CLASS}>
             {onRetry ? (
               <Button type="button" onClick={onRetry}>
-                {ERROR_STATE_COPY.tryAgain}
+                {ERROR_STATE_TRY_AGAIN}
               </Button>
             ) : null}
             <Button asChild variant="outline">

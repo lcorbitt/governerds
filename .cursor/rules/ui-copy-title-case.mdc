@@ -40,16 +40,14 @@ first or last word (`Sign Up`, `Log In`, `Forgot Password?`, `Back to Dashboard`
 
 ```tsx
 // constants.ts
-export const LOGIN_COPY = {
-  title: "Log In",
-  submit: "Log In",
-  signupLink: "Sign Up",
-  magicLink: "Email Me a Sign-In Link",
-} as const;
+export const LOGIN_FORM_TITLE = "Log In";
+export const LOGIN_FORM_SUBMIT_LABEL = "Log In";
+export const LOGIN_FORM_SIGNUP_LINK_LABEL = "Sign Up";
+export const LOGIN_FORM_MAGIC_LINK_LABEL = "Email Me a Sign-In Link";
 
 // index.tsx
-<CardTitle>{LOGIN_COPY.title}</CardTitle>
-<Button type="submit">{LOGIN_COPY.submit}</Button>
+<CardTitle>{LOGIN_FORM_TITLE}</CardTitle>
+<Button type="submit">{LOGIN_FORM_SUBMIT_LABEL}</Button>
 ```
 
 When adding or editing UI copy, fix nearby violations in the same file or

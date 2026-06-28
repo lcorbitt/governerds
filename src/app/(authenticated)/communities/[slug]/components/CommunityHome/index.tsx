@@ -9,53 +9,71 @@ import {
 } from "@/components/ui/card";
 import { ErrorState } from "@/components/shared/error-state";
 
-import { COMMUNITY_HOME_COPY } from "./constants";
+import {
+  COMMUNITY_HOME_BACK_TO_COMMUNITIES_LABEL,
+  COMMUNITY_HOME_BODY_PREFIX,
+  COMMUNITY_HOME_BODY_SUFFIX,
+  COMMUNITY_HOME_BODY_TEXT_CLASS,
+  COMMUNITY_HOME_CARD_DESCRIPTION,
+  COMMUNITY_HOME_CARD_TITLE,
+  COMMUNITY_HOME_ERROR_DESCRIPTION,
+  COMMUNITY_HOME_ERROR_TITLE,
+  COMMUNITY_HOME_LOADING_BODY,
+  COMMUNITY_HOME_LOADING_TEXT_CLASS,
+  COMMUNITY_HOME_NOT_FOUND_DESCRIPTION,
+  COMMUNITY_HOME_NOT_FOUND_TITLE,
+  COMMUNITY_HOME_PAGE_CLASS,
+  COMMUNITY_HOME_SLUG_CLASS,
+  COMMUNITY_HOME_TITLE_CLASS,
+} from "./constants";
 import { useCommunityHome } from "./useCommunityHome";
 
 export function CommunityHome() {
   const { communityQuery, slug, isNotFound } = useCommunityHome();
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className={COMMUNITY_HOME_PAGE_CLASS}>
       {communityQuery.isPending ? (
-        <p className="text-muted-foreground">{COMMUNITY_HOME_COPY.loading}</p>
+        <p className={COMMUNITY_HOME_LOADING_TEXT_CLASS}>
+          {COMMUNITY_HOME_LOADING_BODY}
+        </p>
       ) : communityQuery.isError ? (
         <ErrorState
           title={
             isNotFound
-              ? COMMUNITY_HOME_COPY.notFoundTitle
-              : COMMUNITY_HOME_COPY.errorTitle
+              ? COMMUNITY_HOME_NOT_FOUND_TITLE
+              : COMMUNITY_HOME_ERROR_TITLE
           }
           description={
             isNotFound
-              ? COMMUNITY_HOME_COPY.notFoundDescription
-              : COMMUNITY_HOME_COPY.errorDescription
+              ? COMMUNITY_HOME_NOT_FOUND_DESCRIPTION
+              : COMMUNITY_HOME_ERROR_DESCRIPTION
           }
           onRetry={() => communityQuery.refetch()}
           homeHref="/communities"
-          homeLabel={COMMUNITY_HOME_COPY.backToCommunities}
+          homeLabel={COMMUNITY_HOME_BACK_TO_COMMUNITIES_LABEL}
         />
       ) : (
         <>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">
+            <h1 className={COMMUNITY_HOME_TITLE_CLASS}>
               {communityQuery.data?.name}
             </h1>
-            <p className="text-muted-foreground text-lg">/{slug}</p>
+            <p className={COMMUNITY_HOME_SLUG_CLASS}>/{slug}</p>
           </div>
 
           <Card>
             <CardHeader>
-              <CardTitle>{COMMUNITY_HOME_COPY.cardTitle}</CardTitle>
+              <CardTitle>{COMMUNITY_HOME_CARD_TITLE}</CardTitle>
               <CardDescription>
-                {COMMUNITY_HOME_COPY.cardDescription}
+                {COMMUNITY_HOME_CARD_DESCRIPTION}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground text-base">
-                {COMMUNITY_HOME_COPY.bodyPrefix}{" "}
+              <p className={COMMUNITY_HOME_BODY_TEXT_CLASS}>
+                {COMMUNITY_HOME_BODY_PREFIX}{" "}
                 <strong>{communityQuery.data?.name}</strong>.{" "}
-                {COMMUNITY_HOME_COPY.bodySuffix}
+                {COMMUNITY_HOME_BODY_SUFFIX}
               </p>
             </CardContent>
           </Card>

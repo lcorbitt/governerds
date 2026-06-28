@@ -6,6 +6,12 @@ import type { ElementType, ReactNode } from "react";
 import { useIntersectionReveal } from "@/hooks/use-intersection-reveal";
 import { cn } from "@/lib/utils";
 
+import {
+  REVEAL_HIDDEN_CLASS,
+  REVEAL_TRANSITION_ACTIVE_CLASS,
+  REVEAL_VISIBLE_CLASS,
+} from "./reveal/constants";
+
 export interface RevealProps {
   children: ReactNode;
   className?: string;
@@ -83,15 +89,9 @@ export function Reveal({
         shouldMount &&
           !prefersReducedMotion &&
           canTransition &&
-          "transition-[opacity,transform] duration-300 ease-in-out",
-        shouldMount &&
-          !prefersReducedMotion &&
-          !visible &&
-          "translate-y-2 opacity-0",
-        shouldMount &&
-          !prefersReducedMotion &&
-          visible &&
-          "translate-y-0 opacity-100",
+          REVEAL_TRANSITION_ACTIVE_CLASS,
+        shouldMount && !prefersReducedMotion && !visible && REVEAL_HIDDEN_CLASS,
+        shouldMount && !prefersReducedMotion && visible && REVEAL_VISIBLE_CLASS,
       )}
     >
       {shouldMount ? children : null}

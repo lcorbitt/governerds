@@ -22,7 +22,30 @@ import {
 import { useMarkNotificationReadMutation } from "@/hooks/mutations/useNotification";
 import { cn } from "@/lib/utils";
 
-import { NOTIFICATION_BELL_COPY } from "./constants";
+import {
+  NOTIFICATION_BELL_ACTION_LINK_CLASS,
+  NOTIFICATION_BELL_BADGE_CLASS,
+  NOTIFICATION_BELL_DROPDOWN_CLASS,
+  NOTIFICATION_BELL_EMPTY_MESSAGE,
+  NOTIFICATION_BELL_ERROR_MESSAGE,
+  NOTIFICATION_BELL_ICON_CLASS,
+  NOTIFICATION_BELL_ITEM_BODY_CLASS,
+  NOTIFICATION_BELL_ITEM_CLASS,
+  NOTIFICATION_BELL_ITEM_HEADER_CLASS,
+  NOTIFICATION_BELL_ITEM_TITLE_CLASS,
+  NOTIFICATION_BELL_ITEM_TITLE_READ_CLASS,
+  NOTIFICATION_BELL_ITEM_TITLE_UNREAD_CLASS,
+  NOTIFICATION_BELL_LABEL,
+  NOTIFICATION_BELL_LABEL_CLASS,
+  NOTIFICATION_BELL_LOADING_MESSAGE,
+  NOTIFICATION_BELL_MARK_ALL_READ_BUTTON_CLASS,
+  NOTIFICATION_BELL_MARK_ALL_READ_LABEL,
+  NOTIFICATION_BELL_MARK_READ_BUTTON_CLASS,
+  NOTIFICATION_BELL_MARK_READ_LABEL,
+  NOTIFICATION_BELL_STATUS_MESSAGE_CLASS,
+  NOTIFICATION_BELL_TITLE,
+  NOTIFICATION_BELL_TRIGGER_CLASS,
+} from "./constants";
 
 interface NotificationBellProps {
   userId: string;
@@ -77,56 +100,61 @@ export function NotificationBell({ userId }: NotificationBellProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="relative"
-          aria-label={NOTIFICATION_BELL_COPY.label}
+          className={NOTIFICATION_BELL_TRIGGER_CLASS}
+          aria-label={NOTIFICATION_BELL_LABEL}
         >
-          <Bell className="h-5 w-5" />
+          <Bell className={NOTIFICATION_BELL_ICON_CLASS} />
           {unreadCount > 0 ? (
-            <span className="bg-primary text-primary-foreground absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1.5 text-[10px] font-semibold">
+            <span className={NOTIFICATION_BELL_BADGE_CLASS}>
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           ) : null}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80">
-        <DropdownMenuLabel className="flex items-center justify-between gap-2">
-          <span>{NOTIFICATION_BELL_COPY.title}</span>
+      <DropdownMenuContent
+        align="end"
+        className={NOTIFICATION_BELL_DROPDOWN_CLASS}
+      >
+        <DropdownMenuLabel className={NOTIFICATION_BELL_LABEL_CLASS}>
+          <span>{NOTIFICATION_BELL_TITLE}</span>
           {unreadCount > 0 ? (
             <button
               type="button"
-              className="text-primary text-xs font-medium hover:underline"
+              className={NOTIFICATION_BELL_MARK_ALL_READ_BUTTON_CLASS}
               disabled={markReadMutation.isPending}
               onClick={() => void handleMarkAllRead()}
             >
-              {NOTIFICATION_BELL_COPY.markAllRead}
+              {NOTIFICATION_BELL_MARK_ALL_READ_LABEL}
             </button>
           ) : null}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {notificationsQuery.isPending ? (
-          <p className="text-muted-foreground px-2 py-4 text-sm">
-            {NOTIFICATION_BELL_COPY.loading}
+          <p className={NOTIFICATION_BELL_STATUS_MESSAGE_CLASS}>
+            {NOTIFICATION_BELL_LOADING_MESSAGE}
           </p>
         ) : notificationsQuery.isError ? (
-          <p className="text-muted-foreground px-2 py-4 text-sm">
-            {NOTIFICATION_BELL_COPY.error}
+          <p className={NOTIFICATION_BELL_STATUS_MESSAGE_CLASS}>
+            {NOTIFICATION_BELL_ERROR_MESSAGE}
           </p>
         ) : items.length === 0 ? (
-          <p className="text-muted-foreground px-2 py-4 text-sm">
-            {NOTIFICATION_BELL_COPY.empty}
+          <p className={NOTIFICATION_BELL_STATUS_MESSAGE_CLASS}>
+            {NOTIFICATION_BELL_EMPTY_MESSAGE}
           </p>
         ) : (
           items.map((item) => (
             <DropdownMenuItem
               key={item.id}
-              className="flex cursor-default flex-col items-start gap-1.5 p-4"
+              className={NOTIFICATION_BELL_ITEM_CLASS}
               onSelect={(event) => event.preventDefault()}
             >
-              <div className="flex w-full items-start justify-between gap-2">
+              <div className={NOTIFICATION_BELL_ITEM_HEADER_CLASS}>
                 <p
                   className={cn(
-                    "text-sm leading-snug font-medium",
-                    item.readAt ? "text-muted-foreground" : "text-foreground",
+                    NOTIFICATION_BELL_ITEM_TITLE_CLASS,
+                    item.readAt
+                      ? NOTIFICATION_BELL_ITEM_TITLE_READ_CLASS
+                      : NOTIFICATION_BELL_ITEM_TITLE_UNREAD_CLASS,
                   )}
                 >
                   {item.title}
@@ -134,21 +162,19 @@ export function NotificationBell({ userId }: NotificationBellProps) {
                 {!item.readAt ? (
                   <button
                     type="button"
-                    className="text-primary shrink-0 text-xs hover:underline"
+                    className={NOTIFICATION_BELL_MARK_READ_BUTTON_CLASS}
                     disabled={markReadMutation.isPending}
                     onClick={() => void handleMarkOneRead(item.id)}
                   >
-                    {NOTIFICATION_BELL_COPY.markRead}
+                    {NOTIFICATION_BELL_MARK_READ_LABEL}
                   </button>
                 ) : null}
               </div>
-              <p className="text-muted-foreground text-sm leading-snug">
-                {item.body}
-              </p>
+              <p className={NOTIFICATION_BELL_ITEM_BODY_CLASS}>{item.body}</p>
               {item.actionUrl ? (
                 <Link
                   href={item.actionUrl}
-                  className="text-primary text-sm font-medium hover:underline"
+                  className={NOTIFICATION_BELL_ACTION_LINK_CLASS}
                   onClick={() => {
                     if (!item.readAt) void handleMarkOneRead(item.id);
                   }}

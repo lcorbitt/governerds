@@ -7,6 +7,11 @@ import { useProfileQuery } from "@/hooks/queries/useProfile";
 import { resolveAvatarDisplayUrl } from "@/lib/profile/avatar-url";
 import { cn } from "@/lib/utils";
 
+import {
+  USER_AVATAR_CLASS,
+  USER_AVATAR_PROFILE_LINK_CLASS,
+} from "./UserAvatar/constants";
+
 interface UserAvatarProps {
   className?: string;
   fallbackClassName?: string;
@@ -39,7 +44,7 @@ export function UserAvatar({
   );
 
   const avatar = (
-    <Avatar className={cn("h-9 w-9", className)}>
+    <Avatar className={cn(USER_AVATAR_CLASS, className)}>
       <AvatarImage src={src} alt="" />
       <AvatarFallback className={fallbackClassName}>
         {getFallbackInitial(displayName)}
@@ -52,7 +57,7 @@ export function UserAvatar({
   return (
     <Link
       href="/settings"
-      className="focus-visible:ring-ring rounded-full focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+      className={USER_AVATAR_PROFILE_LINK_CLASS}
       aria-label={label ?? "Settings"}
     >
       {avatar}

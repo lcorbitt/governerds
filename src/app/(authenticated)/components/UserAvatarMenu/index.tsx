@@ -15,7 +15,15 @@ import {
 import { useAppRouter } from "@/hooks/use-app-router";
 import { signOut } from "@/lib/auth/client";
 
-import { USER_AVATAR_MENU_COPY } from "./constants";
+import {
+  USER_AVATAR_MENU_DROPDOWN_CLASS,
+  USER_AVATAR_MENU_SETTINGS_LABEL,
+  USER_AVATAR_MENU_SIGN_OUT_ERROR_MESSAGE,
+  USER_AVATAR_MENU_SIGN_OUT_LABEL,
+  USER_AVATAR_MENU_SIGNING_OUT_LABEL,
+  USER_AVATAR_MENU_TRIGGER_CLASS,
+  USER_AVATAR_MENU_TRIGGER_LABEL,
+} from "./constants";
 
 export function UserAvatarMenu() {
   const router = useAppRouter();
@@ -28,7 +36,7 @@ export function UserAvatarMenu() {
       router.push("/login");
       router.refresh();
     } catch {
-      toast.error(USER_AVATAR_MENU_COPY.signOutError);
+      toast.error(USER_AVATAR_MENU_SIGN_OUT_ERROR_MESSAGE);
       setSignOutPending(false);
     }
   }
@@ -38,15 +46,18 @@ export function UserAvatarMenu() {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="focus-visible:ring-ring rounded-full focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-          aria-label={USER_AVATAR_MENU_COPY.triggerLabel}
+          className={USER_AVATAR_MENU_TRIGGER_CLASS}
+          aria-label={USER_AVATAR_MENU_TRIGGER_LABEL}
         >
           <UserAvatar linkToProfile={false} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-44">
+      <DropdownMenuContent
+        align="end"
+        className={USER_AVATAR_MENU_DROPDOWN_CLASS}
+      >
         <DropdownMenuItem asChild>
-          <Link href="/settings">{USER_AVATAR_MENU_COPY.settings}</Link>
+          <Link href="/settings">{USER_AVATAR_MENU_SETTINGS_LABEL}</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -57,8 +68,8 @@ export function UserAvatarMenu() {
           }}
         >
           {signOutPending
-            ? USER_AVATAR_MENU_COPY.signingOut
-            : USER_AVATAR_MENU_COPY.signOut}
+            ? USER_AVATAR_MENU_SIGNING_OUT_LABEL
+            : USER_AVATAR_MENU_SIGN_OUT_LABEL}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

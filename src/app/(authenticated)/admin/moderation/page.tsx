@@ -6,7 +6,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { ADMIN_MODERATION_COPY } from "./constants";
+import {
+  ADMIN_MODERATION_BODY,
+  ADMIN_MODERATION_BODY_CLASS,
+  ADMIN_MODERATION_CARD_DESCRIPTION,
+  ADMIN_MODERATION_CARD_TITLE,
+  ADMIN_MODERATION_PAGE_CLASS,
+  ADMIN_MODERATION_SUBTITLE,
+  ADMIN_MODERATION_SUBTITLE_CLASS,
+  ADMIN_MODERATION_TITLE,
+  ADMIN_MODERATION_TITLE_CLASS,
+} from "./constants";
 
 /**
  * Moderation admin stub. Proves the admin sidebar route works. Full tooling
@@ -14,27 +24,23 @@ import { ADMIN_MODERATION_COPY } from "./constants";
  */
 export default function AdminModerationPage() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className={ADMIN_MODERATION_PAGE_CLASS}>
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          {ADMIN_MODERATION_COPY.title}
+        <h1 className={ADMIN_MODERATION_TITLE_CLASS}>
+          {ADMIN_MODERATION_TITLE}
         </h1>
-        <p className="text-muted-foreground text-lg">
-          {ADMIN_MODERATION_COPY.subtitle}
+        <p className={ADMIN_MODERATION_SUBTITLE_CLASS}>
+          {ADMIN_MODERATION_SUBTITLE}
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>{ADMIN_MODERATION_COPY.cardTitle}</CardTitle>
-          <CardDescription>
-            {ADMIN_MODERATION_COPY.cardDescription}
-          </CardDescription>
+          <CardTitle>{ADMIN_MODERATION_CARD_TITLE}</CardTitle>
+          <CardDescription>{ADMIN_MODERATION_CARD_DESCRIPTION}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-base">
-            {ADMIN_MODERATION_COPY.body}
-          </p>
+          <p className={ADMIN_MODERATION_BODY_CLASS}>{ADMIN_MODERATION_BODY}</p>
         </CardContent>
       </Card>
     </div>

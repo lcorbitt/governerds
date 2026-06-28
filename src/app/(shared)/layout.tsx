@@ -1,21 +1,29 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import {
+  SHARED_SHELL_BRAND_CLASS,
+  SHARED_SHELL_HEADER_CLASS,
+  SHARED_SHELL_HEADER_INNER_CLASS,
+  SHARED_SHELL_MAIN_CLASS,
+  SHARED_SHELL_ROOT_CLASS,
+} from "./constants";
+
 /**
  * Shared group layout (Phase 1 stub): minimal chrome for pages visible to both
  * guests and signed-in users, such as help and legal pages. No auth gate.
  */
 export default function SharedLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-dvh flex-col">
-      <header className="border-b">
-        <div className="mx-auto flex h-16 w-full max-w-5xl items-center px-4">
-          <Link href="/" className="text-primary font-serif text-xl font-bold">
+    <div className={SHARED_SHELL_ROOT_CLASS}>
+      <header className={SHARED_SHELL_HEADER_CLASS}>
+        <div className={SHARED_SHELL_HEADER_INNER_CLASS}>
+          <Link href="/" className={SHARED_SHELL_BRAND_CLASS}>
             GoverNerds
           </Link>
         </div>
       </header>
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className={SHARED_SHELL_MAIN_CLASS}>
         {children}
       </main>
     </div>

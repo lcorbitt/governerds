@@ -15,7 +15,42 @@ import {
 import { FieldError } from "@/components/shared/field-error";
 import { ErrorState } from "@/components/shared/error-state";
 
-import { ADMIN_COMMUNITIES_COPY } from "./constants";
+import {
+  ADMIN_COMMUNITIES_BACK_TO_DASHBOARD_LABEL,
+  ADMIN_COMMUNITIES_COMMUNITY_NAME_CLASS,
+  ADMIN_COMMUNITIES_COMMUNITY_SLUG_CLASS,
+  ADMIN_COMMUNITIES_CREATE_CARD_DESCRIPTION,
+  ADMIN_COMMUNITIES_CREATE_CARD_TITLE,
+  ADMIN_COMMUNITIES_CREATE_SUBMIT_LABEL,
+  ADMIN_COMMUNITIES_CREATING_LABEL,
+  ADMIN_COMMUNITIES_EMPTY_TEXT_CLASS,
+  ADMIN_COMMUNITIES_FIELD_CLASS,
+  ADMIN_COMMUNITIES_FORM_CLASS,
+  ADMIN_COMMUNITIES_INVITE_FIELD_CLASS,
+  ADMIN_COMMUNITIES_INVITE_LABEL,
+  ADMIN_COMMUNITIES_INVITE_PLACEHOLDER,
+  ADMIN_COMMUNITIES_INVITE_ROW_CLASS,
+  ADMIN_COMMUNITIES_LIST_CARD_DESCRIPTION,
+  ADMIN_COMMUNITIES_LIST_CARD_TITLE,
+  ADMIN_COMMUNITIES_LIST_CLASS,
+  ADMIN_COMMUNITIES_LIST_EMPTY_BODY,
+  ADMIN_COMMUNITIES_LIST_ERROR_DESCRIPTION,
+  ADMIN_COMMUNITIES_LIST_ERROR_TITLE,
+  ADMIN_COMMUNITIES_LIST_ITEM_CLASS,
+  ADMIN_COMMUNITIES_LIST_ITEM_HEADER_CLASS,
+  ADMIN_COMMUNITIES_LIST_LOADING_BODY,
+  ADMIN_COMMUNITIES_LOADING_TEXT_CLASS,
+  ADMIN_COMMUNITIES_NAME_LABEL,
+  ADMIN_COMMUNITIES_PAGE_CLASS,
+  ADMIN_COMMUNITIES_SENDING_INVITE_LABEL,
+  ADMIN_COMMUNITIES_SEND_INVITE_LABEL,
+  ADMIN_COMMUNITIES_SLUG_LABEL,
+  ADMIN_COMMUNITIES_SUBTITLE,
+  ADMIN_COMMUNITIES_SUBTITLE_CLASS,
+  ADMIN_COMMUNITIES_TITLE,
+  ADMIN_COMMUNITIES_TITLE_CLASS,
+  ADMIN_COMMUNITIES_VIEW_HOME_LABEL,
+} from "./constants";
 import { useAdminCommunities } from "./useAdminCommunities";
 
 export function AdminCommunities() {
@@ -38,31 +73,31 @@ export function AdminCommunities() {
   } = form;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className={ADMIN_COMMUNITIES_PAGE_CLASS}>
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          {ADMIN_COMMUNITIES_COPY.title}
+        <h1 className={ADMIN_COMMUNITIES_TITLE_CLASS}>
+          {ADMIN_COMMUNITIES_TITLE}
         </h1>
-        <p className="text-muted-foreground text-lg">
-          {ADMIN_COMMUNITIES_COPY.subtitle}
+        <p className={ADMIN_COMMUNITIES_SUBTITLE_CLASS}>
+          {ADMIN_COMMUNITIES_SUBTITLE}
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>{ADMIN_COMMUNITIES_COPY.createCardTitle}</CardTitle>
+          <CardTitle>{ADMIN_COMMUNITIES_CREATE_CARD_TITLE}</CardTitle>
           <CardDescription>
-            {ADMIN_COMMUNITIES_COPY.createCardDescription}
+            {ADMIN_COMMUNITIES_CREATE_CARD_DESCRIPTION}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form
             onSubmit={onSubmit}
-            className="flex max-w-md flex-col gap-4"
+            className={ADMIN_COMMUNITIES_FORM_CLASS}
             noValidate
           >
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">{ADMIN_COMMUNITIES_COPY.nameLabel}</Label>
+            <div className={ADMIN_COMMUNITIES_FIELD_CLASS}>
+              <Label htmlFor="name">{ADMIN_COMMUNITIES_NAME_LABEL}</Label>
               <Input
                 id="name"
                 {...nameField}
@@ -74,8 +109,8 @@ export function AdminCommunities() {
               <FieldError message={errors.name?.message} />
             </div>
 
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="slug">{ADMIN_COMMUNITIES_COPY.slugLabel}</Label>
+            <div className={ADMIN_COMMUNITIES_FIELD_CLASS}>
+              <Label htmlFor="slug">{ADMIN_COMMUNITIES_SLUG_LABEL}</Label>
               <Input
                 id="slug"
                 {...register("slug", {
@@ -87,8 +122,8 @@ export function AdminCommunities() {
 
             <Button type="submit" size="lg" disabled={isSubmitting}>
               {isSubmitting
-                ? ADMIN_COMMUNITIES_COPY.creating
-                : ADMIN_COMMUNITIES_COPY.createSubmit}
+                ? ADMIN_COMMUNITIES_CREATING_LABEL
+                : ADMIN_COMMUNITIES_CREATE_SUBMIT_LABEL}
             </Button>
           </form>
         </CardContent>
@@ -96,58 +131,60 @@ export function AdminCommunities() {
 
       <Card>
         <CardHeader>
-          <CardTitle>{ADMIN_COMMUNITIES_COPY.listCardTitle}</CardTitle>
+          <CardTitle>{ADMIN_COMMUNITIES_LIST_CARD_TITLE}</CardTitle>
           <CardDescription>
-            {ADMIN_COMMUNITIES_COPY.listCardDescription}
+            {ADMIN_COMMUNITIES_LIST_CARD_DESCRIPTION}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {adminQuery.isPending ? (
-            <p className="text-muted-foreground">
-              {ADMIN_COMMUNITIES_COPY.listLoading}
+            <p className={ADMIN_COMMUNITIES_LOADING_TEXT_CLASS}>
+              {ADMIN_COMMUNITIES_LIST_LOADING_BODY}
             </p>
           ) : adminQuery.isError ? (
             <ErrorState
-              title={ADMIN_COMMUNITIES_COPY.listErrorTitle}
-              description={ADMIN_COMMUNITIES_COPY.listErrorDescription}
+              title={ADMIN_COMMUNITIES_LIST_ERROR_TITLE}
+              description={ADMIN_COMMUNITIES_LIST_ERROR_DESCRIPTION}
               onRetry={() => adminQuery.refetch()}
               homeHref="/dashboard"
-              homeLabel={ADMIN_COMMUNITIES_COPY.backToDashboard}
+              homeLabel={ADMIN_COMMUNITIES_BACK_TO_DASHBOARD_LABEL}
             />
           ) : adminQuery.data?.communities.length === 0 ? (
-            <p className="text-muted-foreground">
-              {ADMIN_COMMUNITIES_COPY.listEmpty}
+            <p className={ADMIN_COMMUNITIES_EMPTY_TEXT_CLASS}>
+              {ADMIN_COMMUNITIES_LIST_EMPTY_BODY}
             </p>
           ) : (
-            <ul className="flex flex-col gap-6">
+            <ul className={ADMIN_COMMUNITIES_LIST_CLASS}>
               {adminQuery.data?.communities.map((community) => (
                 <li
                   key={community.id}
-                  className="border-b pb-6 last:border-b-0 last:pb-0"
+                  className={ADMIN_COMMUNITIES_LIST_ITEM_CLASS}
                 >
-                  <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                  <div className={ADMIN_COMMUNITIES_LIST_ITEM_HEADER_CLASS}>
                     <div>
-                      <p className="text-lg font-semibold">{community.name}</p>
-                      <p className="text-muted-foreground text-sm">
+                      <p className={ADMIN_COMMUNITIES_COMMUNITY_NAME_CLASS}>
+                        {community.name}
+                      </p>
+                      <p className={ADMIN_COMMUNITIES_COMMUNITY_SLUG_CLASS}>
                         /{community.slug}
                       </p>
                     </div>
                     <Button asChild variant="outline" size="sm">
                       <Link href={`/communities/${community.slug}`}>
-                        {ADMIN_COMMUNITIES_COPY.viewHome}
+                        {ADMIN_COMMUNITIES_VIEW_HOME_LABEL}
                       </Link>
                     </Button>
                   </div>
 
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-                    <div className="flex flex-1 flex-col gap-2">
+                  <div className={ADMIN_COMMUNITIES_INVITE_ROW_CLASS}>
+                    <div className={ADMIN_COMMUNITIES_INVITE_FIELD_CLASS}>
                       <Label htmlFor={`invite-${community.id}`}>
-                        {ADMIN_COMMUNITIES_COPY.inviteLabel}
+                        {ADMIN_COMMUNITIES_INVITE_LABEL}
                       </Label>
                       <Input
                         id={`invite-${community.id}`}
                         type="email"
-                        placeholder={ADMIN_COMMUNITIES_COPY.invitePlaceholder}
+                        placeholder={ADMIN_COMMUNITIES_INVITE_PLACEHOLDER}
                         value={inviteEmails[community.id] ?? ""}
                         onChange={(event) =>
                           setInviteEmails((current) => ({
@@ -163,8 +200,8 @@ export function AdminCommunities() {
                       onClick={() => onSendInvite(community.id, community.name)}
                     >
                       {sendingInviteFor === community.id
-                        ? ADMIN_COMMUNITIES_COPY.sendingInvite
-                        : ADMIN_COMMUNITIES_COPY.sendInvite}
+                        ? ADMIN_COMMUNITIES_SENDING_INVITE_LABEL
+                        : ADMIN_COMMUNITIES_SEND_INVITE_LABEL}
                     </Button>
                   </div>
                 </li>

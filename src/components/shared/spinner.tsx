@@ -3,12 +3,13 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 
-const sizeClasses = {
-  sm: "size-5",
-  md: "size-8",
-} as const;
+import {
+  SPINNER_BASE_CLASS,
+  SPINNER_MD_CLASS,
+  SPINNER_SM_CLASS,
+} from "./spinner/constants";
 
-type SpinnerSize = keyof typeof sizeClasses;
+type SpinnerSize = "sm" | "md";
 
 interface SpinnerProps extends Omit<ComponentProps<typeof Loader2>, "size"> {
   size?: SpinnerSize;
@@ -22,7 +23,11 @@ export function Spinner({ size = "md", className, ...props }: SpinnerProps) {
   return (
     <Loader2
       aria-hidden
-      className={cn("text-primary animate-spin", sizeClasses[size], className)}
+      className={cn(
+        SPINNER_BASE_CLASS,
+        size === "sm" ? SPINNER_SM_CLASS : SPINNER_MD_CLASS,
+        className,
+      )}
       {...props}
     />
   );

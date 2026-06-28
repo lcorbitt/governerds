@@ -5,6 +5,17 @@ import { useEffect, useState } from "react";
 import { Spinner } from "@/components/shared/spinner";
 import { cn } from "@/lib/utils";
 
+import {
+  PAGE_LOADING_OVERLAY_CLASS,
+  PAGE_LOADING_OVERLAY_HIDDEN_CLASS,
+  PAGE_LOADING_OVERLAY_PROGRESS_BAR_CLASS,
+  PAGE_LOADING_OVERLAY_PROGRESS_BAR_FILL_CLASS,
+  PAGE_LOADING_OVERLAY_PROGRESS_BAR_HIDDEN_CLASS,
+  PAGE_LOADING_OVERLAY_PROGRESS_BAR_VISIBLE_CLASS,
+  PAGE_LOADING_OVERLAY_SR_ONLY_CLASS,
+  PAGE_LOADING_OVERLAY_VISIBLE_CLASS,
+} from "./page-loading-overlay/constants";
+
 interface PageLoadingOverlayProps {
   active: boolean;
   /** When true, skip the show delay (e.g. route-level loading.tsx). */
@@ -70,11 +81,13 @@ export function PageLoadingOverlay({
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none fixed inset-x-0 top-0 z-60 h-0.5 overflow-hidden transition-opacity duration-150",
-          visible ? "opacity-100" : "opacity-0",
+          PAGE_LOADING_OVERLAY_PROGRESS_BAR_CLASS,
+          visible
+            ? PAGE_LOADING_OVERLAY_PROGRESS_BAR_VISIBLE_CLASS
+            : PAGE_LOADING_OVERLAY_PROGRESS_BAR_HIDDEN_CLASS,
         )}
       >
-        <div className="bg-primary loading-bar h-full w-1/3" />
+        <div className={PAGE_LOADING_OVERLAY_PROGRESS_BAR_FILL_CLASS} />
       </div>
 
       <div
@@ -82,15 +95,14 @@ export function PageLoadingOverlay({
         aria-live="polite"
         aria-label="Loading page"
         className={cn(
-          "fixed inset-0 z-55 flex items-center justify-center transition-opacity duration-150 motion-reduce:backdrop-blur-none",
-          "bg-background/40 dark:bg-background/50 backdrop-blur-sm",
+          PAGE_LOADING_OVERLAY_CLASS,
           visible
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0",
+            ? PAGE_LOADING_OVERLAY_VISIBLE_CLASS
+            : PAGE_LOADING_OVERLAY_HIDDEN_CLASS,
         )}
       >
         <Spinner size="md" />
-        <span className="sr-only">Loading page</span>
+        <span className={PAGE_LOADING_OVERLAY_SR_ONLY_CLASS}>Loading page</span>
       </div>
     </>
   );

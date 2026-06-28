@@ -12,7 +12,16 @@ import {
 import { FieldError } from "@/components/shared/field-error";
 import { PasswordInput } from "@/components/shared/password-input";
 
-import { RESET_PASSWORD_FORM_COPY } from "./constants";
+import {
+  RESET_PASSWORD_FORM_CARD_CLASS,
+  RESET_PASSWORD_FORM_DESCRIPTION,
+  RESET_PASSWORD_FORM_FIELD_CLASS,
+  RESET_PASSWORD_FORM_FORM_CLASS,
+  RESET_PASSWORD_FORM_PASSWORD_LABEL,
+  RESET_PASSWORD_FORM_SUBMIT_LABEL,
+  RESET_PASSWORD_FORM_SUBMITTING_LABEL,
+  RESET_PASSWORD_FORM_TITLE,
+} from "./constants";
 import { useResetPasswordForm } from "./useResetPasswordForm";
 
 export function ResetPasswordForm() {
@@ -23,18 +32,20 @@ export function ResetPasswordForm() {
   } = form;
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className={RESET_PASSWORD_FORM_CARD_CLASS}>
       <CardHeader>
-        <CardTitle>{RESET_PASSWORD_FORM_COPY.title}</CardTitle>
-        <CardDescription>
-          {RESET_PASSWORD_FORM_COPY.description}
-        </CardDescription>
+        <CardTitle>{RESET_PASSWORD_FORM_TITLE}</CardTitle>
+        <CardDescription>{RESET_PASSWORD_FORM_DESCRIPTION}</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-          <div className="flex flex-col gap-2">
+        <form
+          onSubmit={onSubmit}
+          className={RESET_PASSWORD_FORM_FORM_CLASS}
+          noValidate
+        >
+          <div className={RESET_PASSWORD_FORM_FIELD_CLASS}>
             <Label htmlFor="password">
-              {RESET_PASSWORD_FORM_COPY.passwordLabel}
+              {RESET_PASSWORD_FORM_PASSWORD_LABEL}
             </Label>
             <PasswordInput
               id="password"
@@ -46,8 +57,8 @@ export function ResetPasswordForm() {
           </div>
           <Button type="submit" size="lg" disabled={isSubmitting}>
             {isSubmitting
-              ? RESET_PASSWORD_FORM_COPY.submitting
-              : RESET_PASSWORD_FORM_COPY.submit}
+              ? RESET_PASSWORD_FORM_SUBMITTING_LABEL
+              : RESET_PASSWORD_FORM_SUBMIT_LABEL}
           </Button>
         </form>
       </CardContent>

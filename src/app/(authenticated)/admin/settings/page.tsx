@@ -6,7 +6,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { ADMIN_SETTINGS_COPY } from "./constants";
+import {
+  ADMIN_SETTINGS_BODY,
+  ADMIN_SETTINGS_BODY_CLASS,
+  ADMIN_SETTINGS_CARD_DESCRIPTION,
+  ADMIN_SETTINGS_CARD_TITLE,
+  ADMIN_SETTINGS_PAGE_CLASS,
+  ADMIN_SETTINGS_SUBTITLE,
+  ADMIN_SETTINGS_SUBTITLE_CLASS,
+  ADMIN_SETTINGS_TITLE,
+  ADMIN_SETTINGS_TITLE_CLASS,
+} from "./constants";
 
 /**
  * Platform settings admin stub. Super-admin only. Full configuration UI lands
@@ -14,27 +24,21 @@ import { ADMIN_SETTINGS_COPY } from "./constants";
  */
 export default function AdminSettingsPage() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className={ADMIN_SETTINGS_PAGE_CLASS}>
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          {ADMIN_SETTINGS_COPY.title}
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          {ADMIN_SETTINGS_COPY.subtitle}
+        <h1 className={ADMIN_SETTINGS_TITLE_CLASS}>{ADMIN_SETTINGS_TITLE}</h1>
+        <p className={ADMIN_SETTINGS_SUBTITLE_CLASS}>
+          {ADMIN_SETTINGS_SUBTITLE}
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>{ADMIN_SETTINGS_COPY.cardTitle}</CardTitle>
-          <CardDescription>
-            {ADMIN_SETTINGS_COPY.cardDescription}
-          </CardDescription>
+          <CardTitle>{ADMIN_SETTINGS_CARD_TITLE}</CardTitle>
+          <CardDescription>{ADMIN_SETTINGS_CARD_DESCRIPTION}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-base">
-            {ADMIN_SETTINGS_COPY.body}
-          </p>
+          <p className={ADMIN_SETTINGS_BODY_CLASS}>{ADMIN_SETTINGS_BODY}</p>
         </CardContent>
       </Card>
     </div>
