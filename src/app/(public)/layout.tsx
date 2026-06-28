@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { PUBLIC_SHELL_COPY } from "./constants";
+
 /**
  * Public layout: minimal chrome for marketing and auth pages. No product shell
  * and no auth gate — anyone can view these routes. Individual auth pages
@@ -19,13 +21,13 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
               href="/login"
               className="hover:bg-accent rounded-md px-4 py-2 text-base font-medium"
             >
-              Log in
+              {PUBLIC_SHELL_COPY.loginLink}
             </Link>
             <Link
               href="/signup"
               className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-base font-medium"
             >
-              Sign up
+              {PUBLIC_SHELL_COPY.signupLink}
             </Link>
           </div>
         </nav>
@@ -37,7 +39,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         <div className="text-muted-foreground mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-6 text-sm">
           <span>&copy; {new Date().getFullYear()} GoverNerds</span>
           <Link href="/help" className="hover:underline">
-            Help
+            {PUBLIC_SHELL_COPY.helpLink}
           </Link>
         </div>
       </footer>

@@ -16,8 +16,8 @@ export function Providers({ children }: { children: ReactNode }) {
       <QueryProvider>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           {children}

@@ -15,6 +15,8 @@ alwaysApply: false
   `component-colocation.mdc`** for the required folder layout (`index.tsx`,
   `use<Name>.ts`, `constants.ts`, …), UI-only `index.tsx`, and copy placement.
   **See `ui-copy-title-case.mdc`** for Title Case on buttons, links, and h1/h2.
+  Cursor rules guide the agent; they do not lint or auto-fix existing files.
+  Run a copy sweep when adding conventions, or add CI checks for enforcement.
 - `app/(group)/components/` — shell for that group only.
 - `components/` — shared across routes. `components/ui/` — shadcn primitives.
 - `components/shared/` — AppModal, ErrorState, field helpers.

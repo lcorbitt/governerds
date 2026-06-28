@@ -13,6 +13,7 @@ import {
 import { FieldError } from "@/components/shared/field-error";
 import { ErrorState } from "@/components/shared/error-state";
 
+import { PROFILE_COPY } from "./constants";
 import { useProfile } from "./useProfile";
 
 export function Profile() {
@@ -26,29 +27,27 @@ export function Profile() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Your profile</h1>
-        <p className="text-muted-foreground text-lg">
-          Update how you appear across GoverNerds.
-        </p>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {PROFILE_COPY.title}
+        </h1>
+        <p className="text-muted-foreground text-lg">{PROFILE_COPY.subtitle}</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Details</CardTitle>
-          <CardDescription>
-            Changes update live across your open sessions (Realtime example).
-          </CardDescription>
+          <CardTitle>{PROFILE_COPY.detailsTitle}</CardTitle>
+          <CardDescription>{PROFILE_COPY.detailsDescription}</CardDescription>
         </CardHeader>
         <CardContent>
           {profileQuery.isPending ? (
-            <p className="text-muted-foreground">Loading your profile…</p>
+            <p className="text-muted-foreground">{PROFILE_COPY.loading}</p>
           ) : profileQuery.isError ? (
             <ErrorState
-              title="We could not load your profile"
-              description="Please check that your local stack is running, then try again."
+              title={PROFILE_COPY.errorTitle}
+              description={PROFILE_COPY.errorDescription}
               onRetry={() => profileQuery.refetch()}
               homeHref="/dashboard"
-              homeLabel="Back to dashboard"
+              homeLabel={PROFILE_COPY.backToDashboard}
             />
           ) : (
             <form
@@ -57,13 +56,15 @@ export function Profile() {
               noValidate
             >
               <div className="flex flex-col gap-2">
-                <Label htmlFor="displayName">Display name</Label>
+                <Label htmlFor="displayName">
+                  {PROFILE_COPY.displayNameLabel}
+                </Label>
                 <Input id="displayName" {...register("displayName")} />
                 <FieldError message={errors.displayName?.message} />
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label htmlFor="bio">About you</Label>
+                <Label htmlFor="bio">{PROFILE_COPY.bioLabel}</Label>
                 <textarea
                   id="bio"
                   rows={4}
@@ -75,7 +76,7 @@ export function Profile() {
 
               <div className="flex flex-wrap gap-3">
                 <Button type="submit" size="lg" disabled={isSaving || !isDirty}>
-                  {isSaving ? "Saving…" : "Save changes"}
+                  {isSaving ? PROFILE_COPY.saving : PROFILE_COPY.save}
                 </Button>
                 <Button
                   type="button"
@@ -84,7 +85,7 @@ export function Profile() {
                   disabled={isSaving}
                   onClick={resetForm}
                 >
-                  Reset
+                  {PROFILE_COPY.reset}
                 </Button>
               </div>
             </form>

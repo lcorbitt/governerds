@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { signOut } from "@/lib/auth/client";
 
+import { AUTHENTICATED_SHELL_COPY } from "./constants";
+
 export function SignOutButton() {
   const router = useAppRouter();
   const [pending, setPending] = useState(false);
@@ -18,7 +20,7 @@ export function SignOutButton() {
       router.push("/login");
       router.refresh();
     } catch {
-      toast.error("We could not sign you out. Please try again.");
+      toast.error(AUTHENTICATED_SHELL_COPY.signOutError);
       setPending(false);
     }
   }
@@ -30,7 +32,9 @@ export function SignOutButton() {
       onClick={handleSignOut}
       disabled={pending}
     >
-      {pending ? "Signing out…" : "Sign out"}
+      {pending
+        ? AUTHENTICATED_SHELL_COPY.signingOut
+        : AUTHENTICATED_SHELL_COPY.signOut}
     </Button>
   );
 }

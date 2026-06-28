@@ -1,0 +1,21 @@
+export const ADMIN_OVERVIEW_COPY = {
+  title: "Platform Overview",
+  subtitle: "Analytics and audit activity for super administrators.",
+  loading: "Loading platform overview…",
+  errorTitle: "We Could Not Load the Overview",
+  errorDescription:
+    "Please confirm your local stack is running, then try again.",
+  backToAdmin: "Back to Admin",
+  profilesTitle: "Profiles",
+  profilesDescription: "Registered member profiles",
+  auditTitle: "Audit Events",
+  auditDescription: "Last 24 hours",
+  analyticsTitle: "Analytics Events",
+  analyticsDescription: "Last 24 hours",
+  recentAuditTitle: "Recent Audit Log",
+  recentAuditDescription: "Latest platform actions",
+  recentAnalyticsTitle: "Recent Analytics",
+  recentAnalyticsDescription: "Infrastructure events",
+  noAudit: "No audit entries yet.",
+  noAnalytics: "No analytics events yet.",
+} as const;

@@ -1,7 +1,7 @@
 ---
 description: UI copy conventions — Title Case, punctuation, and constants placement
 globs: src/**/*.{tsx,ts},emails/**/*.tsx
-alwaysApply: false
+alwaysApply: true
 ---
 
 # UI copy — humanized Title Case

@@ -15,6 +15,8 @@ import { useUpdateProfileMutation } from "@/hooks/mutations/useProfile";
 import { openModal } from "@/lib/modal/open-modal";
 import { runMutationWithToast } from "@/lib/toast/mutation-toast";
 
+import { PROFILE_COPY } from "./constants";
+
 const profileFormSchema = z.object({
   displayName: z
     .string()
@@ -79,9 +81,9 @@ export function useProfile() {
         bio: values.bio,
       }),
       {
-        loading: "Saving your profile…",
-        success: "Your profile has been saved.",
-        errorFallback: "We could not save your profile. Please try again.",
+        loading: PROFILE_COPY.toastSaving,
+        success: PROFILE_COPY.toastSaved,
+        errorFallback: PROFILE_COPY.toastError,
       },
     );
   }
@@ -96,11 +98,10 @@ export function useProfile() {
     }
 
     openModal({
-      title: "Discard your changes?",
-      description:
-        "You have unsaved edits. If you reset now, those changes will be lost.",
-      confirmLabel: "Discard changes",
-      cancelLabel: "Keep editing",
+      title: PROFILE_COPY.discardTitle,
+      description: PROFILE_COPY.discardDescription,
+      confirmLabel: PROFILE_COPY.discardConfirm,
+      cancelLabel: PROFILE_COPY.discardCancel,
       variant: "destructive",
       onConfirm: () => {
         form.reset({

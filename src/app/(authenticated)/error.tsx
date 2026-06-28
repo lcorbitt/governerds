@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 
 import { ErrorState } from "@/components/shared/error-state";
+import { AUTHENTICATED_ROUTE_ERROR_COPY } from "@/app/constants";
 
 export default function AuthenticatedError({
   error,
@@ -18,11 +19,11 @@ export default function AuthenticatedError({
 
   return (
     <ErrorState
-      title="Something went wrong"
-      description="We could not load this page right now. Please try again in a moment."
+      title={AUTHENTICATED_ROUTE_ERROR_COPY.title}
+      description={AUTHENTICATED_ROUTE_ERROR_COPY.description}
       onRetry={reset}
       homeHref="/dashboard"
-      homeLabel="Back to dashboard"
+      homeLabel={AUTHENTICATED_ROUTE_ERROR_COPY.backToDashboard}
     />
   );
 }

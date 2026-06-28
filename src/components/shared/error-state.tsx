@@ -10,6 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { ERROR_STATE_COPY } from "./error-state/constants";
+
 interface ErrorStateProps {
   title: string;
   description: string;
@@ -28,7 +30,7 @@ export function ErrorState({
   description,
   onRetry,
   homeHref = "/",
-  homeLabel = "Go home",
+  homeLabel = ERROR_STATE_COPY.goHome,
   children,
 }: ErrorStateProps) {
   return (
@@ -43,7 +45,7 @@ export function ErrorState({
           <div className="flex flex-wrap items-center justify-center gap-3">
             {onRetry ? (
               <Button type="button" onClick={onRetry}>
-                Try again
+                {ERROR_STATE_COPY.tryAgain}
               </Button>
             ) : null}
             <Button asChild variant="outline">

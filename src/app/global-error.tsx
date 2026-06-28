@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 
 import { ErrorState } from "@/components/shared/error-state";
+import { GLOBAL_ERROR_COPY } from "@/app/constants";
 
 /**
  * Top-level error boundary. Reports to Sentry and shows a calm, plain-language
@@ -24,8 +25,8 @@ export default function GlobalError({
     <html lang="en">
       <body className="bg-background text-foreground antialiased">
         <ErrorState
-          title="Something went wrong"
-          description="We hit an unexpected problem. Please try again. If it keeps happening, come back in a few minutes."
+          title={GLOBAL_ERROR_COPY.title}
+          description={GLOBAL_ERROR_COPY.description}
           onRetry={reset}
         />
       </body>

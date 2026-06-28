@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { AuthenticatedLoadingShell } from "./AuthenticatedLoadingShell";
 import { SignOutButton } from "./SignOutButton";
+import { AUTHENTICATED_SHELL_COPY } from "./constants";
 
 interface AppShellProps {
   email: string;
@@ -29,7 +30,7 @@ export function AppShell({
               href={isSuperAdmin ? "/admin/overview" : "/dashboard"}
               className="text-primary font-serif text-xl font-bold"
             >
-              GoverNerds
+              {AUTHENTICATED_SHELL_COPY.brand}
             </Link>
             <div className="flex items-center gap-1">
               {!isSuperAdmin ? (
@@ -37,27 +38,27 @@ export function AppShell({
                   href="/dashboard"
                   className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
                 >
-                  Dashboard
+                  {AUTHENTICATED_SHELL_COPY.dashboard}
                 </Link>
               ) : null}
               <Link
                 href="/communities"
                 className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
               >
-                Communities
+                {AUTHENTICATED_SHELL_COPY.communities}
               </Link>
               <Link
                 href="/profile"
                 className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
               >
-                Profile
+                {AUTHENTICATED_SHELL_COPY.profile}
               </Link>
               {isSuperAdmin ? (
                 <Link
                   href="/admin/overview"
                   className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
                 >
-                  Overview
+                  {AUTHENTICATED_SHELL_COPY.overview}
                 </Link>
               ) : null}
               {isAdmin || isSuperAdmin ? (
@@ -66,13 +67,13 @@ export function AppShell({
                     href="/admin/communities"
                     className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
                   >
-                    Manage communities
+                    {AUTHENTICATED_SHELL_COPY.manageCommunities}
                   </Link>
                   <Link
                     href="/admin/flags"
                     className="hover:bg-accent rounded-md px-3 py-2 text-base font-medium"
                   >
-                    Flags
+                    {AUTHENTICATED_SHELL_COPY.flags}
                   </Link>
                 </>
               ) : null}

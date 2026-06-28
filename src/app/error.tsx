@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 
 import { ErrorState } from "@/components/shared/error-state";
+import { ROUTE_ERROR_COPY } from "@/app/constants";
 
 /**
  * Route-level error boundary. Reports to Sentry and shows a calm recovery
@@ -22,11 +23,11 @@ export default function Error({
 
   return (
     <ErrorState
-      title="Something went wrong"
-      description="We hit an unexpected problem on this page. Please try again. If it keeps happening, come back in a few minutes."
+      title={ROUTE_ERROR_COPY.title}
+      description={ROUTE_ERROR_COPY.description}
       onRetry={reset}
       homeHref="/dashboard"
-      homeLabel="Go to dashboard"
+      homeLabel={ROUTE_ERROR_COPY.goToDashboard}
     />
   );
 }
