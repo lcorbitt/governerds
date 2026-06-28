@@ -9,6 +9,8 @@ interface UseIntersectionRevealOptions {
   once?: boolean;
   /** Root margin passed to IntersectionObserver. Default "50px 0px" */
   rootMargin?: string;
+  /** When false, observer is skipped and shouldMount stays false. Default true */
+  enabled?: boolean;
 }
 
 interface UseIntersectionRevealResult<T extends Element> {
@@ -36,6 +38,7 @@ export function useIntersectionReveal<T extends Element = HTMLDivElement>({
   threshold = 0.1,
   once = true,
   rootMargin = "50px 0px",
+  enabled = true,
 }: UseIntersectionRevealOptions = {}): UseIntersectionRevealResult<T> {
   const ref = useRef<T | null>(null);
   const [shouldMount, setShouldMount] = useState(false);
@@ -46,6 +49,8 @@ export function useIntersectionReveal<T extends Element = HTMLDivElement>({
   );
 
   useEffect(() => {
+    if (!enabled) return;
+
     const element = ref.current;
     if (!element) return;
 
@@ -63,7 +68,7 @@ export function useIntersectionReveal<T extends Element = HTMLDivElement>({
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, [threshold, once, rootMargin]);
+  }, [threshold, once, rootMargin, enabled]);
 
   return { ref, shouldMount, prefersReducedMotion };
 }

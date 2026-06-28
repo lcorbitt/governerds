@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { signupSchema, type SignupInput } from "@/lib/auth/schemas";
 import { buildAuthHref } from "@/lib/auth/next-path";
 import { signUpWithPassword } from "@/lib/auth/client";
+import { showUserError } from "@/lib/toast/user-message";
 
 import { SIGNUP_FORM_COPY } from "./constants";
 import type { UseSignupFormOptions } from "./types";
@@ -30,8 +31,8 @@ export function useSignupForm({ nextPath = null }: UseSignupFormOptions = {}) {
       await signUpWithPassword(values.email, values.password, destination);
       setSubmittedEmail(values.email);
       toast.success(SIGNUP_FORM_COPY.toastSuccess);
-    } catch {
-      toast.error(SIGNUP_FORM_COPY.toastError);
+    } catch (error) {
+      showUserError(error, SIGNUP_FORM_COPY.toastError);
     }
   }
 

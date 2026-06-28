@@ -14,6 +14,5 @@ export const SIGNUP_FORM_COPY = {
     "We sent a confirmation link to {email}. Click it to finish setting up your account.",
   backToLogin: "Back to Log In",
   toastSuccess: "Account created. Please check your email to confirm.",
-  toastError:
-    "We could not create your account. The email may already be in use.",
+  toastError: "We could not create your account. Please try again.",
 } as const;

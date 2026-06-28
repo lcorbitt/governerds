@@ -15,6 +15,11 @@ export interface RevealProps {
   once?: boolean;
   /** Delay before fade-in starts (ms). Useful for stagger. Default 0 */
   delay?: number;
+  /**
+   * Mount on first paint and animate in without waiting for scroll into view.
+   * Use for above-the-fold content (e.g. landing hero).
+   */
+  immediate?: boolean;
   as?: ElementType;
 }
 
@@ -28,12 +33,20 @@ export function Reveal({
   threshold = 0.1,
   once = true,
   delay = 0,
+  immediate = false,
   as: Component = "div",
 }: RevealProps) {
-  const { ref, shouldMount, prefersReducedMotion } = useIntersectionReveal({
+  const {
+    ref,
+    shouldMount: inView,
+    prefersReducedMotion,
+  } = useIntersectionReveal({
     threshold,
     once,
+    enabled: !immediate,
   });
+  const shouldMount = immediate || inView;
+  const [canTransition, setCanTransition] = useState(false);
   const [delayedVisible, setDelayedVisible] = useState(false);
   const visible = shouldMount && (prefersReducedMotion || delayedVisible);
 
@@ -42,14 +55,22 @@ export function Reveal({
       return;
     }
 
-    let rafId = 0;
+    let rafEnable = 0;
+    let rafReveal = 0;
     const delayTimer = window.setTimeout(() => {
-      rafId = window.requestAnimationFrame(() => setDelayedVisible(true));
+      rafEnable = window.requestAnimationFrame(() => {
+        setCanTransition(true);
+        rafReveal = window.requestAnimationFrame(() => {
+          setDelayedVisible(true);
+        });
+      });
     }, delay);
 
     return () => {
       window.clearTimeout(delayTimer);
-      window.cancelAnimationFrame(rafId);
+      window.cancelAnimationFrame(rafEnable);
+      window.cancelAnimationFrame(rafReveal);
+      setCanTransition(false);
       setDelayedVisible(false);
     };
   }, [shouldMount, prefersReducedMotion, delay]);
@@ -61,7 +82,8 @@ export function Reveal({
         className,
         shouldMount &&
           !prefersReducedMotion &&
-          "transition-[opacity,transform] duration-150 ease-in-out",
+          canTransition &&
+          "transition-[opacity,transform] duration-300 ease-in-out",
         shouldMount &&
           !prefersReducedMotion &&
           !visible &&

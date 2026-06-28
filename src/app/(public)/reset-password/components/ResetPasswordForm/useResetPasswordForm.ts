@@ -10,6 +10,7 @@ import {
   type ResetPasswordInput,
 } from "@/lib/auth/schemas";
 import { updatePassword } from "@/lib/auth/client";
+import { showUserError } from "@/lib/toast/user-message";
 
 import { RESET_PASSWORD_FORM_COPY } from "./constants";
 
@@ -30,8 +31,8 @@ export function useResetPasswordForm() {
       toast.success(RESET_PASSWORD_FORM_COPY.toastSuccess);
       router.push("/dashboard");
       router.refresh();
-    } catch {
-      toast.error(RESET_PASSWORD_FORM_COPY.toastError);
+    } catch (error) {
+      showUserError(error, RESET_PASSWORD_FORM_COPY.toastError);
     }
   }
 

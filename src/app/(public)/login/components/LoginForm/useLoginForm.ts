@@ -9,6 +9,7 @@ import { useAppRouter } from "@/hooks/use-app-router";
 import { loginSchema, type LoginInput } from "@/lib/auth/schemas";
 import { buildAuthHref } from "@/lib/auth/next-path";
 import { sendMagicLink, signInWithPassword } from "@/lib/auth/client";
+import { showUserError } from "@/lib/toast/user-message";
 
 import { LOGIN_FORM_COPY } from "./constants";
 import type { UseLoginFormOptions } from "./types";
@@ -33,8 +34,8 @@ export function useLoginForm({ nextPath = null }: UseLoginFormOptions = {}) {
       toast.success(LOGIN_FORM_COPY.toastWelcome);
       router.push(destination);
       router.refresh();
-    } catch {
-      toast.error(LOGIN_FORM_COPY.toastError);
+    } catch (error) {
+      showUserError(error, LOGIN_FORM_COPY.toastError);
     }
   }
 
@@ -47,8 +48,8 @@ export function useLoginForm({ nextPath = null }: UseLoginFormOptions = {}) {
       await sendMagicLink(email, destination);
       setMagicLinkSent(true);
       toast.success(LOGIN_FORM_COPY.toastMagicSent);
-    } catch {
-      toast.error(LOGIN_FORM_COPY.toastMagicError);
+    } catch (error) {
+      showUserError(error, LOGIN_FORM_COPY.toastMagicError);
     }
   }
 

@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { signInWithOAuth, type OAuthProvider } from "@/lib/auth/client";
+import { showUserError } from "@/lib/toast/user-message";
+
+const OAUTH_ERROR_FALLBACK = "We could not start sign-in. Please try again.";
 
 /**
  * Continue-with-Google / Continue-with-Microsoft buttons. Shared across login
@@ -18,8 +20,8 @@ export function OAuthButtons() {
     try {
       await signInWithOAuth(provider);
       // On success the browser is redirected, so no further UI is needed.
-    } catch {
-      toast.error("We could not start sign-in. Please try again.");
+    } catch (error) {
+      showUserError(error, OAUTH_ERROR_FALLBACK);
       setPending(null);
     }
   }

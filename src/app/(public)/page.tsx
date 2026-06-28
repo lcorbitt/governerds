@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Reveal } from "@/components/shared/reveal";
 import { Button } from "@/components/ui/button";
 
 import { LANDING_PAGE_COPY } from "./constants";
@@ -10,7 +11,11 @@ import { LANDING_PAGE_COPY } from "./constants";
  */
 export default function LandingPage() {
   return (
-    <section className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center gap-6 px-4 py-24 text-center">
+    <Reveal
+      immediate
+      as="section"
+      className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center gap-6 px-4 py-24 text-center"
+    >
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
         {LANDING_PAGE_COPY.title}
       </h1>
@@ -25,6 +30,6 @@ export default function LandingPage() {
           <Link href="/login">{LANDING_PAGE_COPY.login}</Link>
         </Button>
       </div>
-    </section>
+    </Reveal>
   );
 }

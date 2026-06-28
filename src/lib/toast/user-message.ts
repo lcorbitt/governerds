@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 
+import { getAuthErrorMessage, isAuthLikeError } from "@/lib/auth/user-message";
 import { EdgeFunctionError } from "@/lib/edge-function/request";
 
 /**
@@ -9,6 +10,9 @@ import { EdgeFunctionError } from "@/lib/edge-function/request";
 export function getUserErrorMessage(error: unknown, fallback: string): string {
   if (error instanceof EdgeFunctionError) {
     return error.message;
+  }
+  if (isAuthLikeError(error)) {
+    return getAuthErrorMessage(error, fallback);
   }
   return fallback;
 }
