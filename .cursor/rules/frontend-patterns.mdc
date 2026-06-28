@@ -15,6 +15,8 @@ alwaysApply: false
   `component-colocation.mdc`** for the required folder layout (`index.tsx`,
   `use<Name>.ts`, `constants.ts`, …), UI-only `index.tsx`, and copy placement.
   **See `ui-copy-title-case.mdc`** for Title Case on buttons, links, and h1/h2.
+  **See `ui-spacing.mdc`** for spacing on the 2px grid (even and half steps like
+  `gap-2`, `p-4`, `space-y-1.5`; no odd integers like `gap-3`).
   Cursor rules guide the agent; they do not lint or auto-fix existing files.
   Run a copy sweep when adding conventions, or add CI checks for enforcement.
 - `app/(group)/components/` — shell for that group only.

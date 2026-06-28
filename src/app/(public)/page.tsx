@@ -22,7 +22,7 @@ export default function LandingPage() {
       <p className="text-muted-foreground max-w-xl text-lg">
         {LANDING_PAGE_COPY.description}
       </p>
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <Button asChild size="lg">
           <Link href="/signup">{LANDING_PAGE_COPY.createAccount}</Link>
         </Button>

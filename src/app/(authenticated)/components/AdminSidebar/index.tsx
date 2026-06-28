@@ -93,7 +93,7 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
         </p>
       </div>
 
-      <nav className="flex flex-1 flex-col gap-1 p-3">
+      <nav className="flex flex-1 flex-col gap-2 p-4">
         {visibleItems.map((item) => {
           const Icon = item.icon;
           const isActive = isActivePath(pathname, item.href);
@@ -104,7 +104,7 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
               href={item.href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                "flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-muted text-foreground font-semibold"
                   : "text-muted-foreground hover:bg-accent hover:text-foreground",
@@ -122,10 +122,10 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
         })}
       </nav>
 
-      <div className="border-border border-t p-3">
+      <div className="border-border border-t p-4">
         <Link
           href={backHref}
-          className="text-muted-foreground hover:text-foreground hover:bg-accent block rounded-md px-3 py-2 text-sm font-medium transition-colors"
+          className="text-muted-foreground hover:text-foreground hover:bg-accent block rounded-md px-4 py-2 text-sm font-medium transition-colors"
         >
           {backLabel}
         </Link>
@@ -143,7 +143,7 @@ export function AdminSidebarMobile({ isSuperAdmin }: AdminSidebarProps) {
   return (
     <nav
       aria-label={ADMIN_SIDEBAR_COPY.title}
-      className="border-border flex gap-1 overflow-x-auto border-b px-4 py-2 md:hidden"
+      className="border-border flex gap-2 overflow-x-auto border-b px-4 py-2 md:hidden"
     >
       {visibleItems.map((item) => {
         const isActive = isActivePath(pathname, item.href);
@@ -154,7 +154,7 @@ export function AdminSidebarMobile({ isSuperAdmin }: AdminSidebarProps) {
             href={item.href}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "shrink-0 rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
+              "shrink-0 rounded-md px-4 py-1.5 text-xs font-medium transition-colors",
               isActive
                 ? "bg-muted text-foreground font-semibold"
                 : "text-muted-foreground hover:bg-accent hover:text-foreground",

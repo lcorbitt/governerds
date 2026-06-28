@@ -40,7 +40,7 @@ export function AcceptInvite() {
               {ACCEPT_INVITE_COPY.authDescription}
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-3">
+          <CardContent className="flex flex-col gap-4">
             <Button asChild size="lg">
               <Link href={loginHref}>{ACCEPT_INVITE_COPY.login}</Link>
             </Button>

@@ -104,9 +104,9 @@ export function AdminOverview() {
                 {ADMIN_OVERVIEW_COPY.noAudit}
               </p>
             ) : (
-              <ul className="flex flex-col gap-3 text-sm">
+              <ul className="flex flex-col gap-4 text-sm">
                 {data.recentAuditLogs.map((entry) => (
-                  <li key={entry.id} className="border-b pb-3 last:border-0">
+                  <li key={entry.id} className="border-b pb-4 last:border-0">
                     <p className="font-medium">{entry.action}</p>
                     <p className="text-muted-foreground">
                       {entry.resourceType}
@@ -135,9 +135,9 @@ export function AdminOverview() {
                 {ADMIN_OVERVIEW_COPY.noAnalytics}
               </p>
             ) : (
-              <ul className="flex flex-col gap-3 text-sm">
+              <ul className="flex flex-col gap-4 text-sm">
                 {data.recentAnalyticsEvents.map((entry) => (
-                  <li key={entry.id} className="border-b pb-3 last:border-0">
+                  <li key={entry.id} className="border-b pb-4 last:border-0">
                     <p className="font-medium">{entry.eventName}</p>
                     <p className="text-muted-foreground">
                       {entry.environment}

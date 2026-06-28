@@ -82,7 +82,7 @@ export function NotificationBell({ userId }: NotificationBellProps) {
         >
           <Bell className="h-5 w-5" />
           {unreadCount > 0 ? (
-            <span className="bg-primary text-primary-foreground absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-semibold">
+            <span className="bg-primary text-primary-foreground absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1.5 text-[10px] font-semibold">
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           ) : null}
@@ -104,22 +104,22 @@ export function NotificationBell({ userId }: NotificationBellProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {notificationsQuery.isPending ? (
-          <p className="text-muted-foreground px-2 py-3 text-sm">
+          <p className="text-muted-foreground px-2 py-4 text-sm">
             {NOTIFICATION_BELL_COPY.loading}
           </p>
         ) : notificationsQuery.isError ? (
-          <p className="text-muted-foreground px-2 py-3 text-sm">
+          <p className="text-muted-foreground px-2 py-4 text-sm">
             {NOTIFICATION_BELL_COPY.error}
           </p>
         ) : items.length === 0 ? (
-          <p className="text-muted-foreground px-2 py-3 text-sm">
+          <p className="text-muted-foreground px-2 py-4 text-sm">
             {NOTIFICATION_BELL_COPY.empty}
           </p>
         ) : (
           items.map((item) => (
             <DropdownMenuItem
               key={item.id}
-              className="flex cursor-default flex-col items-start gap-1 p-3"
+              className="flex cursor-default flex-col items-start gap-1.5 p-4"
               onSelect={(event) => event.preventDefault()}
             >
               <div className="flex w-full items-start justify-between gap-2">

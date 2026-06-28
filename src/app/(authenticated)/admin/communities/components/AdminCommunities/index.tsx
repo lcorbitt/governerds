@@ -125,7 +125,7 @@ export function AdminCommunities() {
                   key={community.id}
                   className="border-b pb-6 last:border-b-0 last:pb-0"
                 >
-                  <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                     <div>
                       <p className="text-lg font-semibold">{community.name}</p>
                       <p className="text-muted-foreground text-sm">

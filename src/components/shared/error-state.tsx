@@ -40,9 +40,9 @@ export function ErrorState({
           <CardTitle className="text-2xl">{title}</CardTitle>
           <CardDescription className="text-base">{description}</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col items-center gap-3">
+        <CardContent className="flex flex-col items-center gap-4">
           {children}
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-4">
             {onRetry ? (
               <Button type="button" onClick={onRetry}>
                 {ERROR_STATE_COPY.tryAgain}

@@ -5,10 +5,9 @@ import { usePathname } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { UserAvatar } from "@/components/shared/UserAvatar";
 
 import { NotificationBell } from "../NotificationBell";
-import { SignOutButton } from "../SignOutButton";
+import { UserAvatarMenu } from "../UserAvatarMenu";
 import { MEMBER_TOP_NAV_COPY } from "./constants";
 
 interface MemberTopNavProps {
@@ -37,7 +36,7 @@ function NavTabLink({
       href={href}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        "shrink-0 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+        "shrink-0 rounded-md px-4 py-2 text-sm font-medium transition-colors",
         isActive
           ? "bg-muted text-foreground font-semibold"
           : "text-muted-foreground hover:bg-accent hover:text-foreground",
@@ -72,11 +71,6 @@ export function MemberTopNav({
       label: MEMBER_TOP_NAV_COPY.communities,
       match: (path: string) => path.startsWith("/communities"),
     },
-    {
-      href: "/profile",
-      label: MEMBER_TOP_NAV_COPY.profile,
-      match: (path: string) => path === "/profile",
-    },
     ...(isAdmin || isSuperAdmin
       ? [
           {
@@ -98,7 +92,7 @@ export function MemberTopNav({
           {MEMBER_TOP_NAV_COPY.brand}
         </Link>
 
-        <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
+        <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto">
           {tabs.map((tab) => (
             <NavTabLink
               key={tab.href}
@@ -108,7 +102,7 @@ export function MemberTopNav({
           ))}
         </div>
 
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex shrink-0 items-center gap-4">
           <Input
             disabled
             aria-hidden
@@ -116,8 +110,7 @@ export function MemberTopNav({
             className="hidden h-9 max-w-xs text-sm md:block"
           />
           <NotificationBell userId={userId} />
-          <UserAvatar label={MEMBER_TOP_NAV_COPY.profile} />
-          <SignOutButton />
+          <UserAvatarMenu />
         </div>
       </nav>
     </header>

@@ -51,9 +51,9 @@ export function UserAvatar({
 
   return (
     <Link
-      href="/profile"
+      href="/settings"
       className="focus-visible:ring-ring rounded-full focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-      aria-label={label ?? "Profile"}
+      aria-label={label ?? "Settings"}
     >
       {avatar}
     </Link>

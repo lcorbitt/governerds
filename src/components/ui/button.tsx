@@ -21,7 +21,7 @@ const buttonVariants = cva(
       },
       size: {
         // Minimum 44px touch targets for accessibility.
-        default: "h-11 px-5 py-2",
+        default: "h-11 px-6 py-2",
         sm: "h-10 rounded-md px-4",
         lg: "h-12 rounded-md px-8 text-lg",
         icon: "h-11 w-11",

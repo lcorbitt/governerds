@@ -10,7 +10,7 @@ export default function HelpPage() {
       <h1 className="text-3xl font-bold tracking-tight">
         {HELP_PAGE_COPY.title}
       </h1>
-      <p className="text-muted-foreground mt-3 text-lg">
+      <p className="text-muted-foreground mt-4 text-lg">
         {HELP_PAGE_COPY.description}
       </p>
     </div>

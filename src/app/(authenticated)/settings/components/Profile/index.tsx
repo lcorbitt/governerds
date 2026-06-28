@@ -127,13 +127,13 @@ export function Profile() {
                 <textarea
                   id="bio"
                   rows={4}
-                  className="border-input bg-background ring-offset-background focus-visible:ring-ring flex w-full rounded-md border px-3 py-2 text-base focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                  className="border-input bg-background ring-offset-background focus-visible:ring-ring flex w-full rounded-md border px-4 py-2 text-base focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                   {...register("bio")}
                 />
                 <FieldError message={errors.bio?.message} />
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-4">
                 <Button type="submit" size="lg" disabled={isSaving || !isDirty}>
                   {isSaving ? PROFILE_COPY.saving : PROFILE_COPY.save}
                 </Button>

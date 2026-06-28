@@ -91,7 +91,7 @@ export function SignupForm({ nextPath = null }: SignupFormProps) {
           </Button>
         </form>
 
-        <div className="text-muted-foreground flex items-center gap-3 text-sm">
+        <div className="text-muted-foreground flex items-center gap-4 text-sm">
           <span className="bg-border h-px flex-1" />
           {SIGNUP_FORM_COPY.divider}
           <span className="bg-border h-px flex-1" />

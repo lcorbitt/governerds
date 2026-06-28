@@ -9,8 +9,8 @@ import { EdgeFunctionError } from "@/lib/edge-function/request";
 import {
   resolveProfileFieldError,
   resolveProfileSaveErrorMessage,
-} from "@/app/(authenticated)/profile/components/Profile/utils";
-import { PROFILE_COPY } from "@/app/(authenticated)/profile/components/Profile/constants";
+} from "@/app/(authenticated)/settings/components/Profile/utils";
+import { PROFILE_COPY } from "@/app/(authenticated)/settings/components/Profile/constants";
 
 describe("profile validation", () => {
   it("normalizes display names by trimming whitespace", () => {

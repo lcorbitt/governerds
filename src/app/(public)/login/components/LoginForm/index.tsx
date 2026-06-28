@@ -77,7 +77,7 @@ export function LoginForm({ nextPath = null }: LoginFormProps) {
           {LOGIN_FORM_COPY.magicLink}
         </Button>
 
-        <div className="text-muted-foreground flex items-center gap-3 text-sm">
+        <div className="text-muted-foreground flex items-center gap-4 text-sm">
           <span className="bg-border h-px flex-1" />
           {LOGIN_FORM_COPY.divider}
           <span className="bg-border h-px flex-1" />

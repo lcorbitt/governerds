@@ -1,6 +1,6 @@
 export const PROFILE_COPY = {
-  title: "Your Profile",
-  subtitle: "Update how you appear across GoverNerds.",
+  title: "Settings",
+  subtitle: "Update your profile and how you appear across GoverNerds.",
   detailsTitle: "Details",
   detailsDescription:
     "Changes update live across your open sessions (Realtime example).",

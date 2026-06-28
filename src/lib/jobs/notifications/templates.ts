@@ -6,7 +6,7 @@
 export const WELCOME_NOTIFICATION = {
   title: "Welcome to GoverNerds",
   body: "Your account is ready. Explore communities and update your profile.",
-  actionUrl: "/profile",
+  actionUrl: "/settings",
 } as const;
 
 export function buildCommunityMemberJoinedNotification(params: {
