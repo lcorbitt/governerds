@@ -15,22 +15,21 @@ import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import {
+  ADMIN_SECTION_LABEL,
   ASIDE_CLASS,
   BACK_LINK_CLASS,
   BACK_TO_COMMUNITIES_LABEL,
   BACK_TO_DASHBOARD_LABEL,
-  COMING_SOON_BADGE_CLASS,
-  COMING_SOON_LABEL,
   FEATURE_FLAGS_LABEL,
   FOOTER_CLASS,
   HEADER_CLASS,
   MANAGE_COMMUNITIES_LABEL,
   MOBILE_NAV_CLASS,
+  MOBILE_SECTION_DIVIDER_CLASS,
   MOBILE_TAB_ACTIVE_CLASS,
   MOBILE_TAB_CLASS,
   MOBILE_TAB_INACTIVE_CLASS,
   MODERATION_LABEL,
-  NAV_CLASS,
   NAV_ICON_CLASS,
   NAV_LABEL_CLASS,
   NAV_LINK_ACTIVE_CLASS,
@@ -38,10 +37,14 @@ import {
   NAV_LINK_INACTIVE_CLASS,
   OVERVIEW_LABEL,
   PLATFORM_SETTINGS_LABEL,
-  SUBTITLE,
-  SUBTITLE_CLASS,
-  TITLE,
-  TITLE_CLASS,
+  PRODUCT_NAME,
+  PRODUCT_NAME_CLASS,
+  SECTION_CLASS,
+  SECTION_DIVIDER_CLASS,
+  SECTION_LABEL_CLASS,
+  SECTION_LINKS_CLASS,
+  SECTIONS_CLASS,
+  SUPER_ADMIN_SECTION_LABEL,
   USERS_LABEL,
 } from "./constants";
 
@@ -53,17 +56,22 @@ interface AdminNavItem {
   href: string;
   label: string;
   icon: LucideIcon;
-  superAdminOnly?: boolean;
-  comingSoon?: boolean;
 }
 
-const ADMIN_NAV_ITEMS: AdminNavItem[] = [
+const SUPER_ADMIN_NAV_ITEMS: AdminNavItem[] = [
   {
     href: "/admin/overview",
     label: OVERVIEW_LABEL,
     icon: LayoutDashboard,
-    superAdminOnly: true,
   },
+  {
+    href: "/admin/settings",
+    label: PLATFORM_SETTINGS_LABEL,
+    icon: Settings,
+  },
+];
+
+const PLATFORM_ADMIN_NAV_ITEMS: AdminNavItem[] = [
   {
     href: "/admin/communities",
     label: MANAGE_COMMUNITIES_LABEL,
@@ -73,26 +81,16 @@ const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     href: "/admin/flags",
     label: FEATURE_FLAGS_LABEL,
     icon: Flag,
-    comingSoon: true,
   },
   {
     href: "/admin/users",
     label: USERS_LABEL,
     icon: Users,
-    comingSoon: true,
   },
   {
     href: "/admin/moderation",
     label: MODERATION_LABEL,
     icon: Shield,
-    comingSoon: true,
-  },
-  {
-    href: "/admin/settings",
-    label: PLATFORM_SETTINGS_LABEL,
-    icon: Settings,
-    superAdminOnly: true,
-    comingSoon: true,
   },
 ];
 
@@ -103,11 +101,78 @@ function isActivePath(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function SidebarNavLink({
+  item,
+  isActive,
+}: {
+  item: AdminNavItem;
+  isActive: boolean;
+}) {
+  const Icon = item.icon;
+
+  return (
+    <Link
+      href={item.href}
+      aria-current={isActive ? "page" : undefined}
+      className={cn(
+        NAV_LINK_CLASS,
+        isActive ? NAV_LINK_ACTIVE_CLASS : NAV_LINK_INACTIVE_CLASS,
+      )}
+    >
+      <Icon className={NAV_ICON_CLASS} aria-hidden />
+      <span className={NAV_LABEL_CLASS}>{item.label}</span>
+    </Link>
+  );
+}
+
+function SidebarNavSection({
+  label,
+  items,
+  pathname,
+}: {
+  label: string;
+  items: AdminNavItem[];
+  pathname: string;
+}) {
+  return (
+    <div className={SECTION_CLASS}>
+      <p className={SECTION_LABEL_CLASS}>{label}</p>
+      <div className={SECTION_LINKS_CLASS}>
+        {items.map((item) => (
+          <SidebarNavLink
+            key={item.href}
+            item={item}
+            isActive={isActivePath(pathname, item.href)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MobileNavTab({
+  item,
+  isActive,
+}: {
+  item: AdminNavItem;
+  isActive: boolean;
+}) {
+  return (
+    <Link
+      href={item.href}
+      aria-current={isActive ? "page" : undefined}
+      className={cn(
+        MOBILE_TAB_CLASS,
+        isActive ? MOBILE_TAB_ACTIVE_CLASS : MOBILE_TAB_INACTIVE_CLASS,
+      )}
+    >
+      {item.label}
+    </Link>
+  );
+}
+
 export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
   const pathname = usePathname();
-  const visibleItems = ADMIN_NAV_ITEMS.filter(
-    (item) => !item.superAdminOnly || isSuperAdmin,
-  );
   const backHref = isSuperAdmin ? "/communities" : "/dashboard";
   const backLabel = isSuperAdmin
     ? BACK_TO_COMMUNITIES_LABEL
@@ -116,35 +181,25 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
   return (
     <aside className={ASIDE_CLASS}>
       <div className={HEADER_CLASS}>
-        <p className={TITLE_CLASS}>{TITLE}</p>
-        <p className={SUBTITLE_CLASS}>{SUBTITLE}</p>
+        <p className={PRODUCT_NAME_CLASS}>{PRODUCT_NAME}</p>
       </div>
 
-      <nav className={NAV_CLASS}>
-        {visibleItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = isActivePath(pathname, item.href);
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={isActive ? "page" : undefined}
-              className={cn(
-                NAV_LINK_CLASS,
-                isActive ? NAV_LINK_ACTIVE_CLASS : NAV_LINK_INACTIVE_CLASS,
-              )}
-            >
-              <Icon className={NAV_ICON_CLASS} aria-hidden />
-              <span className={NAV_LABEL_CLASS}>{item.label}</span>
-              {item.comingSoon ? (
-                <span className={COMING_SOON_BADGE_CLASS}>
-                  {COMING_SOON_LABEL}
-                </span>
-              ) : null}
-            </Link>
-          );
-        })}
+      <nav className={SECTIONS_CLASS}>
+        {isSuperAdmin ? (
+          <>
+            <SidebarNavSection
+              label={SUPER_ADMIN_SECTION_LABEL}
+              items={SUPER_ADMIN_NAV_ITEMS}
+              pathname={pathname}
+            />
+            <div className={SECTION_DIVIDER_CLASS} role="presentation" />
+          </>
+        ) : null}
+        <SidebarNavSection
+          label={ADMIN_SECTION_LABEL}
+          items={PLATFORM_ADMIN_NAV_ITEMS}
+          pathname={pathname}
+        />
       </nav>
 
       <div className={FOOTER_CLASS}>
@@ -158,29 +213,28 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
 
 export function AdminSidebarMobile({ isSuperAdmin }: AdminSidebarProps) {
   const pathname = usePathname();
-  const visibleItems = ADMIN_NAV_ITEMS.filter(
-    (item) => !item.superAdminOnly || isSuperAdmin,
-  );
 
   return (
-    <nav aria-label={TITLE} className={MOBILE_NAV_CLASS}>
-      {visibleItems.map((item) => {
-        const isActive = isActivePath(pathname, item.href);
-
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            aria-current={isActive ? "page" : undefined}
-            className={cn(
-              MOBILE_TAB_CLASS,
-              isActive ? MOBILE_TAB_ACTIVE_CLASS : MOBILE_TAB_INACTIVE_CLASS,
-            )}
-          >
-            {item.label}
-          </Link>
-        );
-      })}
+    <nav aria-label={PRODUCT_NAME} className={MOBILE_NAV_CLASS}>
+      {isSuperAdmin
+        ? SUPER_ADMIN_NAV_ITEMS.map((item) => (
+            <MobileNavTab
+              key={item.href}
+              item={item}
+              isActive={isActivePath(pathname, item.href)}
+            />
+          ))
+        : null}
+      {isSuperAdmin ? (
+        <div className={MOBILE_SECTION_DIVIDER_CLASS} role="presentation" />
+      ) : null}
+      {PLATFORM_ADMIN_NAV_ITEMS.map((item) => (
+        <MobileNavTab
+          key={item.href}
+          item={item}
+          isActive={isActivePath(pathname, item.href)}
+        />
+      ))}
     </nav>
   );
 }

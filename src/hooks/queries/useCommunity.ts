@@ -15,10 +15,11 @@ export { communityQueryKeyRoot, communityQueryKeys };
 /**
  * Community reads, query keys, and invalidation helpers.
  */
-export function useCommunitiesQuery() {
+export function useCommunitiesQuery(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: communityQueryKeys.list(),
     queryFn: listCommunities,
+    enabled: options?.enabled ?? true,
   });
 }
 
@@ -30,10 +31,11 @@ export function useCommunityQuery(slug: string) {
   });
 }
 
-export function useAdminCommunitiesQuery() {
+export function useAdminCommunitiesQuery(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: communityQueryKeys.adminList(),
     queryFn: listAdminCommunities,
+    enabled: options?.enabled ?? true,
   });
 }
 

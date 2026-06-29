@@ -27,6 +27,37 @@ export function setProfileQueryData(
   queryClient.setQueryData(profileQueryKeys.me(), profile);
 }
 
+/** Realtime payload row shape (snake_case from Postgres). */
+export interface ProfileRealtimeRow {
+  avatar_url?: string | null;
+  display_name?: string | null;
+  bio?: string | null;
+  updated_at?: string;
+}
+
+/**
+ * Merges a Realtime `profiles` UPDATE into the warm profile cache so avatars
+ * and display names refresh without waiting on a refetch.
+ */
+export function patchProfileQueryDataFromRealtimeRow(
+  queryClient: QueryClient,
+  row: ProfileRealtimeRow,
+): boolean {
+  const previous = queryClient.getQueryData<ProfileResponse>(
+    profileQueryKeys.me(),
+  );
+  if (!previous) return false;
+
+  setProfileQueryData(queryClient, {
+    ...previous,
+    ...(row.display_name !== undefined && { displayName: row.display_name }),
+    ...(row.avatar_url !== undefined && { avatarUrl: row.avatar_url }),
+    ...(row.bio !== undefined && { bio: row.bio }),
+    ...(row.updated_at !== undefined && { updatedAt: row.updated_at }),
+  });
+  return true;
+}
+
 export function invalidateProfileQueries(queryClient: QueryClient) {
   return queryClient.invalidateQueries({ queryKey: profileQueryKeyRoot });
 }

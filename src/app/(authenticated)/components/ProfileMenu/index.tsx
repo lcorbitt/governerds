@@ -12,12 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useProfileQuery } from "@/hooks/queries/useProfile";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { signOut } from "@/lib/auth/client";
 
 import {
+  DISPLAY_NAME_CLASS,
   DROPDOWN_CLASS,
+  HEADER_AVATAR_CLASS,
+  HEADER_CLASS,
+  HEADER_TEXT_CLASS,
   ITEM_CLASS,
+  ROLE_BADGE_CLASS,
   SETTINGS_LABEL,
   SIGN_OUT_ERROR_MESSAGE,
   SIGN_OUT_LABEL,
@@ -25,10 +31,20 @@ import {
   TRIGGER_CLASS,
   TRIGGER_LABEL,
 } from "./constants";
+import { resolveDisplayName, resolveRoleLabel } from "./utils";
 
-export function UserAvatarMenu() {
+interface ProfileMenuProps {
+  isAdmin: boolean;
+  isSuperAdmin: boolean;
+}
+
+export function ProfileMenu({ isAdmin, isSuperAdmin }: ProfileMenuProps) {
   const router = useAppRouter();
+  const profileQuery = useProfileQuery();
   const [signOutPending, setSignOutPending] = useState(false);
+
+  const displayName = resolveDisplayName(profileQuery.data?.displayName);
+  const roleLabel = resolveRoleLabel(isSuperAdmin, isAdmin);
 
   async function handleSignOut() {
     setSignOutPending(true);
@@ -54,6 +70,14 @@ export function UserAvatarMenu() {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className={DROPDOWN_CLASS}>
+        <div className={HEADER_CLASS}>
+          <UserAvatar className={HEADER_AVATAR_CLASS} linkToProfile={false} />
+          <div className={HEADER_TEXT_CLASS}>
+            <p className={DISPLAY_NAME_CLASS}>{displayName}</p>
+            <span className={ROLE_BADGE_CLASS}>{roleLabel}</span>
+          </div>
+        </div>
+        <DropdownMenuSeparator />
         <DropdownMenuItem asChild className={ITEM_CLASS}>
           <Link href="/settings">{SETTINGS_LABEL}</Link>
         </DropdownMenuItem>

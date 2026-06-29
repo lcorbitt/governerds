@@ -2,10 +2,7 @@ import type { ReactNode } from "react";
 
 import { AuthenticatedLoadingShell } from "../AuthenticatedLoadingShell";
 import { AuthenticatedShellBody } from "../AuthenticatedShellBody";
-import { MemberTopNav } from "../MemberTopNav";
 import { ProfileRealtimeSync } from "../ProfileRealtimeSync";
-
-import { ROOT_CLASS } from "./constants";
 
 interface AppShellProps {
   userId: string;
@@ -25,16 +22,15 @@ export function AppShell({
   children,
 }: AppShellProps) {
   return (
-    <div className={ROOT_CLASS}>
+    <>
       <ProfileRealtimeSync userId={userId} />
-      <MemberTopNav
+      <AuthenticatedShellBody
         userId={userId}
         isAdmin={isAdmin}
         isSuperAdmin={isSuperAdmin}
-      />
-      <AuthenticatedShellBody isAdmin={isAdmin} isSuperAdmin={isSuperAdmin}>
+      >
         <AuthenticatedLoadingShell>{children}</AuthenticatedLoadingShell>
       </AuthenticatedShellBody>
-    </div>
+    </>
   );
 }

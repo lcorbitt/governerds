@@ -42,7 +42,7 @@ export function UserAvatar({
 
   const avatar = (
     <Avatar className={cn(CLASS, className)}>
-      <AvatarImage src={src} alt="" />
+      <AvatarImage key={src ?? "no-avatar"} src={src} alt="" />
       <AvatarFallback className={fallbackClassName}>
         {getFallbackInitial(displayName)}
       </AvatarFallback>

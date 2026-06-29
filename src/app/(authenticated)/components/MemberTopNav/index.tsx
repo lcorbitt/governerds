@@ -6,17 +6,17 @@ import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
+import { CommunityPicker } from "../CommunityPicker";
 import { NotificationBell } from "../NotificationBell";
-import { UserAvatarMenu } from "../UserAvatarMenu";
+import { ProfileMenu } from "../ProfileMenu";
 import {
   ACTIONS_CLASS,
   ADMIN_LABEL,
-  BRAND_CLASS,
-  BRAND_LABEL,
   COMMUNITIES_LABEL,
   DASHBOARD_LABEL,
   HEADER_CLASS,
   NAV_CLASS,
+  NAV_FULL_WIDTH_CLASS,
   SEARCH_INPUT_CLASS,
   SEARCH_PLACEHOLDER,
   TAB_LINK_ACTIVE_CLASS,
@@ -29,6 +29,7 @@ interface MemberTopNavProps {
   userId: string;
   isAdmin: boolean;
   isSuperAdmin: boolean;
+  layout?: "default" | "admin";
 }
 
 interface NavTabConfig {
@@ -64,9 +65,9 @@ export function MemberTopNav({
   userId,
   isAdmin,
   isSuperAdmin,
+  layout = "default",
 }: MemberTopNavProps) {
   const pathname = usePathname();
-  const brandHref = isSuperAdmin ? "/admin/overview" : "/dashboard";
   const adminHref = isSuperAdmin ? "/admin/overview" : "/admin/communities";
 
   const tabs: NavTabConfig[] = [
@@ -97,10 +98,8 @@ export function MemberTopNav({
 
   return (
     <header className={HEADER_CLASS}>
-      <nav className={NAV_CLASS}>
-        <Link href={brandHref} className={BRAND_CLASS}>
-          {BRAND_LABEL}
-        </Link>
+      <nav className={layout === "admin" ? NAV_FULL_WIDTH_CLASS : NAV_CLASS}>
+        <CommunityPicker isSuperAdmin={isSuperAdmin} />
 
         <div className={TABS_CLASS}>
           {tabs.map((tab) => (
@@ -120,7 +119,7 @@ export function MemberTopNav({
             className={SEARCH_INPUT_CLASS}
           />
           <NotificationBell userId={userId} />
-          <UserAvatarMenu />
+          <ProfileMenu isAdmin={isAdmin} isSuperAdmin={isSuperAdmin} />
         </div>
       </nav>
     </header>

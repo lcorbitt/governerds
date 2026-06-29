@@ -4,7 +4,11 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { createClient } from "@/lib/supabase/client";
-import { invalidateProfileQueries } from "@/hooks/queries/useProfile";
+import {
+  invalidateProfileQueries,
+  patchProfileQueryDataFromRealtimeRow,
+  type ProfileRealtimeRow,
+} from "@/hooks/queries/useProfile";
 
 interface ProfileRealtimeSyncProps {
   userId: string;
@@ -12,8 +16,8 @@ interface ProfileRealtimeSyncProps {
 
 /**
  * Keeps the shared profile query in sync across the authenticated shell. Any
- * profile row update (avatar, display name, bio) invalidates the cache so every
- * `useProfileQuery` subscriber refetches together.
+ * profile row update (avatar, display name, bio) patches the cache so every
+ * `useProfileQuery` subscriber updates together.
  */
 export function ProfileRealtimeSync({ userId }: ProfileRealtimeSyncProps) {
   const queryClient = useQueryClient();
@@ -30,14 +34,20 @@ export function ProfileRealtimeSync({ userId }: ProfileRealtimeSyncProps) {
           table: "profiles",
           filter: `owner_id=eq.${userId}`,
         },
-        () => {
-          void invalidateProfileQueries(queryClient);
+        (payload) => {
+          const patched = patchProfileQueryDataFromRealtimeRow(
+            queryClient,
+            payload.new as ProfileRealtimeRow,
+          );
+          if (!patched) {
+            void invalidateProfileQueries(queryClient);
+          }
         },
       )
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      void supabase.removeChannel(channel);
     };
   }, [queryClient, userId]);
 

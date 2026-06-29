@@ -1,4 +1,3 @@
-export const BRAND_LABEL = "GoverNerds";
 export const DASHBOARD_LABEL = "Dashboard";
 export const COMMUNITIES_LABEL = "Communities";
 export const ADMIN_LABEL = "Admin";
@@ -7,7 +6,7 @@ export const SEARCH_PLACEHOLDER = "Search communities and posts";
 export const HEADER_CLASS = "bg-background border-b";
 export const NAV_CLASS =
   "mx-auto flex h-14 w-full max-w-7xl items-center gap-4 px-4";
-export const BRAND_CLASS = "text-primary shrink-0 font-serif text-xl font-bold";
+export const NAV_FULL_WIDTH_CLASS = "flex h-14 w-full items-center gap-4 px-4";
 export const TABS_CLASS =
   "flex min-w-0 flex-1 items-center gap-2 overflow-x-auto";
 export const TAB_LINK_CLASS =

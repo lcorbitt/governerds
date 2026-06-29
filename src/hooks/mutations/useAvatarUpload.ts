@@ -2,10 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { createAvatarUploadUrl } from "@/frontend/services/storage.service";
 import { updateProfile } from "@/frontend/services/profile.service";
-import {
-  invalidateProfileQueries,
-  setProfileQueryData,
-} from "@/hooks/queries/useProfile";
+import { setProfileQueryData } from "@/hooks/queries/useProfile";
 import { createClient } from "@/lib/supabase/client";
 import {
   AVATAR_MAX_BYTES,
@@ -55,7 +52,6 @@ export function useAvatarUploadMutation() {
     },
     onSuccess: (profile) => {
       setProfileQueryData(queryClient, profile);
-      void invalidateProfileQueries(queryClient);
     },
   });
 }

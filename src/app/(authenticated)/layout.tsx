@@ -22,7 +22,11 @@ export default async function AuthenticatedLayout({
   const superAdmin = isSuperAdmin(session);
 
   return (
-    <PrefetchBoundary prefetch={prefetchAuthenticatedShellQueries}>
+    <PrefetchBoundary
+      prefetch={(queryClient) =>
+        prefetchAuthenticatedShellQueries(queryClient, superAdmin)
+      }
+    >
       <AppShell
         userId={session.user.id}
         isAdmin={isAdmin}
