@@ -15,7 +15,7 @@ import {
   useAdminCommunityMembersQuery,
 } from "@/hooks/queries/useCommunity";
 import type { AdminCommunityMemberListItem } from "@shared/dto/community.dto";
-import type { DataTableFilterOption } from "@/components/DataTable";
+import type { SelectFieldOption } from "@/components/shared/SelectField";
 
 import {
   CELL_MUTED_CLASS,
@@ -68,7 +68,7 @@ export function useAdminMembersTable() {
     communityId,
   });
 
-  const communityFilterOptions = useMemo<DataTableFilterOption[]>(() => {
+  const communityFilterOptions = useMemo<SelectFieldOption[]>(() => {
     return (communitiesQuery.data?.items ?? []).map((community) => ({
       value: community.id,
       label: community.name,

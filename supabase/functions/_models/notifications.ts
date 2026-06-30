@@ -95,19 +95,36 @@ export async function countUnreadNotifications(
   return count ?? 0;
 }
 
+export async function getNotificationUserId(
+  client: SupabaseClient,
+  notificationId: string,
+): Promise<string | null> {
+  const { data, error } = await client
+    .from("notifications")
+    .select("user_id")
+    .eq("id", notificationId)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  return data?.user_id ?? null;
+}
+
 export async function markNotificationReadById(
   client: SupabaseClient,
   userId: string,
   notificationId: string,
-): Promise<void> {
-  const { error } = await client
+): Promise<boolean> {
+  const { data, error } = await client
     .from("notifications")
     .update({ read_at: new Date().toISOString() })
     .eq("id", notificationId)
     .eq("user_id", userId)
-    .is("read_at", null);
+    .is("read_at", null)
+    .select("id")
+    .maybeSingle();
 
   if (error) throw new Error(error.message);
+  return data !== null;
 }
 
 export async function markAllNotificationsRead(

@@ -1,3 +1,5 @@
+import { loadEffectiveAccess } from "@services/access-control/access-control.service.ts";
+
 import type { Handler, HandlerContext, Middleware } from "../context.ts";
 import { apiResponse } from "../response.ts";
 
@@ -20,9 +22,20 @@ export function withResourceOwnership(options: {
     if (ownerId === null) return apiResponse.notFound();
 
     const isOwner = ownerId === ctx.user.id;
-    const hasOverride = options.overridePermission
-      ? ctx.permissions.includes(options.overridePermission)
-      : false;
+    let hasOverride = false;
+
+    if (options.overridePermission) {
+      if (
+        ctx.permissions.length === 0 &&
+        ctx.roleSlugs.length === 0 &&
+        ctx.userClient
+      ) {
+        const access = await loadEffectiveAccess(ctx.userClient, ctx.user.id);
+        ctx.permissions = access.permissions;
+        ctx.roleSlugs = access.roleSlugs;
+      }
+      hasOverride = ctx.permissions.includes(options.overridePermission);
+    }
 
     if (!isOwner && !hasOverride) return apiResponse.forbidden();
 

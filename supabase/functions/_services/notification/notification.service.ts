@@ -103,7 +103,15 @@ export async function markNotificationRead(
     );
   }
 
-  await markNotificationReadById(client, userId, input.notificationId);
+  const updated = await markNotificationReadById(
+    client,
+    userId,
+    input.notificationId,
+  );
+  if (!updated) {
+    throw new NotificationNotFoundError("That notification was not found.");
+  }
+
   const unreadCount = await countUnreadNotifications(client, userId);
   return { unreadCount };
 }

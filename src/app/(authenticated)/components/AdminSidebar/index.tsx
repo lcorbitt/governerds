@@ -2,9 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, type ReactNode } from "react";
 import {
+  ChevronDown,
   Flag,
+  Globe,
   LayoutDashboard,
+  LayoutPanelTop,
+  Menu,
   ScrollText,
   Settings,
   Shield,
@@ -26,6 +31,7 @@ import {
   FEATURE_FLAGS_LABEL,
   FOOTER_CLASS,
   HEADER_CLASS,
+  HOMEPAGE_LABEL,
   MANAGE_COMMUNITIES_LABEL,
   MEMBERS_LABEL,
   MOBILE_NAV_CLASS,
@@ -34,6 +40,7 @@ import {
   MOBILE_TAB_CLASS,
   MOBILE_TAB_INACTIVE_CLASS,
   MODERATION_LABEL,
+  NAVIGATION_LABEL,
   NAV_ICON_CLASS,
   NAV_LABEL_CLASS,
   NAV_LINK_ACTIVE_CLASS,
@@ -48,6 +55,18 @@ import {
   SECTION_LABEL_CLASS,
   SECTION_LINKS_CLASS,
   SECTIONS_CLASS,
+  SITE_CHEVRON_CLASS,
+  SITE_CHEVRON_EXPANDED_CLASS,
+  SITE_SECTION_LABEL,
+  SITE_SUBMENU_CLASS,
+  SITE_SUBMENU_COLLAPSED_CLASS,
+  SITE_SUBMENU_EXPANDED_CLASS,
+  SITE_SUBMENU_INNER_CLASS,
+  SITE_SUBMENU_WRAPPER_CLASS,
+  SITE_TOGGLE_ACTIVE_CLASS,
+  SITE_TOGGLE_CLASS,
+  SITE_TOGGLE_INACTIVE_CLASS,
+  SUBMENU_LINK_CLASS,
   SUPER_ADMIN_SECTION_LABEL,
   USERS_LABEL,
 } from "./constants";
@@ -85,6 +104,19 @@ const SUPER_ADMIN_NAV_ITEMS: AdminNavItem[] = [
   },
 ];
 
+const SITE_NAV_ITEMS: AdminNavItem[] = [
+  {
+    href: "/admin/site/homepage",
+    label: HOMEPAGE_LABEL,
+    icon: LayoutPanelTop,
+  },
+  {
+    href: "/admin/site/navigation",
+    label: NAVIGATION_LABEL,
+    icon: Menu,
+  },
+];
+
 const PLATFORM_ADMIN_NAV_ITEMS: AdminNavItem[] = [
   {
     href: "/admin/communities",
@@ -115,12 +147,18 @@ function isActivePath(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function isSitePath(pathname: string): boolean {
+  return pathname === "/admin/site" || pathname.startsWith("/admin/site/");
+}
+
 function SidebarNavLink({
   item,
   isActive,
+  linkClassName = NAV_LINK_CLASS,
 }: {
   item: AdminNavItem;
   isActive: boolean;
+  linkClassName?: string;
 }) {
   const Icon = item.icon;
 
@@ -129,7 +167,7 @@ function SidebarNavLink({
       href={item.href}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        NAV_LINK_CLASS,
+        linkClassName,
         isActive ? NAV_LINK_ACTIVE_CLASS : NAV_LINK_INACTIVE_CLASS,
       )}
     >
@@ -139,19 +177,84 @@ function SidebarNavLink({
   );
 }
 
+function SidebarSiteNavGroup({ pathname }: { pathname: string }) {
+  const isSiteActive = isSitePath(pathname);
+  const [isExpanded, setIsExpanded] = useState(isSiteActive);
+  const [prevIsSiteActive, setPrevIsSiteActive] = useState(isSiteActive);
+
+  if (isSiteActive !== prevIsSiteActive) {
+    setPrevIsSiteActive(isSiteActive);
+    if (isSiteActive) {
+      setIsExpanded(true);
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <button
+        type="button"
+        aria-expanded={isExpanded}
+        aria-controls="admin-site-submenu"
+        onClick={() => setIsExpanded((current) => !current)}
+        className={cn(
+          SITE_TOGGLE_CLASS,
+          isSiteActive ? SITE_TOGGLE_ACTIVE_CLASS : SITE_TOGGLE_INACTIVE_CLASS,
+        )}
+      >
+        <Globe className={NAV_ICON_CLASS} aria-hidden />
+        <span className={NAV_LABEL_CLASS}>{SITE_SECTION_LABEL}</span>
+        <ChevronDown
+          className={cn(
+            SITE_CHEVRON_CLASS,
+            isExpanded ? SITE_CHEVRON_EXPANDED_CLASS : null,
+          )}
+          aria-hidden
+        />
+      </button>
+
+      <div
+        id="admin-site-submenu"
+        aria-hidden={!isExpanded}
+        className={cn(
+          SITE_SUBMENU_WRAPPER_CLASS,
+          isExpanded
+            ? SITE_SUBMENU_EXPANDED_CLASS
+            : SITE_SUBMENU_COLLAPSED_CLASS,
+        )}
+      >
+        <div className={SITE_SUBMENU_INNER_CLASS} inert={!isExpanded}>
+          <div className={SITE_SUBMENU_CLASS}>
+            {SITE_NAV_ITEMS.map((item) => (
+              <SidebarNavLink
+                key={item.href}
+                item={item}
+                isActive={isActivePath(pathname, item.href)}
+                linkClassName={SUBMENU_LINK_CLASS}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SidebarNavSection({
   label,
   items,
   pathname,
+  leading,
 }: {
   label: string;
   items: AdminNavItem[];
   pathname: string;
+  leading?: ReactNode;
 }) {
   return (
     <div className={SECTION_CLASS}>
       <p className={SECTION_LABEL_CLASS}>{label}</p>
       <div className={SECTION_LINKS_CLASS}>
+        {leading}
         {items.map((item) => (
           <SidebarNavLink
             key={item.href}
@@ -213,6 +316,9 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
           label={ADMIN_SECTION_LABEL}
           items={PLATFORM_ADMIN_NAV_ITEMS}
           pathname={pathname}
+          leading={
+            isSuperAdmin ? <SidebarSiteNavGroup pathname={pathname} /> : null
+          }
         />
       </nav>
 
@@ -242,6 +348,15 @@ export function AdminSidebarMobile({ isSuperAdmin }: AdminSidebarProps) {
       {isSuperAdmin ? (
         <div className={MOBILE_SECTION_DIVIDER_CLASS} role="presentation" />
       ) : null}
+      {isSuperAdmin
+        ? SITE_NAV_ITEMS.map((item) => (
+            <MobileNavTab
+              key={item.href}
+              item={item}
+              isActive={isActivePath(pathname, item.href)}
+            />
+          ))
+        : null}
       {PLATFORM_ADMIN_NAV_ITEMS.map((item) => (
         <MobileNavTab
           key={item.href}

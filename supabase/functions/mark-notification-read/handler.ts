@@ -4,6 +4,7 @@ import type { HandlerContext } from "@http/context.ts";
 import { apiResponse } from "@http/response.ts";
 import {
   markNotificationRead,
+  NotificationNotFoundError,
   NotificationValidationError,
 } from "@services/notification/notification.service.ts";
 
@@ -49,6 +50,9 @@ export async function handle(ctx: HandlerContext): Promise<Response> {
   } catch (error) {
     if (error instanceof NotificationValidationError) {
       return apiResponse.badRequest(error.message);
+    }
+    if (error instanceof NotificationNotFoundError) {
+      return apiResponse.notFound(error.message);
     }
     throw error;
   }

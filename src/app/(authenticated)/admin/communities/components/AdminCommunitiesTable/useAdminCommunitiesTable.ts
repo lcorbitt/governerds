@@ -22,7 +22,6 @@ import type { CommunitySummary } from "@shared/dto/community.dto";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 import {
   CELL_NAME_CLASS,
@@ -40,7 +39,6 @@ import {
   EXPORT_SLUG_HEADER,
   INVITE_CELL_CLASS,
   INVITE_FIELD_CLASS,
-  INVITE_LABEL,
   INVITE_PLACEHOLDER,
   SEND_INVITE_LABEL,
   SENDING_INVITE_LABEL,
@@ -168,11 +166,6 @@ export function useAdminCommunitiesTable({
             createElement(
               "div",
               { className: INVITE_FIELD_CLASS },
-              createElement(
-                Label,
-                { htmlFor: `invite-${row.id}` },
-                INVITE_LABEL,
-              ),
               createElement(Input, {
                 id: `invite-${row.id}`,
                 type: "email",

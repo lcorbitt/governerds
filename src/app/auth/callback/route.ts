@@ -11,6 +11,9 @@ import { NOTIFICATION_TYPES } from "@shared/notification/types";
  * Auth callback bridge. Handles the PKCE code exchange for OAuth (Google,
  * Microsoft), magic links, and email confirmations. This is the narrow auth
  * route exception — it is not a domain API.
+ *
+ * IDOR: `next` is sanitized via sanitizeNextPath (no open redirect); admin
+ * notification lookup keys on session user id only, never a client-supplied id.
  */
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);

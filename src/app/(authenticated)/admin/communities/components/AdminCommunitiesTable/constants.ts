@@ -19,7 +19,6 @@ export const SEARCH_ARIA_LABEL = "Search Communities";
 
 export const VIEW_HOME_LABEL = "View Home";
 export const EDIT_LABEL = "Edit";
-export const INVITE_LABEL = "Invite by Email";
 export const INVITE_PLACEHOLDER = "member@example.com";
 export const SEND_INVITE_LABEL = "Send Invite";
 export const SENDING_INVITE_LABEL = "Sending…";

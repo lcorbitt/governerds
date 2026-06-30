@@ -5,7 +5,9 @@ export {
   serveAuthenticated,
   serveWithAccessContext,
   serveWithPermission,
+  serveWithResourceOwnership,
   type RateLimitOpts,
+  type ResourceOwnershipOpts,
 } from "./presets.ts";
 export {
   withCors,

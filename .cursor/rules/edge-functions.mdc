@@ -16,7 +16,8 @@ alwaysApply: false
 - `_http/middleware/*` — the internal pipeline (auth, rate limit, access
   control, ownership, CORS, security headers, logging, error boundary).
 - `_http/middleware/presets.ts` — `servePublic`, `serveAuthenticated`,
-  `serveWithAccessContext`, `serveWithPermission` — use these in `index.ts`.
+  `serveWithAccessContext`, `serveWithPermission`,
+  `serveWithResourceOwnership` — use these in `index.ts`.
 
 ## Slug naming (`verb-kebab-noun`)
 
@@ -60,6 +61,55 @@ When a UI feature owns the message, the API returns `error.details.reason`
 - User client (anon key + caller JWT) → RLS applies. Default for user data.
 - Service client (service role) → bypasses RLS. ONLY after an explicit
   authorization check in code.
+
+### Service client checklist
+
+Before calling `createServiceClient()` in a handler or service, confirm one of:
+
+1. **`serveWithPermission`** on the slug (platform admin reads/writes).
+2. **Caller-scoped identity** — no client resource id; path or mutation keyed to
+   `ctx.user.id` only (`create-avatar-upload-url`, `update-profile`).
+3. **Token or email binding** — resource resolved from an unguessable token plus
+   session email (`accept-invite`).
+4. **Public read with no user data** (`get-health`).
+
+If none apply, stop and add an ownership or membership gate first.
+
+## IDOR protection matrix
+
+Use this when adding or reviewing a slug. Client resource id = any uuid/slug
+the caller supplies to target a specific row.
+
+| Slug | Client resource id? | Protection pattern |
+|------|---------------------|-------------------|
+| `get-health` | No | Public |
+| `get-feature-flag` | `key` only | `userId` from session, never from client |
+| `get-profile` | No | `ctx.user.id` + RLS |
+| `update-profile` | No | `ctx.user.id` + RLS + avatar path validation |
+| `get-permissions` | No | Projects caller roles |
+| `list-communities` | No | RLS on `userClient` |
+| `get-community` | `slug` (query) | Membership gate in service; 404 non-members |
+| `list-notifications` | No | `.eq("user_id", userId)` + RLS |
+| `mark-notification-read` | `notificationId` (body) | `serveWithResourceOwnership` + scoped update |
+| `create-avatar-upload-url` | No | Storage path from `ctx.user.id` |
+| `accept-invite` | `token` (body) | Token hash + email match |
+| `create-community` | No | `serveWithPermission(communities:manage)` |
+| `update-community` | `communityId` (body) | `serveWithPermission(communities:manage)` |
+| `send-community-invite` | `communityId` (body) | `serveWithPermission(communities:manage)` |
+| `list-admin-communities` | Filters only | `serveWithPermission(communities:read)` |
+| `list-admin-community-members` | `communityId` (optional) | `serveWithPermission(communities:read)` |
+| `list-admin-users` | Filters only | `serveWithPermission(users:read)` |
+| `get-admin-overview` | No | `serveWithPermission(audit:read)` |
+| `list-audit-logs` | Filters only | `serveWithPermission(audit:read)` |
+
+**Patterns:**
+
+- **Caller-scoped** — never accept `userId` / `profileId` from the client.
+- **Membership** — communities have no single owner; use `hasCommunityMembership`.
+- **Ownership middleware** — use `serveWithResourceOwnership` when a member
+  mutation accepts another user's resource id. Shared owner loaders live in
+  `_models/*` (e.g. `getNotificationUserId`).
+- **Platform admin** — `serveWithPermission` before any `createServiceClient()`.
 
 ## Realtime
 

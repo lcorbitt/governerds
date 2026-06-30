@@ -1,4 +1,4 @@
-import type { Handler } from "../context.ts";
+import type { Handler, HandlerContext } from "../context.ts";
 import { createContext, createPipeline } from "./pipeline.ts";
 import {
   withCors,
@@ -9,11 +9,17 @@ import {
 import { withAuth, withOptionalAuth } from "./auth.ts";
 import { withRateLimit } from "./rate-limit.ts";
 import { withAccessContext, withPermission } from "./access-control.ts";
+import { withResourceOwnership } from "./ownership.ts";
 
 export type RateLimitOpts = {
   name: string;
   limit: number;
   windowSeconds: number;
+};
+
+export type ResourceOwnershipOpts = {
+  loadOwnerId: (ctx: HandlerContext) => Promise<string | null>;
+  overridePermission?: string;
 };
 
 const coreStack = [
@@ -76,5 +82,24 @@ export function serveWithPermission(
     withAuth,
     withAccessContext,
     withPermission(permission),
+  );
+}
+
+/** Authenticated endpoints that mutate a specific resource by client-supplied id. */
+export function serveWithResourceOwnership(
+  handler: Handler,
+  rateLimit: RateLimitOpts,
+  ownership: ResourceOwnershipOpts,
+): void {
+  const accessMiddleware = ownership.overridePermission
+    ? [withAccessContext]
+    : [];
+
+  serve(
+    handler,
+    withRateLimit(rateLimit),
+    withAuth,
+    ...accessMiddleware,
+    withResourceOwnership(ownership),
   );
 }

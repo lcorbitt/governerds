@@ -22,6 +22,8 @@ export const SEARCH_ARIA_LABEL = "Search Members";
 
 export const COMMUNITY_FILTER_ID = "admin-members-community-filter";
 export const COMMUNITY_FILTER_LABEL = "Community";
+export const COMMUNITY_SEARCH_PLACEHOLDER = "Search communities…";
+export const COMMUNITY_FILTER_EMPTY_MESSAGE = "No communities found.";
 
 export const CARD_CONTENT_CLASS = "p-0";
 export const CELL_PRIMARY_CLASS = "font-semibold";

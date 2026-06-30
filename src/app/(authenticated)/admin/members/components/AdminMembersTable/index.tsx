@@ -3,19 +3,21 @@
 import {
   DataTable,
   DataTableExportButton,
-  DataTableFilterSelect,
   DataTableSearchInput,
   DataTableToolbar,
 } from "@/components/DataTable";
 import { ErrorState } from "@/components/shared/ErrorState";
 import { LoadingState } from "@/components/shared/LoadingState";
+import { SelectField } from "@/components/shared/SelectField";
 import { TablePagination } from "@/components/TablePagination";
 
 import {
   BACK_TO_DASHBOARD_LABEL,
   CARD_CONTENT_CLASS,
+  COMMUNITY_FILTER_EMPTY_MESSAGE,
   COMMUNITY_FILTER_ID,
   COMMUNITY_FILTER_LABEL,
+  COMMUNITY_SEARCH_PLACEHOLDER,
   EMPTY_MESSAGE,
   FILTERED_EMPTY_MESSAGE,
   LIST_ERROR_DESCRIPTION,
@@ -77,13 +79,17 @@ export function AdminMembersTable() {
               ariaLabel={SEARCH_ARIA_LABEL}
               disabled={fetching}
             />
-            <DataTableFilterSelect
+            <SelectField
               id={COMMUNITY_FILTER_ID}
               label={COMMUNITY_FILTER_LABEL}
               value={communityId}
               onChange={handleCommunityChange}
               options={communityFilterOptions}
               disabled={fetching}
+              searchable
+              searchPlaceholder={COMMUNITY_SEARCH_PLACEHOLDER}
+              emptyMessage={COMMUNITY_FILTER_EMPTY_MESSAGE}
+              includeAllOption
             />
           </>
         }

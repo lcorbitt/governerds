@@ -11,6 +11,9 @@ export const MEMBERS_LABEL = "Members";
 export const USERS_LABEL = "Users";
 export const MODERATION_LABEL = "Moderation";
 export const PLATFORM_SETTINGS_LABEL = "Platform Settings";
+export const SITE_SECTION_LABEL = "Site";
+export const HOMEPAGE_LABEL = "Homepage";
+export const NAVIGATION_LABEL = "Navigation";
 
 export const ASIDE_CLASS =
   "border-border bg-background hidden h-dvh w-56 shrink-0 flex-col border-r md:flex";
@@ -41,3 +44,20 @@ export const MOBILE_TAB_CLASS =
 export const MOBILE_TAB_ACTIVE_CLASS = "bg-muted text-foreground font-semibold";
 export const MOBILE_TAB_INACTIVE_CLASS =
   "text-muted-foreground hover:bg-accent hover:text-foreground";
+export const SITE_SUBMENU_CLASS = "flex flex-col gap-2 pl-6";
+export const SITE_SUBMENU_WRAPPER_CLASS =
+  "grid transition-[grid-template-rows] duration-300 ease-in-out";
+export const SITE_SUBMENU_EXPANDED_CLASS = "grid-rows-[1fr]";
+export const SITE_SUBMENU_COLLAPSED_CLASS = "grid-rows-[0fr]";
+export const SITE_SUBMENU_INNER_CLASS = "min-h-0 overflow-hidden";
+export const SITE_TOGGLE_CLASS =
+  "flex w-full items-center justify-start gap-2 rounded-md px-4 py-2 text-left text-sm font-medium transition-colors";
+export const SITE_TOGGLE_ACTIVE_CLASS =
+  "bg-muted text-foreground font-semibold";
+export const SITE_TOGGLE_INACTIVE_CLASS =
+  "text-muted-foreground hover:bg-accent hover:text-foreground";
+export const SITE_CHEVRON_CLASS =
+  "text-muted-foreground ml-auto h-4 w-4 shrink-0 transition-transform duration-200";
+export const SITE_CHEVRON_EXPANDED_CLASS = "rotate-180";
+export const SUBMENU_LINK_CLASS =
+  "flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors";
