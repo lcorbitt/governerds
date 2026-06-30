@@ -46,8 +46,8 @@ export const MOBILE_TAB_INACTIVE_CLASS =
   "text-muted-foreground hover:bg-accent hover:text-foreground";
 export const SITE_SUBMENU_CLASS = "flex flex-col gap-2 pl-6";
 export const SITE_SUBMENU_WRAPPER_CLASS =
-  "grid transition-[grid-template-rows] duration-300 ease-in-out py-2";
-export const SITE_SUBMENU_EXPANDED_CLASS = "grid-rows-[1fr]";
+  "grid transition-[grid-template-rows] duration-300 ease-in-out";
+export const SITE_SUBMENU_EXPANDED_CLASS = "grid-rows-[1fr] py-2";
 export const SITE_SUBMENU_COLLAPSED_CLASS = "grid-rows-[0fr]";
 export const SITE_SUBMENU_INNER_CLASS = "min-h-0 overflow-hidden";
 export const SITE_TOGGLE_CLASS =
