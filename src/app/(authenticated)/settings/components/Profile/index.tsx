@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { FieldError } from "@/components/shared/FieldError";
 import { ErrorState } from "@/components/shared/ErrorState";
+import { LoadingState } from "@/components/shared/LoadingState";
 
 import {
   ACTIONS_CLASS,
@@ -37,8 +38,6 @@ import {
   FILE_INPUT_CLASS,
   FORM_CLASS,
   HELPER_TEXT_CLASS,
-  LOADING_BODY,
-  LOADING_TEXT_CLASS,
   PAGE_CLASS,
   RESET_LABEL,
   SAVE_LABEL,
@@ -82,7 +81,7 @@ export function Profile() {
         </CardHeader>
         <CardContent>
           {profileQuery.isPending ? (
-            <p className={LOADING_TEXT_CLASS}>{LOADING_BODY}</p>
+            <LoadingState resourceName="your profile" />
           ) : profileQuery.isError ? null : (
             <div className={AVATAR_ROW_CLASS}>
               <UserAvatar
@@ -125,7 +124,7 @@ export function Profile() {
         </CardHeader>
         <CardContent>
           {profileQuery.isPending ? (
-            <p className={LOADING_TEXT_CLASS}>{LOADING_BODY}</p>
+            <LoadingState resourceName="your profile" />
           ) : profileQuery.isError ? (
             <ErrorState
               title={ERROR_TITLE}

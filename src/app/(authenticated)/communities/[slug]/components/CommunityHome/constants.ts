@@ -1,4 +1,3 @@
-export const LOADING_BODY = "Loading community…";
 export const NOT_FOUND_TITLE = "Community Not Available";
 export const NOT_FOUND_DESCRIPTION =
   "You may not have access to this community, or it may not exist.";
@@ -14,7 +13,6 @@ export const BODY_SUFFIX =
   "This is the starting point for community-scoped features.";
 
 export const PAGE_CLASS = "flex flex-col gap-6";
-export const LOADING_TEXT_CLASS = "text-muted-foreground";
 export const TITLE_CLASS = "text-3xl font-bold tracking-tight";
 export const SLUG_CLASS = "text-muted-foreground text-lg";
 export const BODY_TEXT_CLASS = "text-muted-foreground text-base";

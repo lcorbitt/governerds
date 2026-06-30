@@ -7,7 +7,6 @@ export const DATA_TABLE_EXPORT_BUTTON_CLASS =
 export const DATA_TABLE_EXPORT_BUTTON_ICON_CLASS = "h-4 w-4 shrink-0";
 
 export const DEFAULT_EMPTY_MESSAGE = "No rows.";
-export const LOADING_MESSAGE = "Loading…";
 
 export const TABLE_WRAPPER_CLASS = "w-full overflow-x-auto";
 export const TABLE_CLASS = "w-full border-collapse text-sm";
@@ -24,8 +23,7 @@ export const TR_INTERACTIVE_CLASS =
 export const TD_CLASS = "px-4 py-2.5 text-zinc-800 dark:text-zinc-200";
 export const TD_FIRST_INTERACTIVE_CLASS =
   "border-l-2 border-l-transparent group-hover:border-l-primary-orange";
-export const LOADING_CELL_CLASS =
-  "px-4 py-8 text-center text-zinc-500 dark:text-zinc-400";
+export const LOADING_CELL_CLASS = "p-0";
 export const EMPTY_CELL_CLASS =
   "px-4 py-8 text-center text-zinc-500 dark:text-zinc-400";
 

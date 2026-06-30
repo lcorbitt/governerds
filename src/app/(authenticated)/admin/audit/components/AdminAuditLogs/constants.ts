@@ -51,7 +51,6 @@ export const RESOURCE_FILTER_OPTIONS: DataTableFilterOption[] =
 export const ERROR_TITLE = "Could Not Load Audit Logs";
 export const ERROR_DESCRIPTION =
   "We could not load audit logs right now. Please try again.";
-export const LOADING_BODY = "Loading audit logs…";
 
 export const COLUMN_TIME_HEADER = "Time";
 export const COLUMN_ACTION_HEADER = "Action";
@@ -67,7 +66,6 @@ export const PAGE_CLASS = "flex flex-col gap-6";
 export const TITLE_CLASS = "text-3xl font-serif font-bold";
 export const SUBTITLE_CLASS = "text-muted-foreground mt-2 text-base";
 export const CARD_CLASS = "overflow-hidden";
-export const LOADING_TEXT_CLASS = "text-muted-foreground text-base";
 export const EMPTY_TEXT_CLASS = "text-muted-foreground text-base";
 export const CELL_PRIMARY_CLASS = "font-medium";
 export const CELL_MUTED_CLASS = "text-xs text-zinc-500 dark:text-zinc-400";

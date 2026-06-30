@@ -19,11 +19,13 @@ alwaysApply: false
   `gap-2`, `p-4`, `space-y-1.5`; no odd integers like `gap-3`).
   **See `ui-classnames.mdc`** for unprefixed flat `_CLASS` Tailwind exports in
   colocated `constants.ts` (one feature per file; no inline literals in views).
+  **See `ui-loading-state.mdc`** for client-side data-fetch loading UI
+  (`LoadingState`, `resourceName`, `DataTable` `loadingResourceName`).
   Cursor rules guide the agent; they do not lint or auto-fix existing files.
   Run a copy sweep when adding conventions, or add CI checks for enforcement.
 - `app/(group)/components/` — shell for that group only.
 - `components/` — shared across routes. `components/ui/` — shadcn primitives.
-- `components/shared/` — AppModal, ErrorState, field helpers.
+- `components/shared/` — AppModal, ErrorState, LoadingState, field helpers.
 - `hosts/` — global modals/toasts/portals mounted once from the root.
 - `hooks/queries/<domain>.keys.ts` — query keys only (server-safe imports).
 - `hooks/queries/use<Domain>.ts` — reads + invalidation helpers; imports keys

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useNotificationsQuery } from "@/hooks/queries/useNotifications";
 import { useMarkNotificationReadMutation } from "@/hooks/mutations/useNotification";
+import { LoadingState } from "@/components/shared/LoadingState";
 import { cn } from "@/lib/utils";
 
 import {
@@ -31,7 +32,7 @@ import {
   ITEM_TITLE_UNREAD_CLASS,
   LABEL,
   LABEL_CLASS,
-  LOADING_MESSAGE,
+  LOADING_STATE_CLASS,
   MARK_ALL_READ_BUTTON_CLASS,
   MARK_ALL_READ_LABEL,
   MARK_READ_BUTTON_CLASS,
@@ -94,7 +95,10 @@ export function NotificationBell() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {notificationsQuery.isPending ? (
-          <p className={STATUS_MESSAGE_CLASS}>{LOADING_MESSAGE}</p>
+          <LoadingState
+            resourceName="notifications"
+            className={LOADING_STATE_CLASS}
+          />
         ) : notificationsQuery.isError ? (
           <p className={STATUS_MESSAGE_CLASS}>{ERROR_MESSAGE}</p>
         ) : items.length === 0 ? (

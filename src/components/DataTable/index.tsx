@@ -5,11 +5,12 @@ import type { KeyboardEvent } from "react";
 
 import { cn } from "@/lib/utils";
 
+import { LoadingState } from "@/components/shared/LoadingState";
+
 import {
   DEFAULT_EMPTY_MESSAGE,
   EMPTY_CELL_CLASS,
   LOADING_CELL_CLASS,
-  LOADING_MESSAGE,
   SORT_BUTTON_CLASS,
   SORT_ICON_CLASS,
   TABLE_CLASS,
@@ -45,6 +46,7 @@ type DataTableProps<T> = {
   emptyMessage?: string;
   onRowClick?: (row: T) => void;
   loading?: boolean;
+  loadingResourceName?: string;
   sortColumn?: string | null;
   sortDirection?: SortDirection;
   onSortChange?: (columnId: string) => void;
@@ -57,6 +59,7 @@ export function DataTable<T>({
   emptyMessage = DEFAULT_EMPTY_MESSAGE,
   onRowClick,
   loading = false,
+  loadingResourceName,
   sortColumn = null,
   sortDirection = "desc",
   onSortChange,
@@ -114,7 +117,10 @@ export function DataTable<T>({
           {loading ? (
             <tr>
               <td colSpan={columns.length} className={LOADING_CELL_CLASS}>
-                {LOADING_MESSAGE}
+                <LoadingState
+                  resourceName={loadingResourceName ?? "data"}
+                  className="min-h-0 py-4"
+                />
               </td>
             </tr>
           ) : rows.length === 0 ? (

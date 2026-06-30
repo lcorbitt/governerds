@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ErrorState } from "@/components/shared/ErrorState";
+import { LoadingState } from "@/components/shared/LoadingState";
 
 import {
   BACK_TO_COMMUNITIES_LABEL,
@@ -18,8 +19,6 @@ import {
   CARD_TITLE,
   ERROR_DESCRIPTION,
   ERROR_TITLE,
-  LOADING_BODY,
-  LOADING_TEXT_CLASS,
   NOT_FOUND_DESCRIPTION,
   NOT_FOUND_TITLE,
   PAGE_CLASS,
@@ -34,7 +33,7 @@ export function CommunityHome() {
   return (
     <div className={PAGE_CLASS}>
       {communityQuery.isPending ? (
-        <p className={LOADING_TEXT_CLASS}>{LOADING_BODY}</p>
+        <LoadingState resourceName="community" />
       ) : communityQuery.isError ? (
         <ErrorState
           title={isNotFound ? NOT_FOUND_TITLE : ERROR_TITLE}

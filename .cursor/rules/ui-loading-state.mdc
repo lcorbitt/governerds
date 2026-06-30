@@ -1,0 +1,110 @@
+---
+description: Client-side data loading UI — LoadingState, resource names, and DataTable
+globs: src/**/*.{tsx,ts}
+alwaysApply: false
+---
+
+# UI loading state — client data fetch
+
+Use the shared **`LoadingState`** component whenever a feature shows a loading
+UI **after initial page paint** while client data is in flight (TanStack Query
+`isPending`, empty cache refetch, filter/page changes with no rows yet).
+
+Route-level navigation loading stays in **`PageLoadingOverlay`** /
+`(authenticated)/loading.tsx`. Do not reuse `LoadingState` for that.
+
+## Component
+
+Location: `src/components/shared/LoadingState/`
+
+```tsx
+import { LoadingState } from "@/components/shared/LoadingState";
+
+{query.isPending ? (
+  <LoadingState resourceName="users" />
+) : (
+  /* content */
+)}
+```
+
+### Props
+
+| Prop | Required | Purpose |
+|------|----------|---------|
+| `resourceName` | yes | Sentence-case fragment appended to `"Loading …"` |
+| `className` | no | Override layout for tight containers (dropdowns, table cells) |
+
+Message format is built by `formatLoadingMessage()` in
+`LoadingState/constants.ts`:
+
+```ts
+formatLoadingMessage("users"); // → "Loading users…"
+```
+
+- **Sentence case** for the resource fragment (`users`, `your profile`, `audit logs`).
+- **Unicode ellipsis** (`…`), not three ASCII periods.
+- Do **not** store per-feature `LOADING_BODY` / `LIST_LOADING_BODY` strings.
+  Pass `resourceName` at the call site instead.
+
+### Layout
+
+`LoadingState` centers a **spinner + message** inside its parent (card content,
+section, table cell). The parent supplies bounds; do not wrap with extra
+loading-specific layout unless a compact override is needed.
+
+Compact override example (notification dropdown):
+
+```tsx
+<LoadingState resourceName="notifications" className="min-h-0 py-4" />
+```
+
+## DataTable
+
+Pass **`loadingResourceName`** alongside `loading`:
+
+```tsx
+<DataTable
+  loading={loading}
+  loadingResourceName="users"
+  /* … */
+/>
+```
+
+Do not render custom loading text inside table cells. `DataTable` delegates to
+`LoadingState`.
+
+## When not to use
+
+| Case | Use instead |
+|------|-------------|
+| Client route navigation (link click) | `PageLoadingOverlay` via navigation loading host |
+| SSR route segment streaming | `(authenticated)/loading.tsx` |
+| Mutation / submit in progress | Button label in feature `constants.ts` (`Saving…`, `Sending…`) |
+| Action-specific multi-step copy | Feature-local copy (e.g. invite accept checking vs accepting) |
+| Inline row refresh while rows exist | Keep showing rows; disable toolbar via `fetching` |
+
+## Anti-patterns
+
+```tsx
+// ❌ BAD — plain text, no spinner, duplicated copy constant
+export const LOADING_BODY = "Loading users…";
+<p className={LOADING_TEXT_CLASS}>{LOADING_BODY}</p>
+
+// ❌ BAD — ad-hoc spinner + message
+<div className="flex items-center gap-2">
+  <Spinner />
+  <span>Loading communities...</span>
+</div>
+
+// ✅ GOOD
+<LoadingState resourceName="users" />
+```
+
+## Accessibility
+
+`LoadingState` renders `role="status"`, `aria-live="polite"`, and
+`aria-label` from the formatted message. Do not nest a second status region
+around it.
+
+When adding or touching loading UI, migrate nearby violations in the same
+feature folder when reasonable.

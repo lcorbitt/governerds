@@ -1,7 +1,6 @@
 export const LABEL = "Notifications";
 export const TITLE = "Notifications";
 export const EMPTY_MESSAGE = "You are all caught up.";
-export const LOADING_MESSAGE = "Loading notifications…";
 export const ERROR_MESSAGE = "We could not load your notifications.";
 export const MARK_ALL_READ_LABEL = "Mark All Read";
 export const MARK_READ_LABEL = "Mark as Read";
@@ -14,6 +13,7 @@ export const DROPDOWN_CLASS = "w-80";
 export const LABEL_CLASS = "flex items-center justify-between gap-2";
 export const MARK_ALL_READ_BUTTON_CLASS =
   "text-primary text-xs font-medium hover:underline";
+export const LOADING_STATE_CLASS = "min-h-0 py-4";
 export const STATUS_MESSAGE_CLASS = "text-muted-foreground px-2 py-4 text-sm";
 export const ITEM_CLASS =
   "flex cursor-default flex-col items-start gap-1.5 p-4";

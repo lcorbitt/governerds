@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ErrorState } from "@/components/shared/ErrorState";
+import { LoadingState } from "@/components/shared/LoadingState";
 import { Reveal } from "@/components/shared/Reveal";
 
 import {
@@ -20,8 +21,6 @@ import {
   ERROR_DESCRIPTION,
   ERROR_TITLE,
   LIST_CLASS,
-  LOADING_BODY,
-  LOADING_TEXT_CLASS,
   OPEN_HOME_LABEL,
   OPEN_HOME_TEXT_CLASS,
   PAGE_CLASS,
@@ -43,7 +42,7 @@ export function Communities() {
       </div>
 
       {communitiesQuery.isPending ? (
-        <p className={LOADING_TEXT_CLASS}>{LOADING_BODY}</p>
+        <LoadingState resourceName="your communities" />
       ) : communitiesQuery.isError ? (
         <ErrorState
           title={ERROR_TITLE}

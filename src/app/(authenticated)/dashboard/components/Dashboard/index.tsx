@@ -8,11 +8,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ErrorState } from "@/components/shared/ErrorState";
+import { LoadingState } from "@/components/shared/LoadingState";
 import { useFeatureFlagQuery } from "@/hooks/queries/useFeatureFlag";
 
 import {
   FLAG_CARD_TITLE,
-  FLAG_CHECKING_BODY,
   FLAG_ERROR_DESCRIPTION,
   FLAG_ERROR_TITLE,
   FLAG_OFF_LABEL,
@@ -20,7 +20,6 @@ import {
   FLAG_ON_PREFIX_BODY,
   FLAG_ON_SUFFIX_BODY,
   FLAG_VALUE_CLASS,
-  MUTED_TEXT_CLASS,
   PAGE_CLASS,
   SUBTITLE,
   SUBTITLE_CLASS,
@@ -52,7 +51,7 @@ export function Dashboard() {
         </CardHeader>
         <CardContent>
           {newDashboard.isPending ? (
-            <p className={MUTED_TEXT_CLASS}>{FLAG_CHECKING_BODY}</p>
+            <LoadingState resourceName="feature flag" />
           ) : newDashboard.isError ? (
             <ErrorState
               title={FLAG_ERROR_TITLE}

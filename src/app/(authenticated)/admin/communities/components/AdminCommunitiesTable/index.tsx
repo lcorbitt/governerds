@@ -7,6 +7,7 @@ import {
   DataTableToolbar,
 } from "@/components/DataTable";
 import { ErrorState } from "@/components/shared/ErrorState";
+import { LoadingState } from "@/components/shared/LoadingState";
 import { TablePagination } from "@/components/TablePagination";
 
 import {
@@ -16,8 +17,6 @@ import {
   FILTERED_EMPTY_MESSAGE,
   LIST_ERROR_DESCRIPTION,
   LIST_ERROR_TITLE,
-  LIST_LOADING_BODY,
-  LOADING_TEXT_CLASS,
   SEARCH_ARIA_LABEL,
   SEARCH_PLACEHOLDER,
 } from "./constants";
@@ -66,7 +65,7 @@ export function AdminCommunitiesTable({
   });
 
   if (adminQuery.isPending && rows.length === 0) {
-    return <p className={LOADING_TEXT_CLASS}>{LIST_LOADING_BODY}</p>;
+    return <LoadingState resourceName="communities" />;
   }
 
   if (adminQuery.isError) {
@@ -106,6 +105,7 @@ export function AdminCommunitiesTable({
         rows={rows}
         getRowId={(row) => row.id}
         loading={loading}
+        loadingResourceName="communities"
         sortColumn={sortColumn}
         sortDirection={sortDirection}
         onSortChange={handleSortChange}

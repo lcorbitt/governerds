@@ -107,3 +107,4 @@ Put new **hard rules** here. Put new **folder conventions** in the matching
 | [`ui-copy-title-case.mdc`](.cursor/rules/ui-copy-title-case.mdc) | Buttons, links, headings, toasts — Title Case |
 | [`ui-spacing.mdc`](.cursor/rules/ui-spacing.mdc) | Padding, margin, gap on 2px grid |
 | [`ui-classnames.mdc`](.cursor/rules/ui-classnames.mdc) | Tailwind `*_CLASS` exports in `constants.ts` |
+| [`ui-loading-state.mdc`](.cursor/rules/ui-loading-state.mdc) | Client data-fetch loading (`LoadingState`, `resourceName`) |

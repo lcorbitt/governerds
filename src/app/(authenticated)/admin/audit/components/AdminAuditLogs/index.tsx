@@ -16,6 +16,7 @@ import {
   DataTableToolbar,
 } from "@/components/DataTable";
 import { ErrorState } from "@/components/shared/ErrorState";
+import { LoadingState } from "@/components/shared/LoadingState";
 import { TablePagination } from "@/components/TablePagination";
 
 import {
@@ -29,8 +30,6 @@ import {
   ERROR_DESCRIPTION,
   ERROR_TITLE,
   FILTERED_EMPTY_MESSAGE,
-  LOADING_BODY,
-  LOADING_TEXT_CLASS,
   PAGE_CLASS,
   RESOURCE_FILTER_ID,
   RESOURCE_FILTER_LABEL,
@@ -74,7 +73,7 @@ export function AdminAuditLogs() {
   } = useAdminAuditLogs();
 
   if (auditLogsQuery.isPending && rows.length === 0) {
-    return <p className={LOADING_TEXT_CLASS}>{LOADING_BODY}</p>;
+    return <LoadingState resourceName="audit logs" />;
   }
 
   if (auditLogsQuery.isError) {
@@ -149,6 +148,7 @@ export function AdminAuditLogs() {
             rows={rows}
             getRowId={(row) => row.id}
             loading={loading}
+            loadingResourceName="audit logs"
             sortColumn={sortColumn}
             sortDirection={sortDirection}
             onSortChange={handleSortChange}

@@ -2,7 +2,6 @@ export const TITLE = "Settings";
 export const SUBTITLE =
   "Update your profile and how you appear across GoverNerds.";
 export const DETAILS_TITLE = "Details";
-export const LOADING_BODY = "Loading your profile…";
 export const ERROR_TITLE = "We Could Not Load Your Profile";
 export const ERROR_DESCRIPTION =
   "Please check that your local stack is running, then try again.";
@@ -37,7 +36,6 @@ export const TOAST_AVATAR_ERROR =
 export const PAGE_CLASS = "flex flex-col gap-6";
 export const TITLE_CLASS = "text-3xl font-bold tracking-tight";
 export const SUBTITLE_CLASS = "text-muted-foreground text-lg";
-export const LOADING_TEXT_CLASS = "text-muted-foreground";
 export const AVATAR_ROW_CLASS = "flex flex-wrap items-center gap-4";
 export const AVATAR_CLASS = "h-20 w-20";
 export const AVATAR_FALLBACK_CLASS = "text-xl";

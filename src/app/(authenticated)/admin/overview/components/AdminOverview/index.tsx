@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ErrorState } from "@/components/shared/ErrorState";
+import { LoadingState } from "@/components/shared/LoadingState";
 import { Reveal } from "@/components/shared/Reveal";
 import { useAdminOverviewQuery } from "@/hooks/queries/useAdminOverview";
 
@@ -26,8 +27,6 @@ import {
   ENTRY_TIMESTAMP_CLASS,
   ERROR_DESCRIPTION,
   ERROR_TITLE,
-  LOADING_BODY,
-  LOADING_TEXT_CLASS,
   NO_ANALYTICS_BODY,
   NO_AUDIT_BODY,
   PAGE_CLASS,
@@ -56,7 +55,7 @@ export function AdminOverview() {
   const overviewQuery = useAdminOverviewQuery();
 
   if (overviewQuery.isPending) {
-    return <p className={LOADING_TEXT_CLASS}>{LOADING_BODY}</p>;
+    return <LoadingState resourceName="dashboard" />;
   }
 
   if (overviewQuery.isError || !overviewQuery.data) {

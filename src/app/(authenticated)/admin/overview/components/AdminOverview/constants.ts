@@ -1,7 +1,6 @@
 export const TITLE = "Dashboard";
 export const SUBTITLE =
   "Analytics and audit activity for super administrators.";
-export const LOADING_BODY = "Loading dashboard…";
 export const ERROR_TITLE = "We Could Not Load the Overview";
 export const ERROR_DESCRIPTION =
   "Please confirm your local stack is running, then try again.";
@@ -19,7 +18,6 @@ export const RECENT_ANALYTICS_DESCRIPTION = "Infrastructure events";
 export const NO_AUDIT_BODY = "No audit entries yet.";
 export const NO_ANALYTICS_BODY = "No analytics events yet.";
 
-export const LOADING_TEXT_CLASS = "text-muted-foreground";
 export const PAGE_CLASS = "flex flex-col gap-6";
 export const TITLE_CLASS = "text-3xl font-bold tracking-tight";
 export const SUBTITLE_CLASS = "text-muted-foreground text-lg";

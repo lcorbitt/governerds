@@ -13,7 +13,6 @@ export const LIST_ERROR_TITLE = "We Could Not Load Communities";
 export const LIST_ERROR_DESCRIPTION =
   "Please check that your local stack is running, then try again.";
 export const BACK_TO_DASHBOARD_LABEL = "Back to Dashboard";
-export const LIST_LOADING_BODY = "Loading communities…";
 
 export const SEARCH_PLACEHOLDER = "Search communities…";
 export const SEARCH_ARIA_LABEL = "Search Communities";
@@ -25,7 +24,6 @@ export const INVITE_PLACEHOLDER = "member@example.com";
 export const SEND_INVITE_LABEL = "Send Invite";
 export const SENDING_INVITE_LABEL = "Sending…";
 
-export const LOADING_TEXT_CLASS = "text-muted-foreground";
 export const CARD_CONTENT_CLASS = "p-0";
 export const CELL_NAME_CLASS = "font-semibold";
 export const CELL_SLUG_CLASS = "text-muted-foreground text-sm";

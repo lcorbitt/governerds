@@ -16,7 +16,6 @@ export const LIST_ERROR_TITLE = "We Could Not Load Members";
 export const LIST_ERROR_DESCRIPTION =
   "Please check that your local stack is running, then try again.";
 export const BACK_TO_DASHBOARD_LABEL = "Back to Dashboard";
-export const LIST_LOADING_BODY = "Loading members…";
 
 export const SEARCH_PLACEHOLDER = "Search members…";
 export const SEARCH_ARIA_LABEL = "Search Members";
@@ -24,7 +23,6 @@ export const SEARCH_ARIA_LABEL = "Search Members";
 export const COMMUNITY_FILTER_ID = "admin-members-community-filter";
 export const COMMUNITY_FILTER_LABEL = "Community";
 
-export const LOADING_TEXT_CLASS = "text-muted-foreground";
 export const CARD_CONTENT_CLASS = "p-0";
 export const CELL_PRIMARY_CLASS = "font-semibold";
 export const CELL_MUTED_CLASS = "text-muted-foreground text-sm";
