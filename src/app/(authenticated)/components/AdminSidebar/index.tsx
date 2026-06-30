@@ -25,11 +25,7 @@ import {
   ADMIN_SECTION_LABEL,
   AUDIT_LOGS_LABEL,
   ASIDE_CLASS,
-  BACK_LINK_CLASS,
-  BACK_TO_COMMUNITIES_LABEL,
-  BACK_TO_DASHBOARD_LABEL,
   FEATURE_FLAGS_LABEL,
-  FOOTER_CLASS,
   HEADER_CLASS,
   HOMEPAGE_LABEL,
   MANAGE_COMMUNITIES_LABEL,
@@ -288,10 +284,6 @@ function MobileNavTab({
 
 export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
   const pathname = usePathname();
-  const backHref = isSuperAdmin ? "/communities" : "/dashboard";
-  const backLabel = isSuperAdmin
-    ? BACK_TO_COMMUNITIES_LABEL
-    : BACK_TO_DASHBOARD_LABEL;
 
   return (
     <aside className={ASIDE_CLASS}>
@@ -319,12 +311,6 @@ export function AdminSidebar({ isSuperAdmin }: AdminSidebarProps) {
           }
         />
       </nav>
-
-      <div className={FOOTER_CLASS}>
-        <Link href={backHref} className={BACK_LINK_CLASS}>
-          {backLabel}
-        </Link>
-      </div>
     </aside>
   );
 }
