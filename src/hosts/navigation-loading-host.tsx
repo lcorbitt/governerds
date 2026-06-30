@@ -2,7 +2,7 @@
 
 import { useAtomValue } from "jotai";
 
-import { PageLoadingOverlay } from "@/components/shared/page-loading-overlay";
+import { PageLoadingOverlay } from "@/components/shared/PageLoadingOverlay";
 import { navigationLoadingAtom } from "@/lib/state/navigation-loading";
 
 /**

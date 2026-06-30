@@ -7,11 +7,14 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 import {
+  HIDE_PASSWORD_LABEL,
   PADDING_CLASS,
   ROOT_CLASS,
+  SHOW_PASSWORD_LABEL,
   TOGGLE_BUTTON_CLASS,
   TOGGLE_ICON_CLASS,
-} from "./password-input/constants";
+} from "./constants";
+import { usePasswordInput } from "./usePasswordInput";
 
 /**
  * Password field with a show/hide toggle. The toggle is a real button with an
@@ -21,7 +24,7 @@ const PasswordInput = React.forwardRef<
   HTMLInputElement,
   React.InputHTMLAttributes<HTMLInputElement>
 >(({ className, ...props }, ref) => {
-  const [visible, setVisible] = React.useState(false);
+  const { visible, toggleVisible } = usePasswordInput();
 
   return (
     <div className={ROOT_CLASS}>
@@ -33,8 +36,8 @@ const PasswordInput = React.forwardRef<
       />
       <button
         type="button"
-        onClick={() => setVisible((v) => !v)}
-        aria-label={visible ? "Hide password" : "Show password"}
+        onClick={toggleVisible}
+        aria-label={visible ? HIDE_PASSWORD_LABEL : SHOW_PASSWORD_LABEL}
         className={TOGGLE_BUTTON_CLASS}
       >
         {visible ? (

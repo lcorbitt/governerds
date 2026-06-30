@@ -9,8 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FieldError } from "@/components/shared/field-error";
-import { PasswordInput } from "@/components/shared/password-input";
+import { FieldError } from "@/components/shared/FieldError";
+import { PasswordInput } from "@/components/shared/PasswordInput";
 
 import {
   CARD_CLASS,

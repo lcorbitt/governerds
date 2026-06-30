@@ -7,7 +7,7 @@ import {
   PAGE_CLASS,
   TITLE,
 } from "@/app/not-found/constants";
-import { ErrorState } from "@/components/shared/error-state";
+import { ErrorState } from "@/components/shared/ErrorState";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {

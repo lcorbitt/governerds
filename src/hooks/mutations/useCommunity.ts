@@ -4,6 +4,7 @@ import {
   acceptInvite,
   createCommunity,
   sendCommunityInvite,
+  updateCommunity,
 } from "@/frontend/services/community.service";
 import { invalidateCommunityQueries } from "@/hooks/queries/useCommunity";
 
@@ -16,6 +17,15 @@ export function useCreateCommunityMutation() {
 
   return useMutation({
     mutationFn: createCommunity,
+    onSuccess: () => invalidateCommunityQueries(queryClient),
+  });
+}
+
+export function useUpdateCommunityMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateCommunity,
     onSuccess: () => invalidateCommunityQueries(queryClient),
   });
 }

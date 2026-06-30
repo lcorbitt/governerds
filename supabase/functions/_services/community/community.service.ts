@@ -10,6 +10,8 @@ import {
   normalizeCommunitySortColumn,
   defaultSortDirectionForCommunityColumn,
   slugExists,
+  slugExistsExcept,
+  updateCommunityRow,
   type CommunityRow,
 } from "@models/communities.ts";
 import {
@@ -35,6 +37,7 @@ import type {
   SendCommunityInviteBody,
   SendCommunityInviteResponse,
   CommunitySummary,
+  UpdateCommunityBody,
 } from "@shared/dto/community.dto.ts";
 import type { PaginatedListQuery } from "@shared/dto/pagination.dto.ts";
 
@@ -172,6 +175,44 @@ export async function createCommunity(
       slug: row.slug,
       createdBy: creatorId,
     },
+  });
+
+  return toDetail(row);
+}
+
+export async function updateCommunity(
+  serviceClient: SupabaseClient,
+  body: UpdateCommunityBody,
+): Promise<CommunityDetail> {
+  const name = body.name.trim();
+  const slug = body.slug.trim().toLowerCase();
+
+  if (name.length < 2 || name.length > 80) {
+    throw new CommunityValidationError(
+      "Please enter a community name between 2 and 80 characters.",
+    );
+  }
+
+  if (!isValidCommunitySlug(slug)) {
+    throw new CommunityValidationError(
+      "Please use a slug with 3–50 lowercase letters, numbers, and hyphens only.",
+    );
+  }
+
+  const existing = await getCommunityById(serviceClient, body.communityId);
+  if (!existing) {
+    throw new CommunityNotFoundError("That community was not found.");
+  }
+
+  if (await slugExistsExcept(serviceClient, slug, body.communityId)) {
+    throw new CommunityConflictError(
+      "That slug is already in use. Please choose another.",
+    );
+  }
+
+  const row = await updateCommunityRow(serviceClient, body.communityId, {
+    name,
+    slug,
   });
 
   return toDetail(row);

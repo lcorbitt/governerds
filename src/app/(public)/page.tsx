@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Reveal } from "@/components/shared/reveal";
+import { Reveal } from "@/components/shared/Reveal";
 import { Button } from "@/components/ui/button";
 
 import {

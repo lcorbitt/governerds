@@ -93,6 +93,9 @@ verify_jwt = false
 [functions.create-community]
 verify_jwt = false
 
+[functions.update-community]
+verify_jwt = false
+
 [functions.list-admin-communities]
 verify_jwt = false
 

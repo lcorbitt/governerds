@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FieldError } from "@/components/shared/field-error";
+import { FieldError } from "@/components/shared/FieldError";
 
 import {
   BACK_TO_LOGIN_LABEL,

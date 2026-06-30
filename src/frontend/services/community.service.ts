@@ -10,6 +10,7 @@ import type {
   ListCommunitiesResponse,
   SendCommunityInviteBody,
   SendCommunityInviteResponse,
+  UpdateCommunityBody,
 } from "@shared/dto/community.dto";
 import type { PaginatedListQuery } from "@shared/dto/pagination.dto";
 
@@ -68,6 +69,15 @@ export function createCommunity(
   return edgeFunctionFetch<CommunityDetail, CreateCommunityBody>(
     EDGE_FUNCTION_SLUGS.createCommunity,
     { method: "POST", body },
+  );
+}
+
+export function updateCommunity(
+  body: UpdateCommunityBody,
+): Promise<CommunityDetail> {
+  return edgeFunctionFetch<CommunityDetail, UpdateCommunityBody>(
+    EDGE_FUNCTION_SLUGS.updateCommunity,
+    { method: "PATCH", body },
   );
 }
 

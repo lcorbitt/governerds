@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ErrorState } from "@/components/shared/error-state";
+import { ErrorState } from "@/components/shared/ErrorState";
 
 import {
   BACK_TO_COMMUNITIES_LABEL,

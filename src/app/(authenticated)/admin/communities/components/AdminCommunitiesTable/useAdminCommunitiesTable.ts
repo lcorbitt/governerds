@@ -26,12 +26,15 @@ import { Label } from "@/components/ui/label";
 import {
   CELL_NAME_CLASS,
   CELL_SLUG_CLASS,
+  COLUMN_EDIT_CLASS,
+  COLUMN_EDIT_HEADER,
   COLUMN_HOME_CLASS,
   COLUMN_INVITE_CLASS,
   COLUMN_HOME_HEADER,
   COLUMN_INVITE_HEADER,
   COLUMN_NAME_HEADER,
   COLUMN_SLUG_HEADER,
+  EDIT_LABEL,
   EXPORT_NAME_HEADER,
   EXPORT_SLUG_HEADER,
   INVITE_CELL_CLASS,
@@ -53,6 +56,7 @@ interface UseAdminCommunitiesTableOptions {
   setInviteEmails: Dispatch<SetStateAction<Record<string, string>>>;
   sendingInviteFor: string | null;
   onSendInvite: (communityId: string, communityName: string) => void;
+  onEditCommunity: (community: CommunitySummary) => void;
 }
 
 export function useAdminCommunitiesTable({
@@ -60,6 +64,7 @@ export function useAdminCommunitiesTable({
   setInviteEmails,
   sendingInviteFor,
   onSendInvite,
+  onEditCommunity,
 }: UseAdminCommunitiesTableOptions) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
@@ -106,6 +111,23 @@ export function useAdminCommunitiesTable({
         exportValue: (row) => row.slug,
         cell: (row) =>
           createElement("span", { className: CELL_SLUG_CLASS }, `/${row.slug}`),
+      },
+      {
+        id: "edit",
+        header: COLUMN_EDIT_HEADER,
+        className: COLUMN_EDIT_CLASS,
+        headerClassName: COLUMN_EDIT_CLASS,
+        cell: (row) =>
+          createElement(
+            Button,
+            {
+              type: "button",
+              variant: "outline",
+              size: "sm",
+              onClick: () => onEditCommunity(row),
+            },
+            EDIT_LABEL,
+          ),
       },
       {
         id: "home",
@@ -165,7 +187,13 @@ export function useAdminCommunitiesTable({
           ),
       },
     ],
-    [inviteEmails, onSendInvite, sendingInviteFor, setInviteEmails],
+    [
+      inviteEmails,
+      onEditCommunity,
+      onSendInvite,
+      sendingInviteFor,
+      setInviteEmails,
+    ],
   );
 
   const fetchExportRows = useCallback(async () => {

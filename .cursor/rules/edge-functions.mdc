@@ -18,6 +18,22 @@ alwaysApply: false
 - `_http/middleware/presets.ts` — `servePublic`, `serveAuthenticated`,
   `serveWithAccessContext`, `serveWithPermission` — use these in `index.ts`.
 
+## Slug naming (`verb-kebab-noun`)
+
+Slugs describe the **resource shape**, not the HTTP method (reads are still
+HTTP GET). Registry: `src/config/edge-function-slugs.ts`.
+
+| Verb prefix | Use when | Examples |
+|-------------|----------|----------|
+| **`get-*`** | One resource or one caller context snapshot | `get-profile`, `get-community?slug=` |
+| **`list-*`** | Collection browse, often paginated | `list-communities`, `list-admin-communities` |
+| **`create-*`** | Create a single new resource | `create-community` |
+| **`update-*`** | Update a single existing resource | `update-profile`, `update-community` |
+| **Domain verb** | Action is not CRUD | `accept-invite`, `mark-notification-read` |
+
+Do not use possessive scope (`get-my-profile`). The authenticated caller is
+implied by JWT/session.
+
 ## `_shared/` vs `_http/` placement
 
 Cross-runtime code lives in [`_shared/`](_shared/) inside `supabase/functions/`

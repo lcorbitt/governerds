@@ -9,8 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ErrorState } from "@/components/shared/error-state";
-import { Reveal } from "@/components/shared/reveal";
+import { ErrorState } from "@/components/shared/ErrorState";
+import { Reveal } from "@/components/shared/Reveal";
 
 import {
   BACK_TO_DASHBOARD_LABEL,

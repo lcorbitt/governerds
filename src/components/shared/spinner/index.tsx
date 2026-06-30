@@ -3,7 +3,7 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 
-import { BASE_CLASS, MD_CLASS, SM_CLASS } from "./spinner/constants";
+import { BASE_CLASS, MD_CLASS, SM_CLASS } from "./constants";
 
 type SpinnerSize = "sm" | "md";
 

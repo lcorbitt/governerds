@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { DataTable, DataTableExportButton } from "@/components/DataTable";
-import { ErrorState } from "@/components/shared/error-state";
+import { ErrorState } from "@/components/shared/ErrorState";
 import { TablePagination } from "@/components/TablePagination";
 
 import {

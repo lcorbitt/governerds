@@ -14,11 +14,13 @@ import {
 import { cn } from "@/lib/utils";
 
 import {
+  DEFAULT_CANCEL_LABEL,
+  DEFAULT_CONFIRM_LABEL,
   LG_CLASS,
   MD_CLASS,
   SM_CLASS,
   type AppModalSize,
-} from "./app-modal/constants";
+} from "./constants";
 
 export type { AppModalSize };
 
@@ -59,8 +61,8 @@ export function AppModal({
   title,
   description,
   children,
-  confirmLabel = "Confirm",
-  cancelLabel = "Cancel",
+  confirmLabel = DEFAULT_CONFIRM_LABEL,
+  cancelLabel = DEFAULT_CANCEL_LABEL,
   onConfirm,
   onCancel,
   variant = "default",

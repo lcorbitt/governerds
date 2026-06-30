@@ -1,4 +1,4 @@
-import { PageLoadingOverlay } from "@/components/shared/page-loading-overlay";
+import { PageLoadingOverlay } from "@/components/shared/PageLoadingOverlay";
 
 /**
  * Instant fallback while an authenticated route segment streams on the server.

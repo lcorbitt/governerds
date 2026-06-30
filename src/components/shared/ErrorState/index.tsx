@@ -19,7 +19,7 @@ import {
   ROOT_CLASS,
   TITLE_CLASS,
   TRY_AGAIN,
-} from "./error-state/constants";
+} from "./constants";
 
 interface ErrorStateProps {
   title: string;

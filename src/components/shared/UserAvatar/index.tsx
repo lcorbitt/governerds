@@ -3,11 +3,10 @@
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useProfileQuery } from "@/hooks/queries/useProfile";
-import { resolveAvatarDisplayUrl } from "@/lib/profile/avatar-url";
 import { cn } from "@/lib/utils";
 
-import { CLASS, PROFILE_LINK_CLASS } from "./UserAvatar/constants";
+import { DEFAULT_LABEL, PROFILE_LINK_CLASS, ROOT_CLASS } from "./constants";
+import { useUserAvatar } from "./useUserAvatar";
 
 interface UserAvatarProps {
   className?: string;
@@ -15,12 +14,6 @@ interface UserAvatarProps {
   /** When false, renders the avatar without a profile link. */
   linkToProfile?: boolean;
   label?: string;
-}
-
-function getFallbackInitial(displayName: string | null | undefined): string {
-  const trimmed = displayName?.trim();
-  if (!trimmed) return "?";
-  return trimmed.charAt(0).toUpperCase();
 }
 
 /**
@@ -33,18 +26,13 @@ export function UserAvatar({
   linkToProfile = true,
   label,
 }: UserAvatarProps) {
-  const profileQuery = useProfileQuery();
-  const displayName = profileQuery.data?.displayName;
-  const src = resolveAvatarDisplayUrl(
-    profileQuery.data?.avatarUrl,
-    profileQuery.data?.updatedAt,
-  );
+  const { src, fallbackInitial } = useUserAvatar();
 
   const avatar = (
-    <Avatar className={cn(CLASS, className)}>
+    <Avatar className={cn(ROOT_CLASS, className)}>
       <AvatarImage key={src ?? "no-avatar"} src={src} alt="" />
       <AvatarFallback className={fallbackClassName}>
-        {getFallbackInitial(displayName)}
+        {fallbackInitial}
       </AvatarFallback>
     </Avatar>
   );
@@ -55,7 +43,7 @@ export function UserAvatar({
     <Link
       href="/settings"
       className={PROFILE_LINK_CLASS}
-      aria-label={label ?? "Settings"}
+      aria-label={label ?? DEFAULT_LABEL}
     >
       {avatar}
     </Link>

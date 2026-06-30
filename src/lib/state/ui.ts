@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-import type { AppModalSize } from "@/components/shared/app-modal";
+import type { AppModalSize } from "@/components/shared/AppModal";
 
 /**
  * Ephemeral, client-only UI state. Jotai is for transient interface state only

@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 
 import { BODY_CLASS, DESCRIPTION, TITLE } from "@/app/global-error/constants";
-import { ErrorState } from "@/components/shared/error-state";
+import { ErrorState } from "@/components/shared/ErrorState";
 
 /**
  * Top-level error boundary. Reports to Sentry and shows a calm, plain-language

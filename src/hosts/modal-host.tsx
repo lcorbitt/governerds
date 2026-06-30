@@ -2,7 +2,7 @@
 
 import { useAtom } from "jotai";
 
-import { AppModal } from "@/components/shared/app-modal";
+import { AppModal } from "@/components/shared/AppModal";
 import { modalAtom } from "@/lib/state/ui";
 
 /**

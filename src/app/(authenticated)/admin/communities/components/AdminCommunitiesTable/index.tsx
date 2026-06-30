@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTable, DataTableExportButton } from "@/components/DataTable";
-import { ErrorState } from "@/components/shared/error-state";
+import { ErrorState } from "@/components/shared/ErrorState";
 import { TablePagination } from "@/components/TablePagination";
 
 import {
@@ -22,6 +22,7 @@ interface AdminCommunitiesTableProps {
   setInviteEmails: ReturnType<typeof useAdminCommunities>["setInviteEmails"];
   sendingInviteFor: ReturnType<typeof useAdminCommunities>["sendingInviteFor"];
   onSendInvite: ReturnType<typeof useAdminCommunities>["onSendInvite"];
+  onEditCommunity: ReturnType<typeof useAdminCommunities>["openEditModal"];
 }
 
 export function AdminCommunitiesTable({
@@ -29,6 +30,7 @@ export function AdminCommunitiesTable({
   setInviteEmails,
   sendingInviteFor,
   onSendInvite,
+  onEditCommunity,
 }: AdminCommunitiesTableProps) {
   const {
     adminQuery,
@@ -50,6 +52,7 @@ export function AdminCommunitiesTable({
     setInviteEmails,
     sendingInviteFor,
     onSendInvite,
+    onEditCommunity,
   });
 
   if (adminQuery.isPending && rows.length === 0) {

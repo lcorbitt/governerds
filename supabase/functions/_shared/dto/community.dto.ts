@@ -25,6 +25,12 @@ export interface CreateCommunityBody {
   slug: string;
 }
 
+export interface UpdateCommunityBody {
+  communityId: string;
+  name: string;
+  slug: string;
+}
+
 export interface SendCommunityInviteBody {
   communityId: string;
   email: string;

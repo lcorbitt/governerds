@@ -14,8 +14,8 @@ do not define layout or styling strings inline.
 
 - Colocated feature components: `src/app/**/components/<Name>/index.tsx`
 - Route wrappers: `page.tsx`, group/route `layout.tsx`
-- Shared components: `src/components/shared/` (flat files use a `<name>/constants.ts`
-  subfolder, same pattern as `error-state/constants.ts`)
+- Shared components: `src/components/shared/<Name>/index.tsx` with colocated
+  `constants.ts` (see `component-colocation.mdc`). Example: `ErrorState/constants.ts`.
 
 ## Excluded
 

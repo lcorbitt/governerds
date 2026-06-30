@@ -1,4 +1,4 @@
-import { MESSAGE_CLASS } from "./field-error/constants";
+import { MESSAGE_CLASS } from "./constants";
 
 /**
  * Inline form field error. Uses `role="alert"` so screen readers announce

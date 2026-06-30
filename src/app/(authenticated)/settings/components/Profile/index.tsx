@@ -13,8 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FieldError } from "@/components/shared/field-error";
-import { ErrorState } from "@/components/shared/error-state";
+import { FieldError } from "@/components/shared/FieldError";
+import { ErrorState } from "@/components/shared/ErrorState";
 
 import {
   ACTIONS_CLASS,

@@ -156,6 +156,23 @@ export async function slugExists(
   return data !== null;
 }
 
+export async function slugExistsExcept(
+  client: SupabaseClient,
+  slug: string,
+  excludeId: string,
+): Promise<boolean> {
+  const { data, error } = await client
+    .from("communities")
+    .select("id")
+    .eq("slug", slug)
+    .neq("id", excludeId)
+    .is("deleted_at", null)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  return data !== null;
+}
+
 export async function insertCommunity(
   client: SupabaseClient,
   input: { name: string; slug: string },
@@ -163,6 +180,23 @@ export async function insertCommunity(
   const { data, error } = await client
     .from("communities")
     .insert({ name: input.name, slug: input.slug })
+    .select(DETAIL_COLUMNS)
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data as CommunityRow;
+}
+
+export async function updateCommunityRow(
+  client: SupabaseClient,
+  id: string,
+  input: { name: string; slug: string },
+): Promise<CommunityRow> {
+  const { data, error } = await client
+    .from("communities")
+    .update({ name: input.name, slug: input.slug })
+    .eq("id", id)
+    .is("deleted_at", null)
     .select(DETAIL_COLUMNS)
     .single();
 

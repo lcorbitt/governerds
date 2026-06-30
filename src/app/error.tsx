@@ -8,7 +8,7 @@ import {
   GO_TO_DASHBOARD_LABEL,
   TITLE,
 } from "@/app/error/constants";
-import { ErrorState } from "@/components/shared/error-state";
+import { ErrorState } from "@/components/shared/ErrorState";
 
 /**
  * Route-level error boundary. Reports to Sentry and shows a calm recovery

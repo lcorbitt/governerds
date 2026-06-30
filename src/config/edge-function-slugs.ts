@@ -19,6 +19,7 @@ export const EDGE_FUNCTION_SLUGS = {
   listCommunities: "list-communities",
   getCommunity: "get-community",
   createCommunity: "create-community",
+  updateCommunity: "update-community",
   listAdminCommunities: "list-admin-communities",
   sendCommunityInvite: "send-community-invite",
   acceptInvite: "accept-invite",

@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 
 import { BACK_TO_DASHBOARD_LABEL, DESCRIPTION, TITLE } from "./error/constants";
-import { ErrorState } from "@/components/shared/error-state";
+import { ErrorState } from "@/components/shared/ErrorState";
 
 export default function AuthenticatedError({
   error,

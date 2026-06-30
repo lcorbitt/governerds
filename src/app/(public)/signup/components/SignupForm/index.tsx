@@ -12,9 +12,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FieldError } from "@/components/shared/field-error";
-import { OAuthButtons } from "@/components/shared/oauth-buttons";
-import { PasswordInput } from "@/components/shared/password-input";
+import { FieldError } from "@/components/shared/FieldError";
+import { OAuthButtons } from "@/components/shared/OAuthButtons";
+import { PasswordInput } from "@/components/shared/PasswordInput";
 
 import {
   BACK_TO_LOGIN_LABEL,

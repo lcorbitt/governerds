@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type { ElementType, ReactNode } from "react";
 
-import { useIntersectionReveal } from "@/hooks/use-intersection-reveal";
 import { cn } from "@/lib/utils";
 
 import {
   HIDDEN_CLASS,
   TRANSITION_ACTIVE_CLASS,
   VISIBLE_CLASS,
-} from "./reveal/constants";
+} from "./constants";
+import { useReveal } from "./useReveal";
 
 export interface RevealProps {
   children: ReactNode;
@@ -42,44 +41,8 @@ export function Reveal({
   immediate = false,
   as: Component = "div",
 }: RevealProps) {
-  const {
-    ref,
-    shouldMount: inView,
-    prefersReducedMotion,
-  } = useIntersectionReveal({
-    threshold,
-    once,
-    enabled: !immediate,
-  });
-  const shouldMount = immediate || inView;
-  const [canTransition, setCanTransition] = useState(false);
-  const [delayedVisible, setDelayedVisible] = useState(false);
-  const visible = shouldMount && (prefersReducedMotion || delayedVisible);
-
-  useEffect(() => {
-    if (!shouldMount || prefersReducedMotion) {
-      return;
-    }
-
-    let rafEnable = 0;
-    let rafReveal = 0;
-    const delayTimer = window.setTimeout(() => {
-      rafEnable = window.requestAnimationFrame(() => {
-        setCanTransition(true);
-        rafReveal = window.requestAnimationFrame(() => {
-          setDelayedVisible(true);
-        });
-      });
-    }, delay);
-
-    return () => {
-      window.clearTimeout(delayTimer);
-      window.cancelAnimationFrame(rafEnable);
-      window.cancelAnimationFrame(rafReveal);
-      setCanTransition(false);
-      setDelayedVisible(false);
-    };
-  }, [shouldMount, prefersReducedMotion, delay]);
+  const { ref, shouldMount, prefersReducedMotion, canTransition, visible } =
+    useReveal({ threshold, once, delay, immediate });
 
   return (
     <Component
