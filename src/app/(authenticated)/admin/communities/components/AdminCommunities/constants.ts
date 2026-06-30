@@ -1,6 +1,8 @@
 export const TITLE = "Communities";
 export const SUBTITLE = "Create communities and invite members by email.";
-export const CREATE_BUTTON_LABEL = "Create a Community";
+export const CREATE_BUTTON_LABEL = "Create New Community";
+export const CREATE_BUTTON_ICON_CLASS = "h-4 w-4 shrink-0";
+
 export const LIST_CARD_TITLE = "All Communities";
 export const LIST_CARD_DESCRIPTION =
   "Send email invitations to add members to each community.";

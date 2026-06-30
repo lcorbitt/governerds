@@ -64,3 +64,18 @@ names: `get-profile`, `getProfile`, `update-profile`, `get-permissions`.
   never on every page.
 - Nested `layout.tsx` (e.g. `admin/`) — subtree role gate only.
 - Super admins use `requireSuperAdmin()` for analytics-focused admin routes.
+
+## Icons
+
+- **Default:** use `lucide-react` for all UI icons
+  (`import { Plus } from "lucide-react"`).
+- **Do not** add other icon libraries (`react-icons`, Heroicons, Radix Icons as
+  standalone imports, inline SVGs for standard UI glyphs) unless the user or task
+  explicitly requests otherwise.
+- **Exception:** shadcn primitives in `components/ui/` may import lucide icons
+  internally; do not add duplicate icon dependencies there.
+- Decorative icons beside text: `aria-hidden` on the icon; icon-only controls
+  need `aria-label` on the button or link.
+- Icon sizing classes live in colocated `constants.ts` (`ICON_CLASS`,
+  `CREATE_BUTTON_ICON_CLASS`, etc.), typically `h-4 w-4 shrink-0` beside button
+  labels (`gap-2` on the parent `Button`).

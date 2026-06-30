@@ -1,4 +1,4 @@
-export const CREATE_TITLE = "Create a Community";
+export const CREATE_TITLE = "Create New Community";
 export const CREATE_DESCRIPTION =
   "You will be added as a member automatically.";
 export const EDIT_TITLE = "Edit Community";

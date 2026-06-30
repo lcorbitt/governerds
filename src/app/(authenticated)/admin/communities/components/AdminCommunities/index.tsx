@@ -1,5 +1,7 @@
 "use client";
 
+import { Plus } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,6 +14,7 @@ import {
 import { AdminCommunitiesTable } from "../AdminCommunitiesTable";
 import { CreateOrEditCommunityModal } from "../CreateOrEditCommunityModal";
 import {
+  CREATE_BUTTON_ICON_CLASS,
   CREATE_BUTTON_LABEL,
   HEADER_ROW_CLASS,
   HEADER_TEXT_CLASS,
@@ -46,6 +49,7 @@ export function AdminCommunities() {
           <p className={SUBTITLE_CLASS}>{SUBTITLE}</p>
         </div>
         <Button type="button" size="lg" onClick={openCreateModal}>
+          <Plus className={CREATE_BUTTON_ICON_CLASS} aria-hidden />
           {CREATE_BUTTON_LABEL}
         </Button>
       </div>
