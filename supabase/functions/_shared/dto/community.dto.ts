@@ -63,6 +63,7 @@ export interface AdminCommunityMemberListItem {
   memberEmail: string;
   roleName: string;
   roleSlug: string;
+  platformRoleSlugs: string[];
   joinedAt: string;
 }
 

@@ -34,8 +34,8 @@ import {
 } from "./constants";
 import {
   defaultSortDirectionForAdminCommunityMemberColumn,
-  formatCommunityRoleSlug,
   formatMemberJoinedAt,
+  formatMemberRoleSlugs,
   normalizeAdminCommunityMemberSortColumn,
   type AdminCommunityMemberSortColumn,
 } from "./utils";
@@ -152,9 +152,14 @@ export function useAdminMembersTable() {
         header: COLUMN_ROLE_HEADER,
         sortable: true,
         exportHeader: EXPORT_ROLE_HEADER,
-        exportValue: (row) => formatCommunityRoleSlug(row.roleSlug),
+        exportValue: (row) =>
+          formatMemberRoleSlugs(row.roleSlug, row.platformRoleSlugs),
         cell: (row) =>
-          createElement("span", null, formatCommunityRoleSlug(row.roleSlug)),
+          createElement(
+            "span",
+            null,
+            formatMemberRoleSlugs(row.roleSlug, row.platformRoleSlugs),
+          ),
       },
       {
         id: "joined_at",

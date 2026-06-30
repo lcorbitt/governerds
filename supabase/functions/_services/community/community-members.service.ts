@@ -25,6 +25,7 @@ function mapCommunityMemberRow(
     memberEmail: row.member_email,
     roleName: row.role_name,
     roleSlug: row.role_slug,
+    platformRoleSlugs: row.platform_role_slugs ?? [],
     joinedAt: row.joined_at,
   };
 }

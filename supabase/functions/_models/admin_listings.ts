@@ -16,6 +16,7 @@ export interface AdminCommunityMemberRpcRow {
   member_email: string;
   role_name: string;
   role_slug: string;
+  platform_role_slugs: string[];
   joined_at: string;
   total_count: number;
 }
